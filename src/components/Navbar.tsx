@@ -39,10 +39,10 @@ const Navbar = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" className="text-foreground hover:text-primary">
+            <Button variant="ghost" className="text-foreground hover:text-primary" onClick={() => window.location.href = '/auth'}>
               Sign In
             </Button>
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground" onClick={() => window.location.href = '/auth'}>
               Join Now
             </Button>
           </div>
@@ -93,10 +93,10 @@ const Navbar = () => {
                 About
               </a>
               <div className="pt-4 space-y-3 border-t border-border/50">
-                <Button variant="ghost" className="w-full justify-start text-foreground hover:text-primary">
+                <Button variant="ghost" className="w-full justify-start text-foreground hover:text-primary" onClick={() => window.location.href = '/auth'}>
                   Sign In
                 </Button>
-                <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+                <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground" onClick={() => window.location.href = '/auth'}>
                   Join Now
                 </Button>
               </div>
