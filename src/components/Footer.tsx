@@ -14,11 +14,11 @@ const Footer = () => {
                 <Mountain className="h-5 w-5 text-primary-foreground" />
               </div>
               <span className="text-xl font-bold text-foreground">
-                Himalayan<span className="text-primary">Connect</span>
+                Yatra <span className="text-primary">Sathi</span>
               </span>
             </div>
             <p className="text-muted-foreground leading-relaxed">
-              Your gateway to extraordinary Himalayan adventures. Connect, explore, and create memories that last a lifetime.
+              Your trusted travel companion for extraordinary adventures. Connect, explore, and create memories that last a lifetime.
             </p>
             <div className="flex space-x-3">
               <Button size="icon" variant="ghost" className="h-9 w-9 hover:bg-primary/10 hover:text-primary">
@@ -101,7 +101,7 @@ const Footer = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
             <div className="flex items-center justify-center md:justify-start space-x-3">
               <Mail className="h-5 w-5 text-primary" />
-              <span className="text-muted-foreground">contact@himalayanconnect.com</span>
+              <span className="text-muted-foreground">contact@yatrasathi.com</span>
             </div>
             <div className="flex items-center justify-center md:justify-start space-x-3">
               <Phone className="h-5 w-5 text-primary" />
@@ -117,7 +117,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="mt-8 pt-8 border-t border-border/50 text-center">
           <p className="text-muted-foreground text-sm">
-            © 2024 HimalayanConnect. All rights reserved. | Built with ❤️ for adventurers
+            © 2024 Yatra Sathi. All rights reserved. | Built with ❤️ for adventurers
           </p>
         </div>
       </div>
