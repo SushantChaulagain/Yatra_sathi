@@ -23,16 +23,16 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#home" className="text-foreground hover:text-primary transition-colors font-medium">
+            <a href="/" className="text-foreground hover:text-primary transition-colors font-medium">
               Home
             </a>
-            <a href="#treks" className="text-foreground hover:text-primary transition-colors font-medium">
+            <a href="/treks" className="text-foreground hover:text-primary transition-colors font-medium">
               Treks
             </a>
-            <a href="#community" className="text-foreground hover:text-primary transition-colors font-medium">
+            <a href="/community" className="text-foreground hover:text-primary transition-colors font-medium">
               Community
             </a>
-            <a href="#about" className="text-foreground hover:text-primary transition-colors font-medium">
+            <a href="/about" className="text-foreground hover:text-primary transition-colors font-medium">
               About
             </a>
           </div>
@@ -65,28 +65,28 @@ const Navbar = () => {
           <div className="md:hidden absolute top-16 left-0 right-0 bg-background/95 backdrop-blur-md border-b border-border/50">
             <div className="px-4 py-6 space-y-4">
               <a
-                href="#home"
+                href="/"
                 className="block text-foreground hover:text-primary transition-colors font-medium py-2"
                 onClick={toggleMenu}
               >
                 Home
               </a>
               <a
-                href="#treks"
+                href="/treks"
                 className="block text-foreground hover:text-primary transition-colors font-medium py-2"
                 onClick={toggleMenu}
               >
                 Treks
               </a>
               <a
-                href="#community"
+                href="/community"
                 className="block text-foreground hover:text-primary transition-colors font-medium py-2"
                 onClick={toggleMenu}
               >
                 Community
               </a>
               <a
-                href="#about"
+                href="/about"
                 className="block text-foreground hover:text-primary transition-colors font-medium py-2"
                 onClick={toggleMenu}
               >

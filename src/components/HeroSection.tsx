@@ -31,7 +31,7 @@ const HeroSection = () => {
               Start Your Journey
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4">
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4" onClick={() => window.location.href = '/treks'}>
               Explore Treks
             </Button>
           </div>
