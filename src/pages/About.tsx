@@ -7,26 +7,27 @@ import Footer from "@/components/Footer";
 const About = () => {
   const teamMembers = [
     {
-      name: "Rajesh Shrestha",
-      role: "Founder & Trek Guide",
-      bio: "A passionate mountaineer with over 15 years of trekking experience across the Himalayas. Rajesh has led hundreds of successful expeditions and believes in promoting safe, sustainable tourism.",
+      name: "Simon Shrestha",
+      role: "Founder & Developer",
+      bio: "Full-stack developer and avid trekker with 10+ years exploring Nepal's mountain trails. Simon combines his passion for coding and hiking to build digital platforms that connect adventurers with the Himalayas.",
       image: "photo-1472396961693-142e6e269027",
-      initials: "RS"
+      initials: "SS"
     },
     {
-      name: "Nisha Gurung",
-      role: "Community Manager",
-      bio: "Former adventure photographer turned community builder. Nisha manages our trekker community and ensures everyone has a great experience sharing their adventures.",
+      name: "Sushant Chaulagain",
+      role: "Founder & Developer",
+      bio: "Software engineer turned mountain enthusiast who has trekked extensively across the Annapurna and Everest regions. Sushant leads our technical development while sharing his trail expertise with the community.",
       image: "photo-1615729947596-a598e5de0ab3",
-      initials: "NG"
+      initials: "SC"
     },
     {
-      name: "Binod Tamang",
-      role: "Safety Coordinator",
-      bio: "Certified wilderness first aid instructor and safety expert. Binod ensures all our treks meet the highest safety standards and provides emergency response coordination.",
-      image: "photo-1501854140801-50d01698950b",
-      initials: "BT"
-    }
+      name: "Avinash Maskey",
+      role: "Developer",
+      bio: "Frontend developer and weekend hiker who discovered his love for the mountains through local trail exploration. Avinash focuses on creating intuitive user experiences inspired by the simplicity of mountain life.",
+      image: "photo-1615729947596-a598e5de0ab3",
+      initials: "AM"
+    },
+
   ];
 
   const values = [

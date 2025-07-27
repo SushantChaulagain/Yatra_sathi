@@ -101,7 +101,7 @@ const Auth = () => {
         <div className="flex flex-col items-center mb-8">
           <div className="flex items-center gap-2 mb-4">
             <Mountain className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold">TravelBuddy</span>
+            <span className="text-2xl font-bold">YatraSathi</span>
           </div>
           <p className="text-muted-foreground text-center">
             Join the adventure community
