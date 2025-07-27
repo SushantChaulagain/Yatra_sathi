@@ -10,23 +10,17 @@ const About = () => {
       name: "Simon Shrestha",
       role: "Founder & Developer",
       bio: "Full-stack developer and avid trekker with 10+ years exploring Nepal's mountain trails. Simon combines his passion for coding and hiking to build digital platforms that connect adventurers with the Himalayas.",
-      image: "photo-1472396961693-142e6e269027",
+      image: "/Simon.jpg",
       initials: "SS"
     },
     {
       name: "Sushant Chaulagain",
       role: "Founder & Developer",
       bio: "Software engineer turned mountain enthusiast who has trekked extensively across the Annapurna and Everest regions. Sushant leads our technical development while sharing his trail expertise with the community.",
-      image: "photo-1615729947596-a598e5de0ab3",
+      image: "/sushant.jpg",
       initials: "SC"
     },
-    {
-      name: "Avinash Maskey",
-      role: "Developer",
-      bio: "Frontend developer and weekend hiker who discovered his love for the mountains through local trail exploration. Avinash focuses on creating intuitive user experiences inspired by the simplicity of mountain life.",
-      image: "photo-1615729947596-a598e5de0ab3",
-      initials: "AM"
-    },
+ 
 
   ];
 
@@ -121,13 +115,21 @@ const About = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Meet Our Team</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                 {teamMembers.map((member, index) => (
                   <Card key={index} className="text-center">
                     <CardHeader>
-                      <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white text-2xl font-bold">
-                        {member.initials}
-                      </div>
+                      {member.image ? (
+                        <img 
+                          src={member.image} 
+                          alt={member.name}
+                          className="w-32 h-32 mx-auto mb-4 rounded-full object-cover border-4 border-primary/20"
+                        />
+                      ) : (
+                        <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white text-2xl font-bold">
+                          {member.initials}
+                        </div>
+                      )}
                       <CardTitle className="text-xl">{member.name}</CardTitle>
                       <p className="text-primary font-medium">{member.role}</p>
                     </CardHeader>

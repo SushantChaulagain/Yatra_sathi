@@ -23,6 +23,9 @@ interface UserProfile {
   availability: string;
   languages: string[];
   userId?: string;
+  rating?: number;
+  avatar?: string;
+  createdAt?: string;
 }
 
 interface UserProfileFormProps {
@@ -264,7 +267,7 @@ const UserProfileForm = ({ onSubmit, initialData, isEditing = false }: UserProfi
               <Select 
                 value={formData.availability.split(' ')[0]} 
                 onValueChange={(month) => {
-                  const year = formData.availability.split(' ')[1] || '2024';
+                  const year = formData.availability.split(' ')[1] || '2025';
                   setFormData(prev => ({ ...prev, availability: `${month} ${year}` }));
                 }}
               >
@@ -328,6 +331,7 @@ const UserProfileForm = ({ onSubmit, initialData, isEditing = false }: UserProfi
                 variant="outline" 
                 onClick={() => addInterest(newInterest)}
                 disabled={!newInterest}
+                className="bg-green-500 hover:bg-green-600 text-white border-green-500 hover:border-green-600 disabled:bg-gray-300 disabled:border-gray-300"
               >
                 <Plus className="h-4 w-4" />
               </Button>
@@ -364,6 +368,7 @@ const UserProfileForm = ({ onSubmit, initialData, isEditing = false }: UserProfi
                 variant="outline" 
                 onClick={() => addLanguage(newLanguage)}
                 disabled={!newLanguage}
+                className="bg-green-500 hover:bg-green-600 text-white border-green-500 hover:border-green-600 disabled:bg-gray-300 disabled:border-gray-300"
               >
                 <Plus className="h-4 w-4" />
               </Button>

@@ -11,7 +11,6 @@ export interface UserProfile {
   availability: string;
   languages: string[];
   userId: string;
-  rating?: number;
   avatar?: string;
   createdAt: string;
 }
@@ -45,7 +44,6 @@ export const profileStorage = {
       const profileWithDefaults = {
         ...profile,
         id: profile.id || this.generateId(),
-        rating: profile.rating || this.calculateInitialRating(profile),
         avatar: profile.avatar || this.generateAvatar(),
         createdAt: profile.createdAt || new Date().toISOString()
       };
@@ -88,24 +86,7 @@ export const profileStorage = {
     return Date.now().toString(36) + Math.random().toString(36).substr(2);
   },
 
-  // Calculate initial rating based on experience
-  calculateInitialRating(profile: UserProfile): number {
-    let rating = 4.0; // Base rating
-    
-    // Adjust based on experience
-    if (profile.experience === 'Advanced') rating += 0.5;
-    if (profile.experience === 'Beginner') rating += 0.3;
-    
-    // Adjust based on completed treks
-    if (profile.completedTreks > 20) rating += 0.3;
-    else if (profile.completedTreks > 10) rating += 0.2;
-    else if (profile.completedTreks > 5) rating += 0.1;
-    
-    // Add some randomness to make it realistic
-    rating += (Math.random() - 0.5) * 0.4;
-    
-    return Math.min(5.0, Math.max(3.5, Math.round(rating * 10) / 10));
-  },
+
 
   // Generate a random avatar placeholder
   generateAvatar(): string {
@@ -177,18 +158,97 @@ export const profileStorage = {
         {
           id: 'sample1',
           userId: 'sample-user-1',
-          name: 'Demo User',
+          name: 'Maya Sherpa',
           age: 28,
           location: 'Pokhara',
-          experience: 'Intermediate',
-          completedTreks: 8,
-          bio: 'Demo profile for testing the compatibility algorithm.',
-          interests: ['Photography', 'Annapurna Circuit', 'Cultural Exploration'],
+          experience: 'Advanced',
+          completedTreks: 15,
+          bio: 'Passionate trekker and photography enthusiast. Love exploring hidden trails and capturing the beauty of the Himalayas.',
+          interests: ['Photography', 'Annapurna Circuit', 'Cultural Exploration', 'High Altitude', 'Solo Travel'],
           nextTrek: 'Everest Base Camp',
-          availability: 'April 2024',
-          languages: ['English', 'Nepali'],
-          rating: 4.6,
+          availability: 'April 2025',
+          languages: ['English', 'Nepali', 'Hindi'],
           avatar: 'photo-1494790108755-2616b612b786',
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: 'sample2',
+          userId: 'sample-user-2',
+          name: 'Rajesh Tamang',
+          age: 32,
+          location: 'Kathmandu',
+          experience: 'Intermediate',
+          completedTreks: 7,
+          bio: 'Weekend warrior who loves mountain adventures. Looking for partners who enjoy a good challenge and great conversations.',
+          interests: ['Manaslu Circuit', 'Technical Climbing', 'Wildlife Watching', 'Digital Detox'],
+          nextTrek: 'Langtang Valley',
+          availability: 'March 2025',
+          languages: ['English', 'Nepali'],
+          avatar: 'photo-1507003211169-0a1dd7228f2d',
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: 'sample3',
+          userId: 'sample-user-3',
+          name: 'Sarah Mitchell',
+          age: 26,
+          location: 'Pokhara',
+          experience: 'Beginner',
+          completedTreks: 3,
+          bio: 'Adventure seeker from abroad, new to Himalayan trekking. Excited to learn from experienced partners!',
+          interests: ['Photography', 'Cultural Exploration', 'Short Treks', 'Local Culture'],
+          nextTrek: 'Poon Hill',
+          availability: 'April 2025',
+          languages: ['English', 'Spanish'],
+          avatar: 'photo-1438761681033-6461ffad8d80',
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: 'sample4',
+          userId: 'sample-user-4',
+          name: 'Karma Lama',
+          age: 35,
+          location: 'Kathmandu',
+          experience: 'Advanced',
+          completedTreks: 22,
+          bio: 'Local guide and trek leader. Happy to share my knowledge and help newcomers discover the magic of our mountains.',
+          interests: ['Group Leading', 'Cultural Exploration', 'High Altitude', 'Everest Base Camp', 'Upper Mustang'],
+          nextTrek: 'Kanchenjunga',
+          availability: 'May 2025',
+          languages: ['English', 'Nepali', 'Tibetan'],
+          avatar: 'photo-1472099645785-5658abf4ff4e',
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: 'sample5',
+          userId: 'sample-user-5',
+          name: 'Emma Johnson',
+          age: 29,
+          location: 'Pokhara',
+          experience: 'Intermediate',
+          completedTreks: 9,
+          bio: 'Nature photographer and wellness enthusiast. Looking for mindful trekking experiences with like-minded people.',
+          interests: ['Photography', 'Digital Detox', 'Wildlife Watching', 'Gokyo Lakes', 'Solo Travel'],
+          nextTrek: 'Gokyo Lakes',
+          availability: 'April 2025',
+          languages: ['English', 'French'],
+          avatar: 'photo-1489424731084-a5d8b219a5bb',
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: 'sample6',
+          userId: 'sample-user-6',
+          name: 'Bikash Rai',
+          age: 24,
+          location: 'Chitwan',
+          experience: 'Beginner',
+          completedTreks: 2,
+          bio: 'Engineering student with a passion for mountains. Looking to build experience with patient and encouraging partners.',
+          interests: ['Annapurna Circuit', 'Photography', 'Cultural Exploration', 'Short Treks'],
+          nextTrek: 'Annapurna Circuit',
+          availability: 'March 2025',
+          languages: ['English', 'Nepali', 'Hindi'],
+          avatar: 'photo-1500648767791-00dcc994a43e',
           createdAt: new Date().toISOString()
         }
       ];

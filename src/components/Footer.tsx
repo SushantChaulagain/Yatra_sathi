@@ -40,15 +40,6 @@ const Footer = () => {
               <a href="#treks" className="block text-muted-foreground hover:text-primary transition-colors">
                 Popular Treks
               </a>
-              <a href="#guides" className="block text-muted-foreground hover:text-primary transition-colors">
-                Our Guides
-              </a>
-              <a href="#safety" className="block text-muted-foreground hover:text-primary transition-colors">
-                Safety Guidelines
-              </a>
-              <a href="#gear" className="block text-muted-foreground hover:text-primary transition-colors">
-                Gear Recommendations
-              </a>
               <a href="#blog" className="block text-muted-foreground hover:text-primary transition-colors">
                 Blog & Stories
               </a>
@@ -65,12 +56,7 @@ const Footer = () => {
               <a href="#contact" className="block text-muted-foreground hover:text-primary transition-colors">
                 Contact Us
               </a>
-              <a href="#booking" className="block text-muted-foreground hover:text-primary transition-colors">
-                Booking Help
-              </a>
-              <a href="#cancellation" className="block text-muted-foreground hover:text-primary transition-colors">
-                Cancellation Policy
-              </a>
+            
               <a href="#terms" className="block text-muted-foreground hover:text-primary transition-colors">
                 Terms of Service
               </a>
@@ -117,7 +103,7 @@ const Footer = () => {
         {/* Copyright */}
         <div className="mt-8 pt-8 border-t border-border/50 text-center">
           <p className="text-muted-foreground text-sm">
-            © 2024 Yatra Sathi. All rights reserved. | Built with ❤️ for adventurers
+            © 2025 Yatra Sathi. All rights reserved. | Built with ❤️ for adventurers
           </p>
         </div>
       </div>
