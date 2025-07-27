@@ -11,8 +11,6 @@ import Footer from "@/components/Footer";
 const Trek = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [difficultyFilter, setDifficultyFilter] = useState("all");
-  const [budgetFilter, setBudgetFilter] = useState("all");
-  const [locationFilter, setLocationFilter] = useState("all");
 
   // Mock trek data
   const treks = [
@@ -24,7 +22,7 @@ const Trek = () => {
       duration: "12-15 days",
       budget: "NPR 35,000 - 50,000",
       season: "March-May, Sep-Nov",
-      image: "photo-1469474968028-56623f02e42d",
+      image: "/annapurna.jpg",
       rating: 4.8,
       description: "A classic trek offering stunning views of Annapurna massif and diverse landscapes.",
       route: "Pokhara → Ghandruk → Chomrong → Annapurna Base Camp"
@@ -100,13 +98,8 @@ const Trek = () => {
     const matchesSearch = trek.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          trek.location.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesDifficulty = difficultyFilter === "all" || trek.difficulty.toLowerCase() === difficultyFilter;
-    const matchesBudget = budgetFilter === "all" || 
-                         (budgetFilter === "low" && trek.budget.includes("15,000") || trek.budget.includes("25,000")) ||
-                         (budgetFilter === "medium" && trek.budget.includes("35,000") || trek.budget.includes("45,000")) ||
-                         (budgetFilter === "high" && trek.budget.includes("60,000") || trek.budget.includes("75,000"));
-    const matchesLocation = locationFilter === "all" || trek.location.includes(locationFilter);
     
-    return matchesSearch && matchesDifficulty && matchesBudget && matchesLocation;
+    return matchesSearch && matchesDifficulty;
   });
 
   const getDifficultyColor = (difficulty: string) => {
@@ -162,30 +155,6 @@ const Trek = () => {
                     <SelectItem value="hard">Hard</SelectItem>
                   </SelectContent>
                 </Select>
-
-                <Select value={budgetFilter} onValueChange={setBudgetFilter}>
-                  <SelectTrigger className="w-32">
-                    <SelectValue placeholder="Budget" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Budgets</SelectItem>
-                    <SelectItem value="low">Low</SelectItem>
-                    <SelectItem value="medium">Medium</SelectItem>
-                    <SelectItem value="high">High</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Select value={locationFilter} onValueChange={setLocationFilter}>
-                  <SelectTrigger className="w-36">
-                    <SelectValue placeholder="Location" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Locations</SelectItem>
-                    <SelectItem value="Gandaki">Gandaki</SelectItem>
-                    <SelectItem value="Koshi">Koshi</SelectItem>
-                    <SelectItem value="Bagmati">Bagmati</SelectItem>
-                  </SelectContent>
-                </Select>
               </div>
             </div>
           </div>
@@ -199,7 +168,13 @@ const Trek = () => {
                 <Card key={trek.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                   <div className="relative h-48 bg-muted">
                     <img
-                      src={`https://images.unsplash.com/${trek.image}?w=400&h=200&fit=crop`}
+                      src={
+                        trek.image.startsWith('/') 
+                          ? trek.image 
+                          : trek.image.startsWith('source.') 
+                            ? `https://${trek.image}` 
+                            : `https://images.unsplash.com/${trek.image}?w=400&h=200&fit=crop`
+                      }
                       alt={trek.name}
                       className="w-full h-full object-cover"
                     />
