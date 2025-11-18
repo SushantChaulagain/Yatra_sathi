@@ -36,12 +36,12 @@ const FindFriend = () => {
   const [loading, setLoading] = useState(true);
   // Keep algorithm weights internal and constant
   const algorithmWeights: MatchingWeights = {
-    interests: 0.30,     
-    experience: 0.15,     
-    location: 0.15,      
-    availability: 0.5,  
-    languages: 0.10,     
-    age: 0.05           
+    interests: 0.30,
+    experience: 0.25,
+    location: 0.15,
+    availability: 0.15,
+    languages: 0.10,
+    age: 0.05
   };
 
   useEffect(() => {
@@ -195,140 +195,288 @@ const FindFriend = () => {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-b from-background to-[hsl(var(--muted))]">
       <Navbar />
-      
-      <main className="pt-16">
-        {/* Hero Section */}
-        <section className="py-20 bg-gradient-to-br from-primary via-secondary to-accent">
-          <div className="container mx-auto px-4 text-center">
-                      <div className="max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-              Find Your Trek Sathi
-            </h1>
-            <p className="text-xl text-white/90 mb-8">
-              Our smart algorithm analyzes compatibility across interests, experience, location, timing, and more to find your perfect trekking partner
-            </p>
-          </div>
-          </div>
-        </section>
 
-        {/* Smart Search */}
-        <section className="py-8 bg-muted/50">
-          <div className="container mx-auto px-4">
-            <div className="flex flex-col items-center justify-center max-w-2xl mx-auto">
-              <div className="w-full relative mb-4">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search names, locations, treks, or interests..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 w-full h-12 text-lg"
-                />
+      <main className="pt-16">
+        {/* Hero Section - Enhanced with mountain theme */}
+        <section className="relative py-24 overflow-hidden">
+          {/* Gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--himalayan-deep-blue))] via-[hsl(var(--forest-green))] to-[hsl(var(--mountain-purple))]" />
+
+          {/* Animated mountain silhouettes in background */}
+          <div className="absolute bottom-0 left-0 right-0 h-32 opacity-20">
+            <div className="absolute bottom-0 left-0 right-0 h-full bg-gradient-to-t from-white/40 to-transparent"
+                 style={{ clipPath: "polygon(0 100%, 0 60%, 15% 50%, 30% 65%, 50% 40%, 70% 55%, 85% 45%, 100% 60%, 100% 100%)" }} />
+          </div>
+
+          {/* Prayer flags decoration */}
+          <div className="absolute top-8 left-0 right-0 flex justify-center gap-2 opacity-20">
+            {['--prayer-flag-blue', '--prayer-flag-white', '--prayer-flag-red', '--forest-green', '--prayer-flag-yellow'].map((color, i) => (
+              <div key={i} className={`w-4 h-8 bg-[hsl(var(${color}))] transform rotate-${i % 2 ? '1' : '-1'} animate-pulse`}
+                   style={{ animationDuration: `${3 + i * 0.3}s`, animationDelay: `${i * 0.5}s` }} />
+            ))}
+          </div>
+
+          <div className="container mx-auto px-4 text-center relative z-10">
+            <div className="max-w-4xl mx-auto">
+              {/* Icon decoration */}
+              <div className="flex justify-center mb-6">
+                <div className="relative">
+                  <div className="absolute inset-0 bg-white/20 blur-2xl rounded-full" />
+                  <div className="relative w-20 h-20 bg-white/10 backdrop-blur-md rounded-3xl flex items-center justify-center border-2 border-white/20">
+                    <Users className="h-10 w-10 text-white" />
+                  </div>
+                </div>
               </div>
-              <div className="text-sm text-muted-foreground">
-                {filteredMatches.length} compatible matches found • Ranked by compatibility
+
+              <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight">
+                Find Your Trek{" "}
+                <span className="relative inline-block">
+                  <span className="relative z-10 bg-gradient-to-r from-[hsl(var(--golden-amber))] to-[hsl(var(--terracotta))] bg-clip-text text-transparent">
+                    Sathi
+                  </span>
+                  <div className="absolute -bottom-2 left-0 right-0 h-3 bg-gradient-to-r from-[hsl(var(--golden-amber))]/30 to-[hsl(var(--terracotta))]/30 blur-lg" />
+                </span>
+              </h1>
+
+              <p className="text-xl md:text-2xl text-white/95 mb-4 font-medium leading-relaxed">
+                AI-Powered Matching • 6 Compatibility Factors • Perfect Partners
+              </p>
+
+              <p className="text-lg text-white/80 max-w-2xl mx-auto leading-relaxed">
+                Our smart algorithm analyzes interests, experience, location, timing, languages, and age to find your ideal trekking companion
+              </p>
+
+              {/* Stats badges */}
+              <div className="flex flex-wrap justify-center gap-4 mt-8">
+                <div className="px-6 py-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
+                  <span className="text-white font-bold text-lg">{filteredMatches.length}</span>
+                  <span className="text-white/80 ml-2">Compatible Matches</span>
+                </div>
+                <div className="px-6 py-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
+                  <span className="text-white font-bold text-lg">🔥</span>
+                  <span className="text-white/80 ml-2">Smart Algorithm</span>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Trekker Profiles */}
+        {/* Smart Search - Enhanced */}
+        <section className="py-12 -mt-8 relative z-20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto">
+              <Card className="border-2 border-[hsl(var(--himalayan-deep-blue))]/20 bg-white shadow-2xl shadow-[hsl(var(--himalayan-deep-blue))]/10">
+                <CardContent className="p-6">
+                  <div className="relative">
+                    <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
+                      <Search className="h-5 w-5 text-[hsl(var(--himalayan-deep-blue))]" />
+                    </div>
+                    <Input
+                      placeholder="Search by name, location, trek destination, or interests..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="pl-12 pr-4 h-14 text-lg border-2 border-[hsl(var(--border))] focus:border-[hsl(var(--himalayan-deep-blue))] rounded-xl font-medium"
+                    />
+                  </div>
+                  <div className="flex items-center justify-between mt-4 text-sm">
+                    <div className="flex items-center gap-2 text-muted-foreground">
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                      <span className="font-semibold text-foreground">{filteredMatches.length}</span> compatible matches found
+                    </div>
+                    <div className="text-muted-foreground">
+                      Sorted by compatibility score
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Trekker Profiles - Completely Redesigned */}
         <section className="py-12">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredMatches.map((match) => {
                 const trekker = match.profile;
+                const scorePercent = Math.round(match.compatibilityScore * 100);
+                const circumference = 2 * Math.PI * 45; // radius = 45
+                const dashOffset = circumference - (scorePercent / 100) * circumference;
+
                 return (
-                <Card key={trekker.id} className="overflow-hidden hover:shadow-lg transition-shadow ring-1 ring-primary/10 hover:ring-primary/30">
-                  <CardHeader className="pb-4">
+                <Card key={trekker.id} className="group relative overflow-hidden border-2 border-transparent hover:border-[hsl(var(--himalayan-deep-blue))]/30 transition-all duration-300 hover:shadow-2xl hover:shadow-[hsl(var(--himalayan-deep-blue))]/20 hover:-translate-y-1">
+                  {/* Gradient border effect on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--himalayan-deep-blue))]/0 via-[hsl(var(--forest-green))]/0 to-[hsl(var(--golden-amber))]/0 group-hover:from-[hsl(var(--himalayan-deep-blue))]/5 group-hover:via-[hsl(var(--forest-green))]/5 group-hover:to-[hsl(var(--golden-amber))]/5 transition-all duration-300 rounded-lg" />
+
+                  <CardHeader className="pb-4 relative">
                     <div className="flex items-start gap-4">
-                      <Avatar className="h-16 w-16">
-                        <AvatarImage 
-                          src={`https://images.unsplash.com/${trekker.avatar}?w=100&h=100&fit=crop&crop=face`}
-                          alt={trekker.name}
-                        />
-                        <AvatarFallback>{trekker.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1">
-                        <CardTitle className="text-lg">{trekker.name}</CardTitle>
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
-                          <MapPin className="h-3 w-3" />
-                          {trekker.location} • Age {trekker.age}
+                      {/* Avatar with status ring */}
+                      <div className="relative flex-shrink-0">
+                        <Avatar className="h-20 w-20 border-4 border-white shadow-lg">
+                          <AvatarImage
+                            src={`https://images.unsplash.com/${trekker.avatar}?w=100&h=100&fit=crop&crop=face`}
+                            alt={trekker.name}
+                          />
+                          <AvatarFallback className="text-lg font-bold bg-gradient-to-br from-[hsl(var(--himalayan-deep-blue))] to-[hsl(var(--forest-green))] text-white">
+                            {trekker.name.split(' ').map(n => n[0]).join('')}
+                          </AvatarFallback>
+                        </Avatar>
+                        {/* Compatibility indicator badge */}
+                        <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-gradient-to-br from-[hsl(var(--golden-amber))] to-[hsl(var(--terracotta))] rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg border-2 border-white">
+                          {getCompatibilityIcon(match.compatibilityScore)}
                         </div>
-                        <div className="flex items-center gap-2 mt-2 flex-wrap">
-                          <Badge className={getExperienceColor(trekker.experience)}>
+                      </div>
+
+                      <div className="flex-1 min-w-0">
+                        <CardTitle className="text-xl font-bold truncate group-hover:text-[hsl(var(--himalayan-deep-blue))] transition-colors">
+                          {trekker.name}
+                        </CardTitle>
+                        <div className="flex items-center gap-1.5 text-sm text-muted-foreground mt-1.5">
+                          <MapPin className="h-3.5 w-3.5 text-[hsl(var(--forest-green))]" />
+                          <span className="font-medium">{trekker.location}</span>
+                          <span className="text-muted-foreground/50">•</span>
+                          <span>{trekker.age} yrs</span>
+                        </div>
+
+                        {/* Experience and Match badges */}
+                        <div className="flex items-center gap-2 mt-3 flex-wrap">
+                          <Badge variant="outline" className={`${getExperienceColor(trekker.experience)} border-2 font-semibold`}>
                             {trekker.experience}
                           </Badge>
-                          <Badge className={getMatchTypeColor(match.matchType)}>
-                            {getCompatibilityIcon(match.compatibilityScore)} {Math.round(match.compatibilityScore * 100)}% match
+                          <Badge variant="outline" className={`${getMatchTypeColor(match.matchType)} border-2 font-semibold`}>
+                            {match.matchType.toUpperCase()}
                           </Badge>
+                        </div>
+                      </div>
 
+                      {/* Circular Compatibility Score */}
+                      <div className="relative flex-shrink-0">
+                        <svg className="w-24 h-24 transform -rotate-90">
+                          {/* Background circle */}
+                          <circle
+                            cx="48"
+                            cy="48"
+                            r="45"
+                            stroke="hsl(var(--muted))"
+                            strokeWidth="6"
+                            fill="none"
+                          />
+                          {/* Progress circle */}
+                          <circle
+                            cx="48"
+                            cy="48"
+                            r="45"
+                            stroke={scorePercent >= 85 ? 'hsl(var(--forest-green))' : scorePercent >= 70 ? 'hsl(var(--himalayan-sky))' : scorePercent >= 55 ? 'hsl(var(--golden-amber))' : 'hsl(var(--muted-foreground))'}
+                            strokeWidth="6"
+                            fill="none"
+                            strokeDasharray={circumference}
+                            strokeDashoffset={dashOffset}
+                            strokeLinecap="round"
+                            className="transition-all duration-1000 ease-out"
+                          />
+                        </svg>
+                        <div className="absolute inset-0 flex flex-col items-center justify-center">
+                          <span className="text-2xl font-extrabold text-foreground">{scorePercent}%</span>
+                          <span className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wide">Match</span>
                         </div>
                       </div>
                     </div>
                   </CardHeader>
                   
-                  <CardContent className="space-y-4">
-                    <p className="text-sm text-muted-foreground">{trekker.bio}</p>
-                    
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div className="flex items-center gap-2">
-                        <Mountain className="h-4 w-4 text-primary" />
-                        <span>{trekker.completedTreks} treks</span>
+                  <CardContent className="space-y-5 relative pt-2">
+                    {/* Bio */}
+                    <p className="text-sm text-muted-foreground leading-relaxed line-clamp-2">
+                      {trekker.bio}
+                    </p>
+
+                    {/* Stats Grid - Enhanced */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="flex items-center gap-2 p-3 rounded-lg bg-[hsl(var(--muted))] group-hover:bg-[hsl(var(--himalayan-sky))]/10 transition-colors">
+                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[hsl(var(--himalayan-deep-blue))] to-[hsl(var(--forest-green))] flex items-center justify-center flex-shrink-0">
+                          <Mountain className="h-4 w-4 text-white" />
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground">Completed</p>
+                          <p className="text-sm font-bold">{trekker.completedTreks} treks</p>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-primary" />
-                        <span className="text-xs">{trekker.availability}</span>
+                      <div className="flex items-center gap-2 p-3 rounded-lg bg-[hsl(var(--muted))] group-hover:bg-[hsl(var(--himalayan-sky))]/10 transition-colors">
+                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[hsl(var(--golden-amber))] to-[hsl(var(--terracotta))] flex items-center justify-center flex-shrink-0">
+                          <Calendar className="h-4 w-4 text-white" />
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground">Available</p>
+                          <p className="text-xs font-bold">{trekker.availability}</p>
+                        </div>
                       </div>
                     </div>
-                    
-                    <div>
-                      <p className="text-sm font-medium mb-2">Next Trek:</p>
-                      <Badge variant="outline" className="text-xs">
-                        {trekker.nextTrek}
-                      </Badge>
+
+                    {/* Next Trek - Enhanced */}
+                    <div className="p-3 rounded-lg bg-gradient-to-br from-[hsl(var(--himalayan-sky))]/10 to-[hsl(var(--forest-green))]/10 border border-[hsl(var(--himalayan-deep-blue))]/20">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Mountain className="h-3.5 w-3.5 text-[hsl(var(--himalayan-deep-blue))]" />
+                        <p className="text-xs font-semibold text-[hsl(var(--himalayan-deep-blue))] uppercase tracking-wide">Next Trek</p>
+                      </div>
+                      <p className="text-sm font-bold text-foreground">{trekker.nextTrek}</p>
                     </div>
-                    
+
+                    {/* Interests - Enhanced with icons */}
                     <div>
-                      <p className="text-sm font-medium mb-2">Interests:</p>
-                      <div className="flex flex-wrap gap-1">
-                        {trekker.interests.slice(0, 2).map((interest, idx) => (
-                          <Badge key={idx} variant="secondary" className="text-xs">
+                      <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">Interests</p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {trekker.interests.slice(0, 3).map((interest, idx) => (
+                          <Badge key={idx} variant="secondary" className="text-xs font-medium bg-[hsl(var(--muted))] hover:bg-[hsl(var(--himalayan-sky))]/20 transition-colors">
                             {interest}
                           </Badge>
                         ))}
-                        {trekker.interests.length > 2 && (
-                          <Badge variant="secondary" className="text-xs">
-                            +{trekker.interests.length - 2}
+                        {trekker.interests.length > 3 && (
+                          <Badge variant="secondary" className="text-xs font-bold bg-[hsl(var(--golden-amber))]/10 text-[hsl(var(--golden-amber))]">
+                            +{trekker.interests.length - 3} more
                           </Badge>
                         )}
                       </div>
                     </div>
-                    
-                    <div>
-                      <p className="text-sm font-medium mb-2">Languages:</p>
-                      <p className="text-xs text-muted-foreground">
-                        {trekker.languages.join(", ")}
+
+                    {/* Languages */}
+                    <div className="flex items-center gap-2">
+                      <div className="text-xs text-muted-foreground font-semibold">🗣️</div>
+                      <p className="text-xs text-muted-foreground font-medium">
+                        {trekker.languages.join(" • ")}
                       </p>
                     </div>
 
+                    {/* Why you match - Enhanced */}
                     {match.reasoning.length > 0 && (
-                      <div className="pt-2 border-t">
-                        <p className="text-sm font-medium mb-1 text-primary">Why you match:</p>
-                        <p className="text-xs text-muted-foreground">
-                          {match.reasoning[0]}
-                        </p>
+                      <div className="pt-3 border-t border-dashed border-[hsl(var(--border))]">
+                        <div className="flex items-start gap-2">
+                          <Star className="h-4 w-4 text-[hsl(var(--golden-amber))] flex-shrink-0 mt-0.5" />
+                          <div>
+                            <p className="text-xs font-semibold text-[hsl(var(--himalayan-deep-blue))] mb-1">Why you match</p>
+                            <p className="text-xs text-muted-foreground leading-relaxed">
+                              {match.reasoning[0]}
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     )}
-                    
+
+                    {/* Action Buttons - Enhanced */}
                     <div className="flex gap-2 pt-2">
-                      <Button size="sm" className="flex-1 bg-primary hover:bg-primary/90">
-                        <MessageCircle className="h-3 w-3 mr-1" />
+                      <Button
+                        size="sm"
+                        className="flex-1 bg-gradient-to-r from-[hsl(var(--himalayan-deep-blue))] to-[hsl(var(--forest-green))] hover:shadow-lg hover:shadow-[hsl(var(--himalayan-deep-blue))]/30 text-white font-bold transition-all duration-300 hover:scale-[1.02]"
+                      >
+                        <MessageCircle className="h-3.5 w-3.5 mr-1.5" />
                         Message
                       </Button>
-                      <Button size="sm" variant="outline" className="flex-1">
-                        <UserPlus className="h-3 w-3 mr-1" />
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="flex-1 border-2 border-[hsl(var(--himalayan-deep-blue))]/30 hover:bg-[hsl(var(--himalayan-sky))]/10 hover:border-[hsl(var(--himalayan-deep-blue))] font-semibold transition-all"
+                      >
+                        <UserPlus className="h-3.5 w-3.5 mr-1.5" />
                         Connect
                       </Button>
                     </div>
@@ -339,68 +487,190 @@ const FindFriend = () => {
             </div>
             
             {filteredMatches.length === 0 && (
-              <div className="text-center py-12">
-                <Users className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-xl font-semibold mb-2">No matches found</h3>
-                <p className="text-muted-foreground mb-4">
-                  {searchTerm 
-                    ? "Try different search terms to find more trekking partners." 
-                    : "Our algorithm is finding the best matches for you. Please refresh the page if no matches appear."
-                  }
-                </p>
-              </div>
+              <Card className="max-w-2xl mx-auto border-2 border-dashed border-[hsl(var(--border))]">
+                <CardContent className="text-center py-16">
+                  <div className="relative inline-block mb-6">
+                    <div className="absolute inset-0 bg-[hsl(var(--himalayan-sky))]/20 blur-3xl rounded-full" />
+                    <div className="relative w-24 h-24 bg-gradient-to-br from-[hsl(var(--himalayan-deep-blue))]/10 to-[hsl(var(--forest-green))]/10 rounded-3xl flex items-center justify-center mx-auto">
+                      <Users className="h-12 w-12 text-[hsl(var(--himalayan-deep-blue))]" />
+                    </div>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-3 text-foreground">No Matches Found</h3>
+                  <p className="text-muted-foreground mb-6 max-w-md mx-auto leading-relaxed">
+                    {searchTerm
+                      ? "Try adjusting your search terms or filters to discover more trekking partners."
+                      : "Our smart algorithm is working to find the best matches for you. Check back soon or complete your profile to improve match quality."
+                    }
+                  </p>
+                  {searchTerm && (
+                    <Button
+                      onClick={() => setSearchTerm("")}
+                      variant="outline"
+                      className="border-2 border-[hsl(var(--himalayan-deep-blue))]/30 hover:bg-[hsl(var(--himalayan-sky))]/10"
+                    >
+                      <Search className="h-4 w-4 mr-2" />
+                      Clear Search
+                    </Button>
+                  )}
+                </CardContent>
+              </Card>
             )}
           </div>
         </section>
 
-        {/* How Our Algorithm Works */}
-        <section className="py-16 bg-muted/50">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Smart Matching Algorithm</h2>
-              <p className="text-lg text-muted-foreground mb-12">
-                Our AI-powered system analyzes 6 key factors to find your perfect trekking companion
+        {/* How Our Algorithm Works - Completely Redesigned */}
+        <section className="relative py-24 overflow-hidden">
+          {/* Gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--muted))] via-[hsl(var(--himalayan-sky))]/5 to-[hsl(var(--forest-green))]/5" />
+
+          {/* Decorative elements */}
+          <div className="absolute top-10 right-10 w-64 h-64 bg-[hsl(var(--himalayan-deep-blue))]/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-10 left-10 w-96 h-96 bg-[hsl(var(--forest-green))]/5 rounded-full blur-3xl" />
+
+          <div className="container mx-auto px-4 relative z-10">
+            {/* Header */}
+            <div className="max-w-3xl mx-auto text-center mb-16">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[hsl(var(--himalayan-deep-blue))]/10 to-[hsl(var(--forest-green))]/10 border border-[hsl(var(--himalayan-deep-blue))]/20 mb-6">
+                <Star className="h-4 w-4 text-[hsl(var(--golden-amber))]" />
+                <span className="text-sm font-bold text-[hsl(var(--himalayan-deep-blue))]">AI-POWERED MATCHING</span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-extrabold mb-6 bg-gradient-to-r from-[hsl(var(--himalayan-deep-blue))] to-[hsl(var(--forest-green))] bg-clip-text text-transparent">
+                How We Find Your Perfect Trek Partner
+              </h2>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Our sophisticated algorithm analyzes <span className="font-bold text-foreground">6 key compatibility factors</span> to match you with trekkers who share your passion and pace
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <Card className="text-center">
-                  <CardHeader>
-                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Star className="h-8 w-8 text-primary" />
-                    </div>
-                    <CardTitle className="text-lg">1. Compatibility Analysis</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">
-                      We analyze interests, experience, location, timing, languages, and age to calculate your compatibility score.
-                    </p>
-                  </CardContent>
-                </Card>
+            </div>
 
-                <Card className="text-center">
-                  <CardHeader>
-                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Star className="h-8 w-8 text-primary" />
+            {/* Algorithm Flow - Creative Asymmetric Layout */}
+            <div className="max-w-6xl mx-auto space-y-8">
+              {/* Step 1 - Left aligned */}
+              <div className="flex flex-col md:flex-row items-center gap-8 group">
+                <div className="md:w-5/12 order-2 md:order-1">
+                  <Card className="border-2 border-[hsl(var(--himalayan-deep-blue))]/20 bg-white shadow-xl group-hover:shadow-2xl group-hover:shadow-[hsl(var(--himalayan-deep-blue))]/10 transition-all duration-300">
+                    <CardContent className="p-8">
+                      <div className="flex items-start gap-4">
+                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-[hsl(var(--himalayan-deep-blue))] to-[hsl(var(--forest-green))] flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                          1
+                        </div>
+                        <div>
+                          <h3 className="text-2xl font-bold mb-3 text-[hsl(var(--himalayan-deep-blue))]">Data Collection</h3>
+                          <p className="text-muted-foreground leading-relaxed mb-4">
+                            We gather comprehensive information from your profile including interests, experience level, location, availability, languages, and age preferences.
+                          </p>
+                          <div className="flex flex-wrap gap-2">
+                            <Badge className="bg-[hsl(var(--himalayan-sky))]/20 text-[hsl(var(--himalayan-deep-blue))] border-[hsl(var(--himalayan-deep-blue))]/20">Interests</Badge>
+                            <Badge className="bg-[hsl(var(--himalayan-sky))]/20 text-[hsl(var(--himalayan-deep-blue))] border-[hsl(var(--himalayan-deep-blue))]/20">Experience</Badge>
+                            <Badge className="bg-[hsl(var(--himalayan-sky))]/20 text-[hsl(var(--himalayan-deep-blue))] border-[hsl(var(--himalayan-deep-blue))]/20">Location</Badge>
+                            <Badge className="bg-[hsl(var(--himalayan-sky))]/20 text-[hsl(var(--himalayan-deep-blue))] border-[hsl(var(--himalayan-deep-blue))]/20">+3 more</Badge>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+                <div className="md:w-2/12 order-1 md:order-2 flex justify-center">
+                  <div className="relative">
+                    <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[hsl(var(--himalayan-deep-blue))]/20 to-[hsl(var(--forest-green))]/20 flex items-center justify-center backdrop-blur-sm border-2 border-[hsl(var(--himalayan-deep-blue))]/30 group-hover:scale-110 transition-transform duration-300">
+                      <Users className="h-12 w-12 text-[hsl(var(--himalayan-deep-blue))]" />
                     </div>
-                    <CardTitle className="text-lg">2. Smart Ranking</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">
-                      Our algorithm automatically ranks partners by compatibility, putting the best matches first.
-                    </p>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
+                <div className="md:w-5/12 order-3"></div>
+              </div>
 
-                <Card className="text-center">
-                  <CardHeader>
-                    <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Mountain className="h-8 w-8 text-primary" />
+              {/* Connector Line */}
+              <div className="flex justify-center">
+                <div className="w-1 h-12 bg-gradient-to-b from-[hsl(var(--himalayan-deep-blue))]/30 to-transparent rounded-full"></div>
+              </div>
+
+              {/* Step 2 - Right aligned */}
+              <div className="flex flex-col md:flex-row items-center gap-8 group">
+                <div className="md:w-5/12 order-3 md:order-1"></div>
+                <div className="md:w-2/12 order-1 md:order-2 flex justify-center">
+                  <div className="relative">
+                    <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[hsl(var(--golden-amber))]/20 to-[hsl(var(--terracotta))]/20 flex items-center justify-center backdrop-blur-sm border-2 border-[hsl(var(--golden-amber))]/30 group-hover:scale-110 transition-transform duration-300">
+                      <Star className="h-12 w-12 text-[hsl(var(--golden-amber))]" />
                     </div>
-                    <CardTitle className="text-lg">3. Perfect Partnerships</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground">
-                      Connect with highly compatible partners and embark on amazing adventures with confidence.
-                    </p>
+                  </div>
+                </div>
+                <div className="md:w-5/12 order-2 md:order-3">
+                  <Card className="border-2 border-[hsl(var(--golden-amber))]/20 bg-white shadow-xl group-hover:shadow-2xl group-hover:shadow-[hsl(var(--golden-amber))]/10 transition-all duration-300">
+                    <CardContent className="p-8">
+                      <div className="flex items-start gap-4">
+                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-[hsl(var(--golden-amber))] to-[hsl(var(--terracotta))] flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                          2
+                        </div>
+                        <div>
+                          <h3 className="text-2xl font-bold mb-3 text-[hsl(var(--golden-amber))]">Smart Analysis</h3>
+                          <p className="text-muted-foreground leading-relaxed mb-4">
+                            Our algorithm calculates compatibility scores using weighted factors, Jaccard similarity for interests, and intelligent filters to find the best matches.
+                          </p>
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2">
+                              <div className="w-20 text-sm text-muted-foreground">Interests</div>
+                              <div className="flex-1 h-2 bg-[hsl(var(--muted))] rounded-full overflow-hidden">
+                                <div className="h-full bg-gradient-to-r from-[hsl(var(--golden-amber))] to-[hsl(var(--terracotta))] rounded-full" style={{ width: '30%' }}></div>
+                              </div>
+                              <span className="text-xs font-bold text-[hsl(var(--golden-amber))]">30%</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <div className="w-20 text-sm text-muted-foreground">Experience</div>
+                              <div className="flex-1 h-2 bg-[hsl(var(--muted))] rounded-full overflow-hidden">
+                                <div className="h-full bg-gradient-to-r from-[hsl(var(--golden-amber))] to-[hsl(var(--terracotta))] rounded-full" style={{ width: '25%' }}></div>
+                              </div>
+                              <span className="text-xs font-bold text-[hsl(var(--golden-amber))]">25%</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <div className="w-20 text-sm text-muted-foreground">Other</div>
+                              <div className="flex-1 h-2 bg-[hsl(var(--muted))] rounded-full overflow-hidden">
+                                <div className="h-full bg-gradient-to-r from-[hsl(var(--golden-amber))] to-[hsl(var(--terracotta))] rounded-full" style={{ width: '45%' }}></div>
+                              </div>
+                              <span className="text-xs font-bold text-[hsl(var(--golden-amber))]">45%</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+
+              {/* Connector Line */}
+              <div className="flex justify-center">
+                <div className="w-1 h-12 bg-gradient-to-b from-[hsl(var(--golden-amber))]/30 to-transparent rounded-full"></div>
+              </div>
+
+              {/* Step 3 - Center aligned */}
+              <div className="flex justify-center">
+                <Card className="border-2 border-[hsl(var(--forest-green))]/20 bg-white shadow-xl hover:shadow-2xl hover:shadow-[hsl(var(--forest-green))]/10 transition-all duration-300 max-w-2xl">
+                  <CardContent className="p-8">
+                    <div className="text-center">
+                      <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[hsl(var(--forest-green))] to-[hsl(var(--himalayan-deep-blue))] mb-6 shadow-lg">
+                        <Mountain className="h-8 w-8 text-white" />
+                      </div>
+                      <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-[hsl(var(--forest-green))] to-[hsl(var(--himalayan-deep-blue))] text-white font-bold text-xl shadow-lg mb-4">
+                        3
+                      </div>
+                      <h3 className="text-2xl font-bold mb-4 text-[hsl(var(--forest-green))]">Perfect Matches Delivered</h3>
+                      <p className="text-muted-foreground leading-relaxed mb-6">
+                        Get ranked results with detailed compatibility breakdowns. Connect with confidence knowing you're matched with partners who share your trekking style and goals.
+                      </p>
+                      <div className="flex flex-wrap justify-center gap-4">
+                        <div className="px-4 py-2 rounded-lg bg-[hsl(var(--forest-green))]/10 border border-[hsl(var(--forest-green))]/20">
+                          <div className="text-2xl font-bold text-[hsl(var(--forest-green))]">85%+</div>
+                          <div className="text-xs text-muted-foreground">Perfect Match</div>
+                        </div>
+                        <div className="px-4 py-2 rounded-lg bg-[hsl(var(--himalayan-sky))]/10 border border-[hsl(var(--himalayan-sky))]/20">
+                          <div className="text-2xl font-bold text-[hsl(var(--himalayan-deep-blue))]">70%+</div>
+                          <div className="text-xs text-muted-foreground">Great Match</div>
+                        </div>
+                        <div className="px-4 py-2 rounded-lg bg-[hsl(var(--golden-amber))]/10 border border-[hsl(var(--golden-amber))]/20">
+                          <div className="text-2xl font-bold text-[hsl(var(--golden-amber))]">55%+</div>
+                          <div className="text-xs text-muted-foreground">Good Match</div>
+                        </div>
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
               </div>
@@ -408,58 +678,190 @@ const FindFriend = () => {
           </div>
         </section>
 
-        {/* Safety & Community Guidelines */}
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-3xl font-bold text-center mb-12">Safety & Community Guidelines</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Users className="h-5 w-5 text-primary" />
-                      Community Guidelines
-                    </CardTitle>
+        {/* Safety & Community Guidelines - Completely Redesigned */}
+        <section className="relative py-24 overflow-hidden bg-gradient-to-b from-background to-[hsl(var(--muted))]">
+          {/* Decorative background patterns */}
+          <div className="absolute inset-0 opacity-5">
+            <div className="absolute top-20 left-10 w-72 h-72 border-2 border-[hsl(var(--himalayan-deep-blue))] rounded-full"></div>
+            <div className="absolute bottom-20 right-10 w-96 h-96 border-2 border-[hsl(var(--forest-green))] rounded-full"></div>
+          </div>
+
+          <div className="container mx-auto px-4 relative z-10">
+            {/* Header */}
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[hsl(var(--terracotta))]/10 to-[hsl(var(--golden-amber))]/10 border border-[hsl(var(--terracotta))]/20 mb-6">
+                <div className="w-2 h-2 bg-[hsl(var(--terracotta))] rounded-full animate-pulse"></div>
+                <span className="text-sm font-bold text-[hsl(var(--terracotta))]">SAFE TREKKING COMMUNITY</span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
+                <span className="bg-gradient-to-r from-[hsl(var(--himalayan-deep-blue))] to-[hsl(var(--forest-green))] bg-clip-text text-transparent">
+                  Trek Safe, Trek Smart
+                </span>
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Our community thrives on respect, honesty, and safety. Follow these guidelines for the best trekking experience.
+              </p>
+            </div>
+
+            {/* Guidelines - Modern Card Layout */}
+            <div className="max-w-6xl mx-auto">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                {/* Community Guidelines */}
+                <Card className="relative overflow-hidden border-2 border-[hsl(var(--himalayan-deep-blue))]/20 bg-white shadow-xl hover:shadow-2xl hover:shadow-[hsl(var(--himalayan-deep-blue))]/10 transition-all duration-300 group">
+                  {/* Gradient accent bar */}
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[hsl(var(--himalayan-deep-blue))] to-[hsl(var(--forest-green))]"></div>
+
+                  <CardHeader className="pb-6">
+                    <div className="flex items-center gap-4">
+                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[hsl(var(--himalayan-deep-blue))] to-[hsl(var(--forest-green))] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <Users className="h-7 w-7 text-white" />
+                      </div>
+                      <div>
+                        <CardTitle className="text-2xl text-[hsl(var(--himalayan-deep-blue))]">Community Guidelines</CardTitle>
+                        <p className="text-sm text-muted-foreground mt-1">Building a respectful community</p>
+                      </div>
+                    </div>
                   </CardHeader>
-                  <CardContent className="space-y-3">
-                    <div className="flex items-start gap-2">
-                      <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-sm">Be respectful and kind to all community members</p>
+
+                  <CardContent className="space-y-4">
+                    <div className="flex items-start gap-4 group/item">
+                      <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-[hsl(var(--himalayan-sky))]/10 flex items-center justify-center group-hover/item:bg-[hsl(var(--himalayan-sky))]/20 transition-colors">
+                        <div className="w-2 h-2 bg-[hsl(var(--himalayan-deep-blue))] rounded-full"></div>
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-foreground mb-1">Be Respectful & Kind</h4>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          Treat all community members with respect, kindness, and understanding. Embrace diverse backgrounds and trekking styles.
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex items-start gap-2">
-                      <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-sm">Share accurate information about your experience level</p>
+
+                    <div className="flex items-start gap-4 group/item">
+                      <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-[hsl(var(--himalayan-sky))]/10 flex items-center justify-center group-hover/item:bg-[hsl(var(--himalayan-sky))]/20 transition-colors">
+                        <div className="w-2 h-2 bg-[hsl(var(--himalayan-deep-blue))] rounded-full"></div>
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-foreground mb-1">Share Accurate Information</h4>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          Be honest about your experience level, fitness, and trekking history. Accurate profiles lead to better matches.
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex items-start gap-2">
-                      <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-sm">Communicate clearly about trek expectations and costs</p>
+
+                    <div className="flex items-start gap-4 group/item">
+                      <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-[hsl(var(--himalayan-sky))]/10 flex items-center justify-center group-hover/item:bg-[hsl(var(--himalayan-sky))]/20 transition-colors">
+                        <div className="w-2 h-2 bg-[hsl(var(--himalayan-deep-blue))] rounded-full"></div>
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-foreground mb-1">Clear Communication</h4>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          Discuss trek expectations, costs, itinerary, and responsibilities clearly before committing to a trek together.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4 group/item">
+                      <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-[hsl(var(--himalayan-sky))]/10 flex items-center justify-center group-hover/item:bg-[hsl(var(--himalayan-sky))]/20 transition-colors">
+                        <div className="w-2 h-2 bg-[hsl(var(--himalayan-deep-blue))] rounded-full"></div>
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-foreground mb-1">Leave No Trace</h4>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          Respect nature and local communities. Practice responsible trekking and minimize your environmental impact.
+                        </p>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Mountain className="h-5 w-5 text-primary" />
-                      Safety First
-                    </CardTitle>
+                {/* Safety First */}
+                <Card className="relative overflow-hidden border-2 border-[hsl(var(--terracotta))]/20 bg-white shadow-xl hover:shadow-2xl hover:shadow-[hsl(var(--terracotta))]/10 transition-all duration-300 group">
+                  {/* Gradient accent bar */}
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[hsl(var(--terracotta))] to-[hsl(var(--golden-amber))]"></div>
+
+                  <CardHeader className="pb-6">
+                    <div className="flex items-center gap-4">
+                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[hsl(var(--terracotta))] to-[hsl(var(--golden-amber))] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <Mountain className="h-7 w-7 text-white" />
+                      </div>
+                      <div>
+                        <CardTitle className="text-2xl text-[hsl(var(--terracotta))]">Safety First</CardTitle>
+                        <p className="text-sm text-muted-foreground mt-1">Your safety is our priority</p>
+                      </div>
+                    </div>
                   </CardHeader>
-                  <CardContent className="space-y-3">
-                    <div className="flex items-start gap-2">
-                      <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-sm">Always meet in public places before trekking</p>
+
+                  <CardContent className="space-y-4">
+                    <div className="flex items-start gap-4 group/item">
+                      <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-[hsl(var(--terracotta))]/10 flex items-center justify-center group-hover/item:bg-[hsl(var(--terracotta))]/20 transition-colors">
+                        <div className="w-2 h-2 bg-[hsl(var(--terracotta))] rounded-full"></div>
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-foreground mb-1">Public Meetups First</h4>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          Always meet potential trek partners in public places before heading to the mountains. Coffee shops, gear stores, or trekking offices are great options.
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex items-start gap-2">
-                      <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-sm">Share your trek plans with trusted contacts</p>
+
+                    <div className="flex items-start gap-4 group/item">
+                      <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-[hsl(var(--terracotta))]/10 flex items-center justify-center group-hover/item:bg-[hsl(var(--terracotta))]/20 transition-colors">
+                        <div className="w-2 h-2 bg-[hsl(var(--terracotta))] rounded-full"></div>
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-foreground mb-1">Share Your Plans</h4>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          Inform trusted contacts about your trek itinerary, partner details, and expected return date. Register with local authorities when required.
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex items-start gap-2">
-                      <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                      <p className="text-sm">Trust your instincts and prioritize your safety</p>
+
+                    <div className="flex items-start gap-4 group/item">
+                      <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-[hsl(var(--terracotta))]/10 flex items-center justify-center group-hover/item:bg-[hsl(var(--terracotta))]/20 transition-colors">
+                        <div className="w-2 h-2 bg-[hsl(var(--terracotta))] rounded-full"></div>
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-foreground mb-1">Trust Your Instincts</h4>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          If something feels off, trust your gut. It's okay to decline or postpone a trek. Your safety and comfort always come first.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4 group/item">
+                      <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-[hsl(var(--terracotta))]/10 flex items-center justify-center group-hover/item:bg-[hsl(var(--terracotta))]/20 transition-colors">
+                        <div className="w-2 h-2 bg-[hsl(var(--terracotta))] rounded-full"></div>
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-foreground mb-1">Emergency Preparedness</h4>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          Carry emergency contacts, first aid kit, and have a backup plan. Know the nearest medical facilities and rescue protocols.
+                        </p>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
               </div>
+
+              {/* Bottom CTA Card */}
+              <Card className="border-2 border-[hsl(var(--forest-green))]/20 bg-gradient-to-br from-[hsl(var(--himalayan-sky))]/5 to-[hsl(var(--forest-green))]/5 shadow-xl">
+                <CardContent className="p-8">
+                  <div className="flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
+                    <div className="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-[hsl(var(--forest-green))] to-[hsl(var(--himalayan-deep-blue))] flex items-center justify-center shadow-lg">
+                      <Star className="h-8 w-8 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold mb-2 text-foreground">Need Help or Want to Report an Issue?</h3>
+                      <p className="text-muted-foreground">
+                        Our support team is here to help. Contact us if you experience any problems or have concerns about community safety.
+                      </p>
+                    </div>
+                    <Button className="flex-shrink-0 bg-gradient-to-r from-[hsl(var(--himalayan-deep-blue))] to-[hsl(var(--forest-green))] hover:shadow-lg text-white font-bold px-8 py-6 text-lg">
+                      Contact Support
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>

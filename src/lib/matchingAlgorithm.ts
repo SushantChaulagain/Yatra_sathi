@@ -61,14 +61,116 @@ export class SophisticatedMatchingAlgorithm {
   ): MatchResult[] {
     const weights = { ...this.defaultWeights, ...customWeights };
     const preferences = userPreferences || this.generateDefaultPreferences(currentUser);
-    
+
     const matches = allUsers
       .filter(user => user.userId !== currentUser.userId)
-      .map(user => this.calculateCompatibility(currentUser, user, preferences, weights))
+      // Apply dealbreaker filters
+      .filter(user => this.passesDealbreakerFilters(user, preferences))
+      .map(user => {
+        let match = this.calculateCompatibility(currentUser, user, preferences, weights);
+
+        // Apply profile completeness boost
+        const completenessBoost = this.calculateProfileCompletenessBoost(user);
+        match.compatibilityScore = Math.min(1.0, match.compatibilityScore * (1 + completenessBoost));
+
+        // Apply mutual interest boost
+        const mutualMatch = this.calculateCompatibility(user, currentUser, preferences, weights);
+        if (mutualMatch.compatibilityScore >= 0.7) {
+          match.compatibilityScore = Math.min(1.0, match.compatibilityScore * 1.1);
+          match.reasoning.push('🔄 High mutual compatibility');
+        }
+
+        // Apply active user boost
+        const activeBoost = this.calculateActiveUserBoost(user);
+        if (activeBoost > 0) {
+          match.compatibilityScore = Math.min(1.0, match.compatibilityScore * (1 + activeBoost));
+          if (activeBoost >= 0.05) {
+            match.reasoning.push('✨ Recently active user');
+          }
+        }
+
+        return match;
+      })
       .filter(match => match.compatibilityScore >= 0.3) // Minimum 30% compatibility
       .sort((a, b) => b.compatibilityScore - a.compatibilityScore);
 
     return matches;
+  }
+
+  /**
+   * Check if a user passes dealbreaker filters
+   */
+  private passesDealbreakerFilters(user: UserProfile, preferences: UserPreferences): boolean {
+    // Dealbreaker interests - must have at least one
+    if (preferences.dealBreakerInterests.length > 0) {
+      const userInterests = user.interests.map(i => i.toLowerCase());
+      const hasDealbreaker = preferences.dealBreakerInterests.some(interest =>
+        userInterests.includes(interest.toLowerCase())
+      );
+      if (!hasDealbreaker) return false;
+    }
+
+    // Avoid interests - must not have any
+    if (preferences.avoidInterests.length > 0) {
+      const userInterests = user.interests.map(i => i.toLowerCase());
+      const hasAvoided = preferences.avoidInterests.some(interest =>
+        userInterests.includes(interest.toLowerCase())
+      );
+      if (hasAvoided) return false;
+    }
+
+    // Age range dealbreaker
+    if (user.age < preferences.preferredAgeRange.min ||
+        user.age > preferences.preferredAgeRange.max) {
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * Calculate profile completeness boost (0 to 0.1 boost)
+   */
+  private calculateProfileCompletenessBoost(user: UserProfile): number {
+    let completeness = 0;
+    const maxFields = 10;
+
+    if (user.bio && user.bio.length > 20) completeness++;
+    if (user.interests && user.interests.length >= 3) completeness++;
+    if (user.languages && user.languages.length >= 2) completeness++;
+    if (user.completedTreks > 0) completeness++;
+    if (user.avatar) completeness++;
+    if (user.experience) completeness++;
+    if (user.location) completeness++;
+    if (user.availability) completeness++;
+    if (user.nextTrek) completeness++;
+    if (user.name && user.name.length > 3) completeness++;
+
+    // Returns 0 to 0.1 (10% max boost for complete profiles)
+    return (completeness / maxFields) * 0.1;
+  }
+
+  /**
+   * Calculate active user boost (0 to 0.08 boost based on recency)
+   * Prioritizes users who have been active recently
+   */
+  private calculateActiveUserBoost(user: UserProfile): number {
+    if (!user.lastActive) return 0;
+
+    const now = new Date().getTime();
+    const lastActive = new Date(user.lastActive).getTime();
+    const daysSinceActive = (now - lastActive) / (1000 * 60 * 60 * 24);
+
+    // Boost based on recency:
+    // Last 7 days: 8% boost
+    // Last 14 days: 5% boost
+    // Last 30 days: 3% boost
+    // Older: no boost
+    if (daysSinceActive <= 7) return 0.08;
+    if (daysSinceActive <= 14) return 0.05;
+    if (daysSinceActive <= 30) return 0.03;
+
+    return 0;
   }
 
   /**
@@ -169,36 +271,70 @@ export class SophisticatedMatchingAlgorithm {
 
   /**
    * Location compatibility - same city = perfect, same region = good
+   * Enhanced with better regional grouping and proximity scoring
    */
   private calculateLocationCompatibility(
     user1: UserProfile,
     user2: UserProfile,
     preferences: UserPreferences
   ): number {
-    if (user1.location.toLowerCase() === user2.location.toLowerCase()) {
-      return 1.0; // Same city
+    const loc1 = user1.location.toLowerCase();
+    const loc2 = user2.location.toLowerCase();
+
+    if (loc1 === loc2) {
+      return 1.0; // Same city - perfect for meetups
     }
-    
-    // Define regional groups
+
+    // Enhanced regional groups for Nepal with more cities
     const regions = {
-      central: ['kathmandu', 'lalitpur', 'bhaktapur'],
-      western: ['pokhara', 'butwal'],
-      eastern: ['biratnagar', 'dharan', 'itahari'],
-      southern: ['birgunj', 'janakpur', 'hetauda']
+      kathmandu_valley: ['kathmandu', 'lalitpur', 'bhaktapur', 'kirtipur', 'madhyapur thimi'],
+      western_mountains: ['pokhara', 'mustang', 'jomsom', 'beni'],
+      western_plains: ['butwal', 'bhairahawa', 'tansen', 'nepalgunj'],
+      eastern_mountains: ['lukla', 'namche bazaar', 'salleri', 'tumlingtar'],
+      eastern_cities: ['biratnagar', 'dharan', 'itahari', 'damak'],
+      southern_plains: ['birgunj', 'janakpur', 'hetauda', 'bharatpur'],
+      mid_western: ['dang', 'surkhet', 'dailekh'],
+      far_western: ['dhangadhi', 'mahendranagar', 'dadeldhura']
     };
-    
+
+    // Trek starting points are special - nearby for coordination
+    const trekHubs = ['pokhara', 'kathmandu', 'lukla', 'jomsom', 'besisahar'];
+    const bothInTrekHub = trekHubs.includes(loc1) && trekHubs.includes(loc2);
+    if (bothInTrekHub) {
+      return 0.85; // Trek hubs are well-connected
+    }
+
     const getUserRegion = (location: string) => {
-      const loc = location.toLowerCase();
       for (const [region, cities] of Object.entries(regions)) {
-        if (cities.includes(loc)) return region;
+        if (cities.some(city => location.includes(city) || city.includes(location))) {
+          return region;
+        }
       }
       return 'other';
     };
-    
-    const region1 = getUserRegion(user1.location);
-    const region2 = getUserRegion(user2.location);
-    
-    return region1 === region2 ? 0.7 : 0.3; // Same region = 0.7, different = 0.3
+
+    const region1 = getUserRegion(loc1);
+    const region2 = getUserRegion(loc2);
+
+    // Same region - easy to coordinate
+    if (region1 === region2 && region1 !== 'other') {
+      return 0.75;
+    }
+
+    // Adjacent regions get slight boost
+    const adjacentRegions = {
+      'kathmandu_valley': ['western_mountains', 'eastern_cities'],
+      'western_mountains': ['kathmandu_valley', 'western_plains'],
+      'eastern_cities': ['kathmandu_valley', 'eastern_mountains'],
+    };
+
+    if (adjacentRegions[region1]?.includes(region2) ||
+        adjacentRegions[region2]?.includes(region1)) {
+      return 0.5;
+    }
+
+    // Different regions - still possible but requires more coordination
+    return 0.3;
   }
 
   /**

@@ -13,6 +13,7 @@ export interface UserProfile {
   userId: string;
   avatar?: string;
   createdAt: string;
+  lastActive?: string; // ISO timestamp of last activity
 }
 
 const PROFILES_KEY = 'trekker_profiles';
@@ -40,12 +41,13 @@ export const profileStorage = {
     try {
       const profiles = this.getAllProfiles();
       const existingIndex = profiles.findIndex(p => p.userId === profile.userId);
-      
+
       const profileWithDefaults = {
         ...profile,
         id: profile.id || this.generateId(),
         avatar: profile.avatar || this.generateAvatar(),
-        createdAt: profile.createdAt || new Date().toISOString()
+        createdAt: profile.createdAt || new Date().toISOString(),
+        lastActive: new Date().toISOString() // Always update last active time
       };
 
       if (existingIndex >= 0) {
@@ -60,6 +62,21 @@ export const profileStorage = {
     } catch (error) {
       console.error('Error saving profile:', error);
       throw new Error('Failed to save profile');
+    }
+  },
+
+  // Update user's last active timestamp
+  updateLastActive(userId: string): void {
+    try {
+      const profiles = this.getAllProfiles();
+      const existingIndex = profiles.findIndex(p => p.userId === userId);
+
+      if (existingIndex >= 0) {
+        profiles[existingIndex].lastActive = new Date().toISOString();
+        localStorage.setItem(PROFILES_KEY, JSON.stringify(profiles));
+      }
+    } catch (error) {
+      console.error('Error updating last active:', error);
     }
   },
 

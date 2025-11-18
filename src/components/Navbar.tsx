@@ -50,50 +50,51 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/50">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-lg border-b border-[hsl(var(--border))] shadow-sm">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between py-4">
           {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <Mountain className="h-5 w-5 text-primary-foreground" />
+          <div className="flex items-center space-x-3 group cursor-pointer" onClick={() => window.location.href = '/'}>
+            <div className="w-10 h-10 bg-gradient-to-br from-[hsl(var(--himalayan-deep-blue))] to-[hsl(var(--forest-green))] rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all duration-300">
+              <Mountain className="h-6 w-6 text-white" />
             </div>
-            <span className="text-xl font-bold text-foreground">
-              Yatra <span className="text-primary">Sathi</span>
+            <span className="text-2xl font-extrabold tracking-tight">
+              <span className="text-[hsl(var(--himalayan-deep-blue))]">Yatra</span>
+              <span className="text-[hsl(var(--forest-green))]"> Sathi</span>
             </span>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <a href="/" className="text-foreground hover:text-primary transition-colors font-medium">
+          <div className="hidden md:flex items-center space-x-1">
+            <a href="/" className="px-4 py-2 rounded-lg text-foreground hover:text-[hsl(var(--himalayan-deep-blue))] hover:bg-[hsl(var(--himalayan-sky))]/10 transition-all duration-200 font-semibold">
               Home
             </a>
-            <a href="/treks" className="text-foreground hover:text-primary transition-colors font-medium">
+            <a href="/treks" className="px-4 py-2 rounded-lg text-foreground hover:text-[hsl(var(--himalayan-deep-blue))] hover:bg-[hsl(var(--himalayan-sky))]/10 transition-all duration-200 font-semibold">
               Treks
             </a>
-            <a href="/find-a-sathi" className="text-foreground hover:text-primary transition-colors font-medium">
-              Find a friend
+            <a href="/find-a-sathi" className="px-4 py-2 rounded-lg text-foreground hover:text-[hsl(var(--himalayan-deep-blue))] hover:bg-[hsl(var(--himalayan-sky))]/10 transition-all duration-200 font-semibold">
+              Find a Friend
             </a>
-            <a href="/about" className="text-foreground hover:text-primary transition-colors font-medium">
+            <a href="/about" className="px-4 py-2 rounded-lg text-foreground hover:text-[hsl(var(--himalayan-deep-blue))] hover:bg-[hsl(var(--himalayan-sky))]/10 transition-all duration-200 font-semibold">
               About
             </a>
           </div>
 
           {/* Desktop CTA */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden md:flex items-center space-x-3">
             {user ? (
               <>
-                <Button 
-                  variant="ghost" 
-                  className="text-foreground hover:text-primary" 
+                <Button
+                  variant="ghost"
+                  className="text-foreground hover:text-[hsl(var(--himalayan-deep-blue))] hover:bg-[hsl(var(--himalayan-sky))]/10 font-semibold"
                   onClick={() => window.location.href = '/profile'}
                 >
                   <User className="h-4 w-4 mr-2" />
                   Profile
                 </Button>
-                <Button 
-                  variant="ghost" 
-                  className="text-foreground hover:text-primary" 
+                <Button
+                  variant="ghost"
+                  className="text-foreground hover:text-[hsl(var(--terracotta))] hover:bg-[hsl(var(--terracotta))]/10 font-semibold"
                   onClick={handleSignOut}
                 >
                   <LogOut className="h-4 w-4 mr-2" />
@@ -102,10 +103,17 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <Button variant="ghost" className="text-foreground hover:text-primary" onClick={() => window.location.href = '/auth'}>
+                <Button
+                  variant="ghost"
+                  className="text-foreground hover:text-[hsl(var(--himalayan-deep-blue))] hover:bg-[hsl(var(--himalayan-sky))]/10 font-semibold"
+                  onClick={() => window.location.href = '/auth'}
+                >
                   Sign In
                 </Button>
-                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground" onClick={() => window.location.href = '/auth'}>
+                <Button
+                  className="bg-gradient-to-r from-[hsl(var(--himalayan-deep-blue))] to-[hsl(var(--forest-green))] hover:shadow-lg hover:shadow-[hsl(var(--himalayan-deep-blue))]/30 text-white font-bold rounded-lg transition-all duration-300 hover:scale-105"
+                  onClick={() => window.location.href = '/auth'}
+                >
                   Join Now
                 </Button>
               </>
@@ -115,7 +123,7 @@ const Navbar = () => {
           {/* Mobile menu button */}
           <button
             onClick={toggleMenu}
-            className="md:hidden p-2 rounded-lg hover:bg-muted transition-colors"
+            className="md:hidden p-2 rounded-lg hover:bg-[hsl(var(--muted))] transition-colors"
           >
             {isOpen ? (
               <X className="h-6 w-6 text-foreground" />
@@ -127,42 +135,42 @@ const Navbar = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden absolute top-16 left-0 right-0 bg-background/95 backdrop-blur-md border-b border-border/50">
-            <div className="px-4 py-6 space-y-4">
+          <div className="md:hidden absolute top-full left-0 right-0 bg-background/98 backdrop-blur-lg border-b border-[hsl(var(--border))] shadow-lg">
+            <div className="px-4 py-6 space-y-2">
               <a
                 href="/"
-                className="block text-foreground hover:text-primary transition-colors font-medium py-2"
+                className="block px-4 py-3 rounded-lg text-foreground hover:text-[hsl(var(--himalayan-deep-blue))] hover:bg-[hsl(var(--himalayan-sky))]/10 transition-all font-semibold"
                 onClick={toggleMenu}
               >
                 Home
               </a>
               <a
                 href="/treks"
-                className="block text-foreground hover:text-primary transition-colors font-medium py-2"
+                className="block px-4 py-3 rounded-lg text-foreground hover:text-[hsl(var(--himalayan-deep-blue))] hover:bg-[hsl(var(--himalayan-sky))]/10 transition-all font-semibold"
                 onClick={toggleMenu}
               >
                 Treks
               </a>
               <a
                 href="/find-a-sathi"
-                className="block text-foreground hover:text-primary transition-colors font-medium py-2"
+                className="block px-4 py-3 rounded-lg text-foreground hover:text-[hsl(var(--himalayan-deep-blue))] hover:bg-[hsl(var(--himalayan-sky))]/10 transition-all font-semibold"
                 onClick={toggleMenu}
               >
-                Find a friend
+                Find a Friend
               </a>
               <a
                 href="/about"
-                className="block text-foreground hover:text-primary transition-colors font-medium py-2"
+                className="block px-4 py-3 rounded-lg text-foreground hover:text-[hsl(var(--himalayan-deep-blue))] hover:bg-[hsl(var(--himalayan-sky))]/10 transition-all font-semibold"
                 onClick={toggleMenu}
               >
                 About
               </a>
-              <div className="pt-4 space-y-3 border-t border-border/50">
+              <div className="pt-4 space-y-2 border-t border-[hsl(var(--border))]">
                 {user ? (
                   <>
-                    <Button 
-                      variant="ghost" 
-                      className="w-full justify-start text-foreground hover:text-primary" 
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start text-foreground hover:text-[hsl(var(--himalayan-deep-blue))] hover:bg-[hsl(var(--himalayan-sky))]/10 font-semibold"
                       onClick={() => {
                         window.location.href = '/profile';
                         toggleMenu();
@@ -171,9 +179,9 @@ const Navbar = () => {
                       <User className="h-4 w-4 mr-2" />
                       Profile
                     </Button>
-                    <Button 
-                      variant="ghost" 
-                      className="w-full justify-start text-foreground hover:text-primary" 
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start text-foreground hover:text-[hsl(var(--terracotta))] hover:bg-[hsl(var(--terracotta))]/10 font-semibold"
                       onClick={() => {
                         handleSignOut();
                         toggleMenu();
@@ -185,10 +193,17 @@ const Navbar = () => {
                   </>
                 ) : (
                   <>
-                    <Button variant="ghost" className="w-full justify-start text-foreground hover:text-primary" onClick={() => window.location.href = '/auth'}>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start text-foreground hover:text-[hsl(var(--himalayan-deep-blue))] hover:bg-[hsl(var(--himalayan-sky))]/10 font-semibold"
+                      onClick={() => window.location.href = '/auth'}
+                    >
                       Sign In
                     </Button>
-                    <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground" onClick={() => window.location.href = '/auth'}>
+                    <Button
+                      className="w-full bg-gradient-to-r from-[hsl(var(--himalayan-deep-blue))] to-[hsl(var(--forest-green))] hover:shadow-lg text-white font-bold"
+                      onClick={() => window.location.href = '/auth'}
+                    >
                       Join Now
                     </Button>
                   </>
