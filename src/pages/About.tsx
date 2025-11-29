@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, Mountain, Users, Shield } from "lucide-react";
+import { Mail, Phone, MapPin, Facebook, Instagram, Twitter, Mountain, Users, Shield, Heart } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
