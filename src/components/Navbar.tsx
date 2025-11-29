@@ -1,13 +1,16 @@
 import { Button } from "@/components/ui/button";
-import { Mountain, Menu, X, User, LogOut } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Mountain, Menu, X, User, LogOut, MessageCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { messaging } from "@/lib/messaging";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState<SupabaseUser | null>(null);
+  const [unreadCount, setUnreadCount] = useState(0);
   const { toast } = useToast();
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -30,6 +33,32 @@ const Navbar = () => {
 
     return () => subscription.unsubscribe();
   }, []);
+
+  // Load unread count when user is logged in
+  useEffect(() => {
+    if (!user) {
+      setUnreadCount(0);
+      return;
+    }
+
+    const loadUnreadCount = async () => {
+      const count = await messaging.getUnreadCount();
+      setUnreadCount(count);
+    };
+
+    loadUnreadCount();
+
+    // Refresh unread count every 30 seconds
+    const interval = setInterval(loadUnreadCount, 30000);
+
+    // Subscribe to conversation updates to refresh count
+    const unsubscribe = messaging.subscribeToConversations(loadUnreadCount);
+
+    return () => {
+      clearInterval(interval);
+      unsubscribe();
+    };
+  }, [user]);
 
   const handleSignOut = async () => {
     try {
@@ -84,6 +113,19 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-3">
             {user ? (
               <>
+                <Button
+                  variant="ghost"
+                  className="text-foreground hover:text-[hsl(var(--himalayan-deep-blue))] hover:bg-[hsl(var(--himalayan-sky))]/10 font-semibold relative"
+                  onClick={() => window.location.href = '/messages'}
+                >
+                  <MessageCircle className="h-4 w-4 mr-2" />
+                  Messages
+                  {unreadCount > 0 && (
+                    <Badge className="ml-2 bg-[hsl(var(--terracotta))] text-white text-xs px-1.5 py-0 min-w-[20px] h-5">
+                      {unreadCount > 9 ? '9+' : unreadCount}
+                    </Badge>
+                  )}
+                </Button>
                 <Button
                   variant="ghost"
                   className="text-foreground hover:text-[hsl(var(--himalayan-deep-blue))] hover:bg-[hsl(var(--himalayan-sky))]/10 font-semibold"
@@ -168,6 +210,22 @@ const Navbar = () => {
               <div className="pt-4 space-y-2 border-t border-[hsl(var(--border))]">
                 {user ? (
                   <>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start text-foreground hover:text-[hsl(var(--himalayan-deep-blue))] hover:bg-[hsl(var(--himalayan-sky))]/10 font-semibold relative"
+                      onClick={() => {
+                        window.location.href = '/messages';
+                        toggleMenu();
+                      }}
+                    >
+                      <MessageCircle className="h-4 w-4 mr-2" />
+                      Messages
+                      {unreadCount > 0 && (
+                        <Badge className="ml-auto bg-[hsl(var(--terracotta))] text-white text-xs px-1.5 py-0 min-w-[20px] h-5">
+                          {unreadCount > 9 ? '9+' : unreadCount}
+                        </Badge>
+                      )}
+                    </Button>
                     <Button
                       variant="ghost"
                       className="w-full justify-start text-foreground hover:text-[hsl(var(--himalayan-deep-blue))] hover:bg-[hsl(var(--himalayan-sky))]/10 font-semibold"

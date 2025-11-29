@@ -14,6 +14,69 @@ export type Database = {
   }
   public: {
     Tables: {
+      conversations: {
+        Row: {
+          id: string
+          user1_id: string
+          user2_id: string
+          last_message: string | null
+          last_message_at: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user1_id: string
+          user2_id: string
+          last_message?: string | null
+          last_message_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user1_id?: string
+          user2_id?: string
+          last_message?: string | null
+          last_message_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      messages: {
+        Row: {
+          id: string
+          conversation_id: string
+          sender_id: string
+          content: string
+          is_read: boolean
+          read_at: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          conversation_id: string
+          sender_id: string
+          content: string
+          is_read?: boolean
+          read_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          conversation_id?: string
+          sender_id?: string
+          content?: string
+          is_read?: boolean
+          read_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           age: number | null
@@ -79,7 +142,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_or_create_conversation: {
+        Args: { other_user_id: string }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never

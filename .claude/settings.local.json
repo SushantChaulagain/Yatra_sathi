@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx supabase db push)"
+      "Bash(npx supabase db push)",
+      "Bash(del \"D:\\Yatra_sathi\\public\\apple-touch-icon.png\")"
     ],
     "deny": [],
     "ask": []

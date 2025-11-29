@@ -1,14 +1,12 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Mountain, 
-  Users, 
-  Shield, 
-  Camera, 
-  MapPin, 
+import {
+  Mountain,
+  Users,
+  Camera,
+  MapPin,
   Calendar,
-  Star,
-  Heart
+  Star
 } from "lucide-react";
 
 const features = [

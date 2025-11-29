@@ -10,6 +10,8 @@ import Profile from "./pages/Profile";
 import About from "./pages/About";
 import Auth from "./pages/Auth";
 import AuthCallback from "./pages/AuthCallback";
+import Messages from "./pages/Messages";
+import Chat from "./pages/Chat";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +30,8 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route path="/messages" element={<Messages />} />
+          <Route path="/chat/:conversationId" element={<Chat />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

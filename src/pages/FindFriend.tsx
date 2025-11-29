@@ -23,6 +23,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { profileStorage, UserProfile } from "@/lib/profileStorage";
 import { matchingAlgorithm, MatchResult, MatchingWeights } from "@/lib/matchingAlgorithm";
+import { messaging } from "@/lib/messaging";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -130,11 +131,26 @@ const FindFriend = () => {
     }
   };
 
+  // Handle message button click - create conversation and navigate to chat
+  const handleMessageClick = async (otherUserId: string) => {
+    try {
+      const conversationId = await messaging.getOrCreateConversation(otherUserId);
+      navigate(`/chat/${conversationId}`);
+    } catch (error) {
+      console.error('Error creating conversation:', error);
+      toast({
+        title: "Error",
+        description: "Failed to start conversation. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   // Filter matches based on search term only (algorithm handles the rest)
   const filteredMatches = matches.filter(match => {
     const trekker = match.profile;
     if (!searchTerm) return true;
-    
+
     return trekker.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
            trekker.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
            trekker.nextTrek.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -481,6 +497,7 @@ const FindFriend = () => {
                     <div className="flex gap-2 pt-2">
                       <Button
                         size="sm"
+                        onClick={() => handleMessageClick(trekker.userId)}
                         className="flex-1 bg-gradient-to-r from-[hsl(var(--himalayan-deep-blue))] to-[hsl(var(--forest-green))] hover:shadow-lg hover:shadow-[hsl(var(--himalayan-deep-blue))]/30 text-white font-bold transition-all duration-300 hover:scale-[1.02]"
                       >
                         <MessageCircle className="h-3.5 w-3.5 mr-1.5" />
