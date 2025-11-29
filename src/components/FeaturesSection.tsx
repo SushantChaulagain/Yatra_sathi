@@ -3,10 +3,12 @@ import { Badge } from "@/components/ui/badge";
 import {
   Mountain,
   Users,
+  Shield,
   Camera,
   MapPin,
   Calendar,
-  Star
+  Star,
+  Heart
 } from "lucide-react";
 
 const features = [
