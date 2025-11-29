@@ -38,10 +38,10 @@ const FindFriend = () => {
   const algorithmWeights: MatchingWeights = {
     interests: 0.30,
     experience: 0.25,
-    location: 0.15,
     availability: 0.15,
+    location: 0.10,     // Reduced from 15%
     languages: 0.10,
-    age: 0.05
+    age: 0.10          // Increased from 5%
   };
 
   useEffect(() => {
@@ -51,17 +51,17 @@ const FindFriend = () => {
   const checkAuthAndLoadProfiles = async () => {
     try {
       const { data: { session } } = await supabase.auth.getSession();
-      
+
       if (!session?.user) {
         navigate('/auth');
         return;
       }
 
       setUser(session.user);
-      
-      // Get current user's profile
-      const userProfile = profileStorage.getCurrentUserProfile(session.user.id);
-      
+
+      // Get current user's profile (now async!)
+      const userProfile = await profileStorage.getCurrentUserProfile(session.user.id);
+
       if (!userProfile) {
         toast({
           title: "Profile Required",
@@ -72,16 +72,22 @@ const FindFriend = () => {
       }
 
       setCurrentUserProfile(userProfile);
-      
-      // Initialize sample data if no profiles exist
-      profileStorage.initializeSampleData();
-      
+
+      // Update last active timestamp
+      await profileStorage.updateLastActive(session.user.id);
+
+      // Get ALL profiles from database (real users only!)
+      const allProfiles = await profileStorage.getAllProfiles();
+      console.log('📊 Total profiles in database:', allProfiles.length);
+      console.log('👤 Current user:', userProfile.name, userProfile.age, 'years old');
+      console.log('👥 All real users:', allProfiles.map(p => ({ name: p.name, age: p.age, userId: p.userId })));
+
       // Calculate compatibility matches using the sophisticated algorithm
       // Generate smart defaults based on user's profile
       const smartPreferences = {
-        preferredAgeRange: { 
-          min: Math.max(18, userProfile.age - 10), 
-          max: Math.min(70, userProfile.age + 10) 
+        preferredAgeRange: {
+          min: Math.max(18, userProfile.age - 15),
+          max: Math.min(70, userProfile.age + 15)
         },
         preferredExperienceLevels: [userProfile.experience],
         preferredLocations: [userProfile.location],
@@ -94,15 +100,24 @@ const FindFriend = () => {
         budgetRange: 'any' as const
       };
 
+      console.log('⚙️ Age range filter:', smartPreferences.preferredAgeRange);
+
       const compatibilityMatches = matchingAlgorithm.findMatches(
         userProfile,
-        profileStorage.getAllProfiles(),
+        allProfiles,
         smartPreferences,
         algorithmWeights
       );
-      
+
+      console.log('✅ Matches found:', compatibilityMatches.length);
+      console.log('🎯 Match details:', compatibilityMatches.map(m => ({
+        name: m.profile.name,
+        score: Math.round(m.compatibilityScore * 100) + '%',
+        type: m.matchType
+      })));
+
       setMatches(compatibilityMatches);
-      
+
     } catch (error) {
       console.error('Error loading profiles:', error);
       toast({

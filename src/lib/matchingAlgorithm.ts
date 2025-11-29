@@ -44,10 +44,10 @@ export class SophisticatedMatchingAlgorithm {
   private defaultWeights: MatchingWeights = {
     interests: 0.30,    // 30% - Most important for trekking compatibility
     experience: 0.25,   // 25% - Safety and pace compatibility
-    location: 0.15,     // 15% - Convenience factor
     availability: 0.15, // 15% - Timing alignment
+    location: 0.10,     // 10% - Convenience factor (reduced from 15%)
     languages: 0.10,    // 10% - Communication
-    age: 0.05          // 5% - Least important, but can matter for energy levels
+    age: 0.10          // 10% - Social compatibility (increased from 5%)
   };
 
   /**
@@ -62,10 +62,23 @@ export class SophisticatedMatchingAlgorithm {
     const weights = { ...this.defaultWeights, ...customWeights };
     const preferences = userPreferences || this.generateDefaultPreferences(currentUser);
 
-    const matches = allUsers
-      .filter(user => user.userId !== currentUser.userId)
-      // Apply dealbreaker filters
-      .filter(user => this.passesDealbreakerFilters(user, preferences))
+    console.log('🔍 Starting match search...');
+    console.log('   Total users:', allUsers.length);
+
+    const afterUserIdFilter = allUsers.filter(user => user.userId !== currentUser.userId);
+    console.log('   After removing current user:', afterUserIdFilter.length);
+
+    const afterDealbreakerFilter = afterUserIdFilter.filter(user => this.passesDealbreakerFilters(user, preferences));
+    console.log('   After dealbreaker filters (age range etc):', afterDealbreakerFilter.length);
+    if (afterDealbreakerFilter.length < afterUserIdFilter.length) {
+      console.log('   ⚠️ Some users filtered out by age range:', preferences.preferredAgeRange);
+      console.log('   Filtered users:', afterUserIdFilter
+        .filter(u => !afterDealbreakerFilter.includes(u))
+        .map(u => ({ name: u.name, age: u.age }))
+      );
+    }
+
+    const matches = afterDealbreakerFilter
       .map(user => {
         let match = this.calculateCompatibility(currentUser, user, preferences, weights);
 
@@ -90,11 +103,21 @@ export class SophisticatedMatchingAlgorithm {
         }
 
         return match;
-      })
-      .filter(match => match.compatibilityScore >= 0.3) // Minimum 30% compatibility
+      });
+
+    console.log('   Before compatibility threshold:', matches.length);
+    console.log('   Compatibility scores:', matches.map(m => ({
+      name: m.profile.name,
+      score: Math.round(m.compatibilityScore * 100) + '%'
+    })));
+
+    const filteredMatches = matches
+      .filter(match => match.compatibilityScore >= 0.2) // Minimum 20% compatibility (lowered from 30%)
       .sort((a, b) => b.compatibilityScore - a.compatibilityScore);
 
-    return matches;
+    console.log('   After 20% compatibility filter:', filteredMatches.length);
+
+    return filteredMatches;
   }
 
   /**
@@ -457,9 +480,9 @@ export class SophisticatedMatchingAlgorithm {
    */
   private generateDefaultPreferences(user: UserProfile): UserPreferences {
     return {
-      preferredAgeRange: { 
-        min: Math.max(18, user.age - 10), 
-        max: Math.min(70, user.age + 10) 
+      preferredAgeRange: {
+        min: Math.max(18, user.age - 15),
+        max: Math.min(70, user.age + 15)
       },
       preferredExperienceLevels: [user.experience],
       preferredLocations: [user.location],

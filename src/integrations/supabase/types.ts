@@ -16,31 +16,58 @@ export type Database = {
     Tables: {
       profiles: {
         Row: {
+          age: number | null
           avatar_url: string | null
+          availability: string | null
           bio: string | null
+          completed_treks: number | null
           created_at: string
+          experience: string | null
           full_name: string | null
           id: string
+          interests: string[] | null
+          languages: string[] | null
+          last_active: string | null
+          location: string | null
+          next_trek: string | null
           travel_preferences: string[] | null
           updated_at: string
           user_id: string
         }
         Insert: {
+          age?: number | null
           avatar_url?: string | null
+          availability?: string | null
           bio?: string | null
+          completed_treks?: number | null
           created_at?: string
+          experience?: string | null
           full_name?: string | null
           id?: string
+          interests?: string[] | null
+          languages?: string[] | null
+          last_active?: string | null
+          location?: string | null
+          next_trek?: string | null
           travel_preferences?: string[] | null
           updated_at?: string
           user_id: string
         }
         Update: {
+          age?: number | null
           avatar_url?: string | null
+          availability?: string | null
           bio?: string | null
+          completed_treks?: number | null
           created_at?: string
+          experience?: string | null
           full_name?: string | null
           id?: string
+          interests?: string[] | null
+          languages?: string[] | null
+          last_active?: string | null
+          location?: string | null
+          next_trek?: string | null
           travel_preferences?: string[] | null
           updated_at?: string
           user_id?: string

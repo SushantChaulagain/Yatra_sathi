@@ -25,18 +25,18 @@ const Profile = () => {
   const checkAuth = async () => {
     try {
       const { data: { session } } = await supabase.auth.getSession();
-      
+
       if (!session?.user) {
         navigate('/auth');
         return;
       }
 
       setUser(session.user);
-      
-      // Check if user has a profile
-      const existingProfile = profileStorage.getCurrentUserProfile(session.user.id);
+
+      // Check if user has a profile (now async!)
+      const existingProfile = await profileStorage.getCurrentUserProfile(session.user.id);
       setUserProfile(existingProfile);
-      
+
       // If no profile exists, start in editing mode
       if (!existingProfile) {
         setIsEditing(true);
@@ -53,22 +53,23 @@ const Profile = () => {
     }
   };
 
-  const handleProfileSubmit = (profileData: UserProfile) => {
+  const handleProfileSubmit = async (profileData: UserProfile) => {
     try {
-      profileStorage.saveProfile({
+      // Save profile to Supabase database
+      await profileStorage.saveProfile({
         ...profileData,
         userId: user.id
       });
-      
+
       // Refresh the profile data
-      const updatedProfile = profileStorage.getCurrentUserProfile(user.id);
+      const updatedProfile = await profileStorage.getCurrentUserProfile(user.id);
       setUserProfile(updatedProfile);
       setIsEditing(false);
-      
+
       toast({
         title: userProfile ? "Profile updated!" : "Profile created!",
-        description: userProfile 
-          ? "Your profile has been updated successfully." 
+        description: userProfile
+          ? "Your profile has been updated successfully."
           : "Welcome to the community! You can now find trek partners.",
       });
     } catch (error) {

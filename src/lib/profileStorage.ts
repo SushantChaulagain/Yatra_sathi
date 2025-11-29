@@ -1,3 +1,6 @@
+import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
+
 export interface UserProfile {
   id: string;
   name: string;
@@ -13,17 +16,66 @@ export interface UserProfile {
   userId: string;
   avatar?: string;
   createdAt: string;
-  lastActive?: string; // ISO timestamp of last activity
+  lastActive?: string;
 }
 
-const PROFILES_KEY = 'trekker_profiles';
+type DbProfile = Database['public']['Tables']['profiles']['Row'];
+type DbProfileInsert = Database['public']['Tables']['profiles']['Insert'];
+type DbProfileUpdate = Database['public']['Tables']['profiles']['Update'];
+
+// Helper functions to convert between DB format and app format
+function dbToUserProfile(dbProfile: DbProfile): UserProfile {
+  return {
+    id: dbProfile.id,
+    name: dbProfile.full_name || 'Unknown',
+    age: dbProfile.age || 0,
+    location: dbProfile.location || '',
+    experience: dbProfile.experience || 'Beginner',
+    completedTreks: dbProfile.completed_treks || 0,
+    bio: dbProfile.bio || '',
+    interests: dbProfile.interests || [],
+    nextTrek: dbProfile.next_trek || '',
+    availability: dbProfile.availability || '',
+    languages: dbProfile.languages || [],
+    userId: dbProfile.user_id,
+    avatar: dbProfile.avatar_url || undefined,
+    createdAt: dbProfile.created_at,
+    lastActive: dbProfile.last_active || undefined,
+  };
+}
+
+function userProfileToDb(profile: Partial<UserProfile>): Partial<DbProfileUpdate> {
+  return {
+    full_name: profile.name,
+    age: profile.age,
+    location: profile.location,
+    experience: profile.experience,
+    completed_treks: profile.completedTreks,
+    bio: profile.bio,
+    interests: profile.interests,
+    next_trek: profile.nextTrek,
+    availability: profile.availability,
+    languages: profile.languages,
+    avatar_url: profile.avatar,
+    last_active: new Date().toISOString(),
+  };
+}
 
 export const profileStorage = {
   // Get all profiles
-  getAllProfiles(): UserProfile[] {
+  async getAllProfiles(): Promise<UserProfile[]> {
     try {
-      const profiles = localStorage.getItem(PROFILES_KEY);
-      return profiles ? JSON.parse(profiles) : [];
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .order('last_active', { ascending: false });
+
+      if (error) {
+        console.error('Error loading profiles:', error);
+        return [];
+      }
+
+      return (data || []).map(dbToUserProfile);
     } catch (error) {
       console.error('Error loading profiles:', error);
       return [];
@@ -31,49 +83,86 @@ export const profileStorage = {
   },
 
   // Get current user's profile
-  getCurrentUserProfile(userId: string): UserProfile | null {
-    const profiles = this.getAllProfiles();
-    return profiles.find(profile => profile.userId === userId) || null;
+  async getCurrentUserProfile(userId: string): Promise<UserProfile | null> {
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('user_id', userId)
+        .single();
+
+      if (error) {
+        if (error.code === 'PGRST116') {
+          // No profile found
+          return null;
+        }
+        console.error('Error loading profile:', error);
+        return null;
+      }
+
+      return data ? dbToUserProfile(data) : null;
+    } catch (error) {
+      console.error('Error loading profile:', error);
+      return null;
+    }
   },
 
   // Save or update a profile
-  saveProfile(profile: UserProfile): void {
+  async saveProfile(profile: UserProfile): Promise<void> {
     try {
-      const profiles = this.getAllProfiles();
-      const existingIndex = profiles.findIndex(p => p.userId === profile.userId);
+      const dbProfile = userProfileToDb(profile);
 
-      const profileWithDefaults = {
-        ...profile,
-        id: profile.id || this.generateId(),
-        avatar: profile.avatar || this.generateAvatar(),
-        createdAt: profile.createdAt || new Date().toISOString(),
-        lastActive: new Date().toISOString() // Always update last active time
-      };
+      console.log('💾 Attempting to save profile:');
+      console.log('   User ID:', profile.userId);
+      console.log('   Profile data:', dbProfile);
 
-      if (existingIndex >= 0) {
-        // Update existing profile
-        profiles[existingIndex] = { ...profiles[existingIndex], ...profileWithDefaults };
-      } else {
-        // Add new profile
-        profiles.push(profileWithDefaults);
+      // First check if profile exists
+      const { data: existing } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('user_id', profile.userId)
+        .single();
+
+      console.log('   Existing profile?', existing ? 'YES (will UPDATE)' : 'NO (will INSERT)');
+
+      const { data, error } = await supabase
+        .from('profiles')
+        .upsert({
+          user_id: profile.userId,
+          ...dbProfile,
+        }, {
+          onConflict: 'user_id'
+        })
+        .select();
+
+      if (error) {
+        console.error('❌ Supabase error details:', {
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+          code: error.code
+        });
+        throw new Error(`Failed to save profile: ${error.message}`);
       }
 
-      localStorage.setItem(PROFILES_KEY, JSON.stringify(profiles));
+      console.log('✅ Profile saved successfully!');
+      console.log('   Saved data:', data);
     } catch (error) {
-      console.error('Error saving profile:', error);
-      throw new Error('Failed to save profile');
+      console.error('❌ Error saving profile:', error);
+      throw error;
     }
   },
 
   // Update user's last active timestamp
-  updateLastActive(userId: string): void {
+  async updateLastActive(userId: string): Promise<void> {
     try {
-      const profiles = this.getAllProfiles();
-      const existingIndex = profiles.findIndex(p => p.userId === userId);
+      const { error } = await supabase
+        .from('profiles')
+        .update({ last_active: new Date().toISOString() })
+        .eq('user_id', userId);
 
-      if (existingIndex >= 0) {
-        profiles[existingIndex].lastActive = new Date().toISOString();
-        localStorage.setItem(PROFILES_KEY, JSON.stringify(profiles));
+      if (error) {
+        console.error('Error updating last active:', error);
       }
     } catch (error) {
       console.error('Error updating last active:', error);
@@ -81,11 +170,17 @@ export const profileStorage = {
   },
 
   // Delete a profile
-  deleteProfile(userId: string): void {
+  async deleteProfile(userId: string): Promise<void> {
     try {
-      const profiles = this.getAllProfiles();
-      const filteredProfiles = profiles.filter(profile => profile.userId !== userId);
-      localStorage.setItem(PROFILES_KEY, JSON.stringify(filteredProfiles));
+      const { error } = await supabase
+        .from('profiles')
+        .delete()
+        .eq('user_id', userId);
+
+      if (error) {
+        console.error('Error deleting profile:', error);
+        throw new Error('Failed to delete profile');
+      }
     } catch (error) {
       console.error('Error deleting profile:', error);
       throw new Error('Failed to delete profile');
@@ -93,17 +188,30 @@ export const profileStorage = {
   },
 
   // Get other users' profiles (excluding current user)
-  getOtherProfiles(currentUserId: string): UserProfile[] {
-    const allProfiles = this.getAllProfiles();
-    return allProfiles.filter(profile => profile.userId !== currentUserId);
+  async getOtherProfiles(currentUserId: string): Promise<UserProfile[]> {
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .neq('user_id', currentUserId)
+        .order('last_active', { ascending: false });
+
+      if (error) {
+        console.error('Error loading profiles:', error);
+        return [];
+      }
+
+      return (data || []).map(dbToUserProfile);
+    } catch (error) {
+      console.error('Error loading profiles:', error);
+      return [];
+    }
   },
 
-  // Helper function to generate unique ID
+  // Helper function to generate unique ID (keeping for compatibility)
   generateId(): string {
     return Date.now().toString(36) + Math.random().toString(36).substr(2);
   },
-
-
 
   // Generate a random avatar placeholder
   generateAvatar(): string {
@@ -121,156 +229,66 @@ export const profileStorage = {
   },
 
   // Check if user has a profile
-  hasProfile(userId: string): boolean {
-    return this.getCurrentUserProfile(userId) !== null;
+  async hasProfile(userId: string): Promise<boolean> {
+    const profile = await this.getCurrentUserProfile(userId);
+    return profile !== null;
   },
 
   // Get profiles with search and filter
-  searchProfiles(currentUserId: string, searchTerm: string = '', filters: any = {}): UserProfile[] {
-    let profiles = this.getOtherProfiles(currentUserId);
+  async searchProfiles(currentUserId: string, searchTerm: string = '', filters: any = {}): Promise<UserProfile[]> {
+    try {
+      let query = supabase
+        .from('profiles')
+        .select('*')
+        .neq('user_id', currentUserId);
 
-    // Search filter
-    if (searchTerm) {
-      const term = searchTerm.toLowerCase();
-      profiles = profiles.filter(profile =>
-        profile.name.toLowerCase().includes(term) ||
-        profile.location.toLowerCase().includes(term) ||
-        profile.nextTrek.toLowerCase().includes(term) ||
-        profile.interests.some(interest => interest.toLowerCase().includes(term))
-      );
+      // Experience filter
+      if (filters.experience && filters.experience !== 'all') {
+        query = query.eq('experience', filters.experience);
+      }
+
+      // Location filter
+      if (filters.location && filters.location !== 'all') {
+        query = query.ilike('location', `%${filters.location}%`);
+      }
+
+      // Age filter
+      if (filters.ageGroup && filters.ageGroup !== 'all') {
+        if (filters.ageGroup === '20s') {
+          query = query.gte('age', 20).lt('age', 30);
+        } else if (filters.ageGroup === '30s') {
+          query = query.gte('age', 30).lt('age', 40);
+        } else if (filters.ageGroup === '40s') {
+          query = query.gte('age', 40);
+        }
+      }
+
+      const { data, error } = await query.order('last_active', { ascending: false });
+
+      if (error) {
+        console.error('Error searching profiles:', error);
+        return [];
+      }
+
+      let profiles = (data || []).map(dbToUserProfile);
+
+      // Client-side search filter (since Supabase array search is complex)
+      if (searchTerm) {
+        const term = searchTerm.toLowerCase();
+        profiles = profiles.filter(profile =>
+          profile.name.toLowerCase().includes(term) ||
+          profile.location.toLowerCase().includes(term) ||
+          profile.nextTrek.toLowerCase().includes(term) ||
+          profile.interests.some(interest => interest.toLowerCase().includes(term))
+        );
+      }
+
+      return profiles;
+    } catch (error) {
+      console.error('Error searching profiles:', error);
+      return [];
     }
-
-    // Experience filter
-    if (filters.experience && filters.experience !== 'all') {
-      profiles = profiles.filter(profile => 
-        profile.experience.toLowerCase() === filters.experience
-      );
-    }
-
-    // Location filter
-    if (filters.location && filters.location !== 'all') {
-      profiles = profiles.filter(profile => 
-        profile.location.toLowerCase().includes(filters.location.toLowerCase())
-      );
-    }
-
-    // Age filter
-    if (filters.ageGroup && filters.ageGroup !== 'all') {
-      profiles = profiles.filter(profile => {
-        if (filters.ageGroup === '20s') return profile.age >= 20 && profile.age < 30;
-        if (filters.ageGroup === '30s') return profile.age >= 30 && profile.age < 40;
-        if (filters.ageGroup === '40s') return profile.age >= 40;
-        return true;
-      });
-    }
-
-    return profiles;
   },
 
-  // Initialize with some sample data for demonstration
-  initializeSampleData(): void {
-    const existing = this.getAllProfiles();
-    if (existing.length === 0) {
-      const sampleProfiles: UserProfile[] = [
-        {
-          id: 'sample1',
-          userId: 'sample-user-1',
-          name: 'Maya Sherpa',
-          age: 28,
-          location: 'Pokhara',
-          experience: 'Advanced',
-          completedTreks: 15,
-          bio: 'Passionate trekker and photography enthusiast. Love exploring hidden trails and capturing the beauty of the Himalayas.',
-          interests: ['Photography', 'Annapurna Circuit', 'Cultural Exploration', 'High Altitude', 'Solo Travel'],
-          nextTrek: 'Everest Base Camp',
-          availability: 'April 2025',
-          languages: ['English', 'Nepali', 'Hindi'],
-          avatar: 'photo-1494790108755-2616b612b786',
-          createdAt: new Date().toISOString()
-        },
-        {
-          id: 'sample2',
-          userId: 'sample-user-2',
-          name: 'Rajesh Tamang',
-          age: 32,
-          location: 'Kathmandu',
-          experience: 'Intermediate',
-          completedTreks: 7,
-          bio: 'Weekend warrior who loves mountain adventures. Looking for partners who enjoy a good challenge and great conversations.',
-          interests: ['Manaslu Circuit', 'Technical Climbing', 'Wildlife Watching', 'Digital Detox'],
-          nextTrek: 'Langtang Valley',
-          availability: 'March 2025',
-          languages: ['English', 'Nepali'],
-          avatar: 'photo-1507003211169-0a1dd7228f2d',
-          createdAt: new Date().toISOString()
-        },
-        {
-          id: 'sample3',
-          userId: 'sample-user-3',
-          name: 'Sarah Mitchell',
-          age: 26,
-          location: 'Pokhara',
-          experience: 'Beginner',
-          completedTreks: 3,
-          bio: 'Adventure seeker from abroad, new to Himalayan trekking. Excited to learn from experienced partners!',
-          interests: ['Photography', 'Cultural Exploration', 'Short Treks', 'Local Culture'],
-          nextTrek: 'Poon Hill',
-          availability: 'April 2025',
-          languages: ['English', 'Spanish'],
-          avatar: 'photo-1438761681033-6461ffad8d80',
-          createdAt: new Date().toISOString()
-        },
-        {
-          id: 'sample4',
-          userId: 'sample-user-4',
-          name: 'Karma Lama',
-          age: 35,
-          location: 'Kathmandu',
-          experience: 'Advanced',
-          completedTreks: 22,
-          bio: 'Local guide and trek leader. Happy to share my knowledge and help newcomers discover the magic of our mountains.',
-          interests: ['Group Leading', 'Cultural Exploration', 'High Altitude', 'Everest Base Camp', 'Upper Mustang'],
-          nextTrek: 'Kanchenjunga',
-          availability: 'May 2025',
-          languages: ['English', 'Nepali', 'Tibetan'],
-          avatar: 'photo-1472099645785-5658abf4ff4e',
-          createdAt: new Date().toISOString()
-        },
-        {
-          id: 'sample5',
-          userId: 'sample-user-5',
-          name: 'Emma Johnson',
-          age: 29,
-          location: 'Pokhara',
-          experience: 'Intermediate',
-          completedTreks: 9,
-          bio: 'Nature photographer and wellness enthusiast. Looking for mindful trekking experiences with like-minded people.',
-          interests: ['Photography', 'Digital Detox', 'Wildlife Watching', 'Gokyo Lakes', 'Solo Travel'],
-          nextTrek: 'Gokyo Lakes',
-          availability: 'April 2025',
-          languages: ['English', 'French'],
-          avatar: 'photo-1489424731084-a5d8b219a5bb',
-          createdAt: new Date().toISOString()
-        },
-        {
-          id: 'sample6',
-          userId: 'sample-user-6',
-          name: 'Bikash Rai',
-          age: 24,
-          location: 'Chitwan',
-          experience: 'Beginner',
-          completedTreks: 2,
-          bio: 'Engineering student with a passion for mountains. Looking to build experience with patient and encouraging partners.',
-          interests: ['Annapurna Circuit', 'Photography', 'Cultural Exploration', 'Short Treks'],
-          nextTrek: 'Annapurna Circuit',
-          availability: 'March 2025',
-          languages: ['English', 'Nepali', 'Hindi'],
-          avatar: 'photo-1500648767791-00dcc994a43e',
-          createdAt: new Date().toISOString()
-        }
-      ];
-      
-      localStorage.setItem(PROFILES_KEY, JSON.stringify(sampleProfiles));
-    }
-  }
-}; 
+  // NO MORE SAMPLE DATA - Real users only!
+};
