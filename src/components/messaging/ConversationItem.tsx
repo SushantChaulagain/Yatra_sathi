@@ -27,10 +27,7 @@ export function ConversationItem({ conversation, isActive, onClick }: Conversati
     >
       <Avatar className="h-12 w-12">
         <AvatarImage
-          src={conversation.otherUser.avatar
-            ? `https://images.unsplash.com/${conversation.otherUser.avatar}?w=100&h=100&fit=crop&crop=face`
-            : undefined
-          }
+          src={conversation.otherUser.avatar}
           alt={conversation.otherUser.name}
         />
         <AvatarFallback className="bg-gradient-to-br from-[hsl(var(--himalayan-deep-blue))] to-[hsl(var(--forest-green))] text-white">

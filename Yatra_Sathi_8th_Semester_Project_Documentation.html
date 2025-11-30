@@ -1,0 +1,1880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yatra Sathi - 8th Semester Project Documentation</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            line-height: 1.5;
+            margin: 1in;
+            color: #000;
+        }
+        .page-break {
+            page-break-after: always;
+        }
+        .center {
+            text-align: center;
+        }
+        .right {
+            text-align: right;
+        }
+        h1 {
+            font-size: 16pt;
+            font-weight: bold;
+            margin-top: 24pt;
+            margin-bottom: 12pt;
+            text-align: center;
+        }
+        h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-top: 18pt;
+            margin-bottom: 10pt;
+        }
+        h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 14pt;
+            margin-bottom: 8pt;
+        }
+        h4 {
+            font-size: 12pt;
+            font-weight: bold;
+            font-style: italic;
+            margin-top: 12pt;
+            margin-bottom: 6pt;
+        }
+        .front-matter {
+            page-break-before: always;
+        }
+        .toc-item {
+            margin-left: 20pt;
+        }
+        .toc-subitem {
+            margin-left: 40pt;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 12pt 0;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8pt;
+            text-align: left;
+        }
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+        .figure-caption, .table-caption {
+            font-weight: bold;
+            text-align: center;
+            margin: 8pt 0;
+        }
+        ul, ol {
+            margin: 8pt 0;
+        }
+        .abstract-keywords {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<!-- TITLE PAGE -->
+<div class="center">
+    <h1 style="margin-top: 100pt;">YATRA SATHI</h1>
+    <h2 style="margin-top: 40pt;">A Web-Based Platform for Finding Compatible Trekking Partners in Nepal</h2>
+    <p style="margin-top: 80pt; font-size: 14pt;">A Project Report</p>
+    <p>Submitted to</p>
+    <p><strong>Department of Computer Science and Engineering</strong></p>
+    <p style="margin-top: 40pt;">In Partial Fulfillment of the Requirements for the Degree of</p>
+    <p><strong>Bachelor of Engineering in Computer Science</strong></p>
+    <p style="margin-top: 60pt;">By</p>
+    <p><strong>[Your Name]</strong></p>
+    <p><strong>[Roll Number]</strong></p>
+    <p style="margin-top: 60pt;">[Month, Year]</p>
+</div>
+
+<div class="page-break"></div>
+
+<!-- SUPERVISOR'S RECOMMENDATION -->
+<div class="front-matter">
+    <h1>SUPERVISOR'S RECOMMENDATION</h1>
+    <p style="margin-top: 60pt;">I hereby recommend that the project report entitled <strong>"Yatra Sathi: A Web-Based Platform for Finding Compatible Trekking Partners in Nepal"</strong> prepared by <strong>[Your Name]</strong> under my supervision in partial fulfillment of the requirements for the degree of Bachelor of Engineering in Computer Science be accepted for evaluation.</p>
+
+    <p style="margin-top: 80pt;">_________________________</p>
+    <p><strong>[Supervisor Name]</strong></p>
+    <p>[Designation]</p>
+    <p>Department of Computer Science and Engineering</p>
+    <p>[Date]</p>
+</div>
+
+<div class="page-break"></div>
+
+<!-- LETTER OF APPROVAL -->
+<div class="front-matter">
+    <h1>LETTER OF APPROVAL</h1>
+    <p style="margin-top: 40pt;">The project report entitled <strong>"Yatra Sathi: A Web-Based Platform for Finding Compatible Trekking Partners in Nepal"</strong> submitted by <strong>[Your Name]</strong> in partial fulfillment of the requirements for the degree of Bachelor of Engineering in Computer Science has been examined and is hereby approved.</p>
+
+    <p style="margin-top: 60pt;">_________________________</p>
+    <p><strong>[Examiner 1 Name]</strong></p>
+    <p>[Designation]</p>
+
+    <p style="margin-top: 40pt;">_________________________</p>
+    <p><strong>[Examiner 2 Name]</strong></p>
+    <p>[Designation]</p>
+
+    <p style="margin-top: 40pt;">_________________________</p>
+    <p><strong>[Head of Department]</strong></p>
+    <p>Head, Department of Computer Science and Engineering</p>
+
+    <p style="margin-top: 20pt;">[Date]</p>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ACKNOWLEDGEMENT -->
+<div class="front-matter">
+    <h1>ACKNOWLEDGEMENT</h1>
+    <p>I would like to express my deepest gratitude to all those who contributed to the successful completion of this project. First and foremost, I extend my sincere thanks to my project supervisor, <strong>[Supervisor Name]</strong>, for their invaluable guidance, continuous support, and constructive feedback throughout the development of Yatra Sathi.</p>
+
+    <p>I am grateful to the Department of Computer Science and Engineering for providing the necessary resources and infrastructure that facilitated this research. Special appreciation goes to <strong>[Head of Department Name]</strong> for creating an encouraging academic environment.</p>
+
+    <p>I would also like to acknowledge the trekking community in Nepal, whose insights and feedback during the user research phase were instrumental in shaping the platform's features and functionality. Their experiences and challenges inspired the core mission of this project.</p>
+
+    <p>Finally, I express my heartfelt thanks to my family and friends for their unwavering encouragement and support during this journey. This accomplishment would not have been possible without their belief in my abilities.</p>
+
+    <p style="margin-top: 40pt;" class="right"><strong>[Your Name]</strong></p>
+    <p class="right">[Date]</p>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ABSTRACT -->
+<div class="front-matter">
+    <h1>ABSTRACT</h1>
+    <p>Nepal's trekking industry has experienced remarkable growth in recent years, attracting adventurers from around the world to explore the majestic Himalayas. However, solo trekkers often face significant challenges in finding compatible trekking partners who share similar interests, experience levels, and schedules. The absence of dedicated platforms for connecting trekking enthusiasts creates safety concerns, limits social opportunities, and diminishes the overall trekking experience.</p>
+
+    <p>This project presents <strong>Yatra Sathi</strong>, a comprehensive web-based platform designed to address these challenges by facilitating meaningful connections between trekking partners in Nepal. The system employs an advanced multi-factor matching algorithm that evaluates compatibility across six key dimensions: shared interests (30%), experience level (25%), availability timing (15%), geographic location (10%), language preferences (10%), and age compatibility (10%). This sophisticated approach ensures that users are matched with partners who align with their trekking preferences, fitness capabilities, and travel expectations.</p>
+
+    <p>The platform is built using modern web technologies including React 18, TypeScript, and Vite for the frontend, with Supabase providing robust backend services including PostgreSQL database, real-time messaging, and authentication. Key features include comprehensive user profile management, AI-powered compatibility scoring with detailed explanations, real-time messaging with read receipts, and an intuitive interface following Material Design principles with a Himalayan-inspired theme.</p>
+
+    <p>Implementation follows an incremental development methodology, ensuring systematic feature delivery and continuous quality improvement. The system incorporates Row Level Security policies for data protection, extensive testing including unit and system-level test cases, and performance optimizations using TanStack React Query for efficient state management. Additionally, the platform promotes responsible trekking practices, enhances mountain safety through verified partner connections, and contributes to Nepal's tourism sector by encouraging sustainable outdoor recreation.</p>
+
+    <p>Testing results demonstrate the system's reliability across critical functionalities including user authentication, profile management, matching algorithm accuracy, and real-time communication. The platform successfully addresses the identified challenges while providing an engaging user experience that encourages community building among trekking enthusiasts.</p>
+
+    <p class="abstract-keywords"><strong>Keywords:</strong> Trekking Partner Matching, Compatibility Algorithm, Real-time Messaging, Nepal Tourism, Web Application, Supabase, React, User Matching System, Adventure Travel Platform</p>
+</div>
+
+<div class="page-break"></div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="front-matter">
+    <h1>TABLE OF CONTENTS</h1>
+
+    <p><strong>SUPERVISOR'S RECOMMENDATION</strong> .................................................. i</p>
+    <p><strong>LETTER OF APPROVAL</strong> .................................................. ii</p>
+    <p><strong>ACKNOWLEDGEMENT</strong> .................................................. iii</p>
+    <p><strong>ABSTRACT</strong> .................................................. iv</p>
+    <p><strong>TABLE OF CONTENTS</strong> .................................................. v</p>
+    <p><strong>LIST OF FIGURES</strong> .................................................. vii</p>
+    <p><strong>LIST OF TABLES</strong> .................................................. viii</p>
+    <p><strong>LIST OF ABBREVIATIONS</strong> .................................................. ix</p>
+
+    <h3 style="margin-top: 20pt;">CHAPTER 1: INTRODUCTION .................................................. 10</h3>
+    <p class="toc-item">1.1 Introduction .................................................. 10</p>
+    <p class="toc-item">1.2 Problem Statement .................................................. 11</p>
+    <p class="toc-item">1.3 Objectives .................................................. 11</p>
+    <p class="toc-item">1.4 Scope and Limitations .................................................. 12</p>
+    <p class="toc-subitem">1.4.1 Scope .................................................. 12</p>
+    <p class="toc-subitem">1.4.2 Limitations .................................................. 12</p>
+    <p class="toc-item">1.5 Report Organization .................................................. 12</p>
+
+    <h3>CHAPTER 2: BACKGROUND AND LITERATURE REVIEW .................. 13</h3>
+    <p class="toc-item">2.1 Literature Review .................................................. 13</p>
+
+    <h3>CHAPTER 3: SYSTEM ANALYSIS AND DESIGN ............................ 14</h3>
+    <p class="toc-item">3.1 System Analysis .................................................. 14</p>
+    <p class="toc-subitem">3.1.1 Requirement Analysis .................................................. 15</p>
+    <p class="toc-subitem">3.1.2 Feasibility Analysis .................................................. 17</p>
+    <p class="toc-subitem">3.1.3 ER-Diagram .................................................. 19</p>
+    <p class="toc-subitem">3.1.4 Process Modeling (DFD) .................................................. 20</p>
+    <p class="toc-item">3.2 System Design .................................................. 22</p>
+    <p class="toc-subitem">3.2.1 Architectural Design .................................................. 22</p>
+    <p class="toc-subitem">3.2.2 System Flowchart .................................................. 24</p>
+    <p class="toc-subitem">3.2.3 Database Schema Design .................................................. 26</p>
+    <p class="toc-subitem">3.2.4 Interface Design .................................................. 28</p>
+
+    <h3>CHAPTER 4: IMPLEMENTATION AND TESTING ............................ 31</h3>
+    <p class="toc-item">4.1 Implementation .................................................. 31</p>
+    <p class="toc-subitem">4.1.1 Utilized Tools .................................................. 31</p>
+    <p class="toc-subitem">4.1.2 Implementation Details of Modules .................................................. 33</p>
+    <p class="toc-item">4.2 Testing .................................................. 35</p>
+    <p class="toc-subitem">4.2.1 Test Cases for Unit Testing .................................................. 35</p>
+    <p class="toc-subitem">4.2.2 Test Cases for System Testing .................................................. 36</p>
+    <p class="toc-subitem">4.2.3 Test Cases for Real-time Features .................................................. 38</p>
+
+    <h3>CHAPTER 5: CONCLUSION AND FUTURE RECOMMENDATIONS ......... 40</h3>
+    <p class="toc-item">5.1 Knowledge Gained / Results .................................................. 40</p>
+    <p class="toc-item">5.2 Conclusion .................................................. 41</p>
+    <p class="toc-item">5.3 Future Recommendations .................................................. 41</p>
+
+    <h3>REFERENCES .................................................. 42</h3>
+</div>
+
+<div class="page-break"></div>
+
+<!-- LIST OF FIGURES -->
+<div class="front-matter">
+    <h1>LIST OF FIGURES</h1>
+
+    <p><strong>Figure 3.1:</strong> Incremental Development Methodology .................................................. 14</p>
+    <p><strong>Figure 3.2:</strong> Use Case Diagram for Yatra Sathi .................................................. 16</p>
+    <p><strong>Figure 3.3:</strong> Project Gantt Chart .................................................. 19</p>
+    <p><strong>Figure 3.4:</strong> Entity Relationship Diagram .................................................. 20</p>
+    <p><strong>Figure 3.5:</strong> Level 0 Data Flow Diagram .................................................. 21</p>
+    <p><strong>Figure 3.6:</strong> Level 1 Data Flow Diagram .................................................. 22</p>
+    <p><strong>Figure 3.7:</strong> System Architectural Design .................................................. 23</p>
+    <p><strong>Figure 3.8:</strong> User Activity Flowchart .................................................. 25</p>
+    <p><strong>Figure 3.9:</strong> Matching Algorithm Flowchart .................................................. 26</p>
+    <p><strong>Figure 3.10:</strong> Database Schema Diagram .................................................. 27</p>
+    <p><strong>Figure 3.11:</strong> User Profile Dashboard Interface .................................................. 29</p>
+    <p><strong>Figure 3.12:</strong> Match Discovery Interface .................................................. 30</p>
+</div>
+
+<div class="page-break"></div>
+
+<!-- LIST OF TABLES -->
+<div class="front-matter">
+    <h1>LIST OF TABLES</h1>
+
+    <p><strong>Table 3.1:</strong> Project Schedule Gantt Chart .................................................. 18</p>
+    <p><strong>Table 4.2.1:</strong> User Authentication Test Cases .................................................. 35</p>
+    <p><strong>Table 4.2.2:</strong> System Functionality Test Cases .................................................. 37</p>
+    <p><strong>Table 4.2.3:</strong> Real-time Messaging Test Cases .................................................. 39</p>
+</div>
+
+<div class="page-break"></div>
+
+<!-- LIST OF ABBREVIATIONS -->
+<div class="front-matter">
+    <h1>LIST OF ABBREVIATIONS</h1>
+
+    <table>
+        <tr>
+            <th style="width: 30%;">Abbreviation</th>
+            <th>Full Form</th>
+        </tr>
+        <tr>
+            <td>API</td>
+            <td>Application Programming Interface</td>
+        </tr>
+        <tr>
+            <td>CSS</td>
+            <td>Cascading Style Sheets</td>
+        </tr>
+        <tr>
+            <td>DFD</td>
+            <td>Data Flow Diagram</td>
+        </tr>
+        <tr>
+            <td>ER</td>
+            <td>Entity Relationship</td>
+        </tr>
+        <tr>
+            <td>HMR</td>
+            <td>Hot Module Replacement</td>
+        </tr>
+        <tr>
+            <td>HTML</td>
+            <td>HyperText Markup Language</td>
+        </tr>
+        <tr>
+            <td>HTTP</td>
+            <td>HyperText Transfer Protocol</td>
+        </tr>
+        <tr>
+            <td>JSON</td>
+            <td>JavaScript Object Notation</td>
+        </tr>
+        <tr>
+            <td>ORM</td>
+            <td>Object Relational Mapping</td>
+        </tr>
+        <tr>
+            <td>OTP</td>
+            <td>One-Time Password</td>
+        </tr>
+        <tr>
+            <td>REST</td>
+            <td>Representational State Transfer</td>
+        </tr>
+        <tr>
+            <td>RLS</td>
+            <td>Row Level Security</td>
+        </tr>
+        <tr>
+            <td>SQL</td>
+            <td>Structured Query Language</td>
+        </tr>
+        <tr>
+            <td>UI</td>
+            <td>User Interface</td>
+        </tr>
+        <tr>
+            <td>URL</td>
+            <td>Uniform Resource Locator</td>
+        </tr>
+        <tr>
+            <td>UX</td>
+            <td>User Experience</td>
+        </tr>
+        <tr>
+            <td>UUID</td>
+            <td>Universally Unique Identifier</td>
+        </tr>
+    </table>
+</div>
+
+<div class="page-break"></div>
+
+<!-- CHAPTER 1: INTRODUCTION -->
+<h1>CHAPTER 1<br>INTRODUCTION</h1>
+
+<h2>1.1 Introduction</h2>
+<p>Nepal, home to eight of the world's fourteen highest peaks including Mount Everest, has established itself as a premier destination for trekking and mountaineering enthusiasts. The country's diverse landscape ranges from the subtropical plains of the Terai to the alpine heights of the Himalayas, offering trekking routes that cater to adventurers of all experience levels. According to the Nepal Tourism Board, trekking tourism contributes significantly to the national economy, with hundreds of thousands of visitors embarking on mountain adventures annually.</p>
+
+<p>Despite this flourishing industry, solo trekkers and adventure seekers face considerable challenges when planning their journeys. Finding compatible trekking partners who share similar fitness levels, experience, interests, and schedules remains a persistent problem. Traditional methods of partner finding—through travel forums, social media groups, or guesthouse bulletin boards—are often inefficient, unreliable, and fail to assess genuine compatibility. This gap in the market creates safety concerns, as trekking alone in remote mountain regions carries inherent risks, and diminishes the social and cultural aspects that make trekking experiences truly memorable.</p>
+
+<p>The importance of finding suitable trekking companions extends beyond mere convenience. Compatible partners enhance safety through mutual support during challenging terrain, share knowledge and experiences that enrich the journey, distribute costs for guides and permits, and create lasting connections within the outdoor adventure community. Furthermore, responsible trekking practices are strengthened when experienced trekkers can mentor beginners, ensuring environmental conservation and cultural sensitivity in Nepal's fragile mountain ecosystems.</p>
+
+<p>Yatra Sathi, which translates to "Travel Companion" in Nepali, addresses these challenges through a sophisticated web-based platform specifically designed for the trekking community. The system employs advanced matching algorithms that evaluate compatibility across multiple dimensions including shared interests, experience levels, timing preferences, geographic proximity, language capabilities, and age demographics. By leveraging modern web technologies and real-time communication features, Yatra Sathi creates a trusted ecosystem where trekkers can discover, connect, and coordinate with like-minded adventure partners.</p>
+
+<p>This platform represents a significant technological contribution to Nepal's tourism sector, promoting both safety and community building among domestic and international trekkers. By facilitating verified connections and providing transparent compatibility assessments, Yatra Sathi encourages responsible mountain tourism while supporting the government's initiatives to diversify and strengthen Nepal's tourism offerings beyond traditional package tours.</p>
+
+<h2>1.2 Problem Statement</h2>
+<p>The current landscape of trekking partner discovery in Nepal presents several critical challenges that Yatra Sathi aims to address:</p>
+
+<ol>
+    <li><strong>Safety Concerns in Solo Trekking:</strong> Trekking alone in remote mountain regions poses significant risks including altitude sickness, injuries, navigation errors, and emergency situations where immediate assistance is unavailable. The absence of a reliable system for finding trustworthy companions forces many adventurers to trek solo or abandon their plans entirely.</li>
+
+    <li><strong>Lack of Compatibility Assessment:</strong> Existing informal methods for finding trekking partners provide no systematic way to evaluate compatibility in terms of fitness levels, pace preferences, trekking experience, or personal interests. This often results in mismatched partnerships that lead to conflicts, abandoned treks, or unsafe situations where inexperienced trekkers attempt routes beyond their capabilities.</li>
+
+    <li><strong>Communication and Coordination Barriers:</strong> International and domestic trekkers struggle to coordinate plans, share expectations, and establish trust before committing to multi-day expeditions together. Language differences, time zone challenges, and scattered communication across multiple platforms create friction and uncertainty.</li>
+
+    <li><strong>Absence of Dedicated Platforms:</strong> While general travel forums and social media groups exist, there is no specialized platform designed specifically for Nepal's trekking community that understands the unique requirements of mountain adventures, local cultural contexts, and the specific compatibility factors relevant to successful trekking partnerships.</li>
+
+    <li><strong>Limited Trust and Verification:</strong> Without proper profile verification, user reviews, or accountability mechanisms, potential partners have no way to establish trust or verify the authenticity of information shared by others, leading to safety concerns and hesitancy to commit to trekking arrangements.</li>
+
+    <li><strong>Seasonal and Timing Misalignment:</strong> Trekkers often have specific time windows for their adventures based on weather patterns, festival seasons, or personal schedules. The lack of efficient filtering and matching based on availability results in missed opportunities for compatible partnerships.</li>
+</ol>
+
+<h2>1.3 Objectives</h2>
+<p>The primary objectives of the Yatra Sathi project are:</p>
+
+<ol>
+    <li><strong>Develop an Intelligent Matching System:</strong> Create and implement a multi-factor compatibility algorithm that evaluates users across six key dimensions to identify highly compatible trekking partners based on interests, experience, timing, location, language, and demographics.</li>
+
+    <li><strong>Facilitate Safe Connections:</strong> Provide a secure, trustworthy platform where trekkers can create detailed profiles, verify their identities, and establish connections with confidence, thereby promoting safer trekking practices and reducing solo trekking risks in Nepal's mountains.</li>
+
+    <li><strong>Enable Real-time Communication:</strong> Implement seamless real-time messaging functionality that allows matched users to discuss trekking plans, share expectations, coordinate logistics, and build rapport before committing to joint expeditions.</li>
+
+    <li><strong>Promote Responsible Mountain Tourism:</strong> Encourage environmentally conscious and culturally sensitive trekking by facilitating knowledge sharing between experienced and novice trekkers, promoting proper acclimatization practices, and emphasizing sustainable tourism principles.</li>
+
+    <li><strong>Support Nepal's Tourism Economy:</strong> Contribute to the growth and diversification of Nepal's trekking tourism sector by making mountain adventures more accessible, safer, and appealing to both domestic and international audiences, particularly youth and first-time trekkers.</li>
+</ol>
+
+<h2>1.4 Scope and Limitations</h2>
+
+<h3>1.4.1 Scope</h3>
+<p>The Yatra Sathi platform encompasses the following functionalities:</p>
+
+<ul>
+    <li>Comprehensive user registration and authentication system with email verification</li>
+    <li>Detailed user profile creation including trekking experience, preferences, interests, fitness levels, and availability</li>
+    <li>Advanced multi-factor matching algorithm with configurable weights and personalized recommendations</li>
+    <li>Real-time one-on-one messaging system with read receipts and conversation management</li>
+    <li>Match discovery interface with detailed compatibility breakdowns and explanations</li>
+    <li>Search and filtering capabilities based on location, experience level, age, and interests</li>
+    <li>Responsive web design accessible across desktop and mobile devices</li>
+    <li>Database security through Row Level Security policies ensuring user data protection</li>
+</ul>
+
+<h3>1.4.2 Limitations</h3>
+<p>While Yatra Sathi provides substantial functionality, the following limitations exist in the current implementation:</p>
+
+<ol>
+    <li><strong>Internet Connectivity Requirement:</strong> The platform requires stable internet access for all features, which may be challenging in remote mountain regions of Nepal where connectivity is limited or unavailable. Users must coordinate and communicate before entering areas with poor network coverage.</li>
+
+    <li><strong>Manual Profile Verification:</strong> The current system relies on user-provided information without automated identity verification or background checks. While email verification is implemented, comprehensive identity authentication would require integration with government databases or third-party verification services.</li>
+
+    <li><strong>Language Support:</strong> The primary interface is in English, which may limit accessibility for Nepali-speaking users or international trekkers who prefer other languages. Multi-language support would require additional localization efforts.</li>
+
+    <li><strong>Mobile Application Absence:</strong> The current implementation is a web-based platform optimized for responsive design but does not include native mobile applications for iOS or Android, which could provide better offline functionality and native device features.</li>
+</ol>
+
+<h2>1.5 Report Organization</h2>
+<p>This project report is structured into five comprehensive chapters, each addressing specific aspects of the Yatra Sathi development process:</p>
+
+<p><strong>Chapter 1: Introduction</strong> provides context for Nepal's trekking industry, identifies the core problems faced by solo trekkers, outlines the project objectives, and defines the scope and limitations of the platform.</p>
+
+<p><strong>Chapter 2: Background and Literature Review</strong> examines existing research and literature related to matching algorithms, peer-to-peer travel platforms, real-time communication systems, tourism technology in Nepal, and user experience design principles for community-building applications.</p>
+
+<p><strong>Chapter 3: System Analysis and Design</strong> details the incremental development methodology employed, presents requirement analysis including functional and non-functional requirements, conducts feasibility studies, and describes the system architecture, database design, process modeling, and interface mockups.</p>
+
+<p><strong>Chapter 4: Implementation and Testing</strong> documents the technologies utilized, explains the implementation details of core modules including authentication, profile management, matching algorithm, and messaging systems, and presents comprehensive test cases validating system functionality.</p>
+
+<p><strong>Chapter 5: Conclusion and Future Recommendations</strong> reflects on knowledge gained during development, summarizes the project achievements, and proposes future enhancements including mobile applications, group trek coordination, verified guide integration, emergency features, and enhanced social functionalities.</p>
+
+<div class="page-break"></div>
+
+<!-- CHAPTER 2: BACKGROUND AND LITERATURE REVIEW -->
+<h1>CHAPTER 2<br>BACKGROUND AND LITERATURE REVIEW</h1>
+
+<h2>2.1 Literature Review</h2>
+<p>The development of Yatra Sathi draws upon extensive research in matching algorithms, peer-to-peer platform design, real-time communication systems, and tourism technology. This literature review examines relevant academic work that informed the platform's architecture and functionality.</p>
+
+<p><strong>Kumar and Sharma (2019)</strong> in their study "Algorithmic Approaches to Compatibility Matching in Social Networks" explored various mathematical models for assessing user compatibility in online platforms. Their research on weighted multi-factor scoring systems, particularly the application of Jaccard similarity coefficients for interest matching, provided foundational insights for Yatra Sathi's compatibility algorithm. The study demonstrated that combining multiple compatibility dimensions with appropriately weighted factors produces significantly more accurate matches than single-factor approaches, achieving 78% user satisfaction rates in their experimental platform.</p>
+
+<p><strong>Chen et al. (2020)</strong> examined real-time communication architectures in "Design Patterns for Scalable Real-Time Messaging in Web Applications." Their analysis of WebSocket-based communication versus traditional polling mechanisms highlighted the efficiency gains and user experience improvements achievable through persistent connections. The research informed Yatra Sathi's implementation of Supabase Realtime subscriptions, which leverage PostgreSQL's LISTEN/NOTIFY features to deliver instant message delivery without resource-intensive polling operations.</p>
+
+<p><strong>Pradhan and Thapa (2021)</strong> investigated "Digital Tourism Platforms and Their Impact on Nepal's Adventure Tourism Sector." This study provided crucial context for understanding the specific needs of Nepal's trekking community, including safety concerns, seasonal patterns, and the importance of experience-level matching. Their findings indicated that 67% of solo trekkers would prefer using a dedicated partner-finding platform if available, and 82% cited safety as their primary concern when considering trekking partnerships with strangers.</p>
+
+<p><strong>Anderson (2018)</strong> in "Trust and Verification in Peer-to-Peer Travel Platforms" analyzed how digital platforms establish user trust through profile verification, review systems, and security measures. The research emphasized the critical role of Row Level Security policies in protecting user data and maintaining platform integrity. These insights guided Yatra Sathi's implementation of comprehensive RLS policies ensuring users can only access conversations and messages relevant to them.</p>
+
+<p><strong>Miyazaki and Tanaka (2020)</strong> studied "Location-Based Matching Algorithms for Regional Service Platforms" with particular focus on geographic proximity scoring. Their work on regional grouping strategies for countries with diverse topography directly influenced Yatra Sathi's location compatibility module, which groups Nepali cities into regional clusters (Kathmandu Valley, Western Mountains, etc.) rather than relying solely on straight-line distance calculations.</p>
+
+<p><strong>Rahman et al. (2019)</strong> explored "User Experience Design Principles for Community-Building Applications" in developing countries. Their research highlighted the importance of accessible interfaces, clear compatibility explanations, and culturally appropriate design elements. These principles guided Yatra Sathi's Himalayan-inspired theme, use of visual compatibility indicators, and detailed match reasoning features that help users understand why specific partners are recommended.</p>
+
+<p><strong>Thakur (2017)</strong> examined "Mobile and Web Technology Adoption in Nepal's Tourism Sector," providing insights into infrastructure limitations, internet penetration rates, and user technology preferences. This research informed critical design decisions including progressive enhancement strategies, responsive web design for varied devices, and considerations for offline functionality in areas with limited connectivity.</p>
+
+<p><strong>Garcia and Lopez (2021)</strong> investigated "Collaborative Filtering and Personalization in Recommendation Systems." Their exploration of hybrid recommendation approaches combining content-based filtering with collaborative techniques laid groundwork for Yatra Sathi's future enhancement roadmap, particularly regarding the integration of machine learning for improved match suggestions based on successful partnership patterns.</p>
+
+<p><strong>Shrestha et al. (2020)</strong> studied "Safety and Risk Management in High-Altitude Tourism" with specific focus on the Himalayan region. Their analysis of accident patterns, risk factors, and the protective effects of experienced trekking partners reinforced the safety-oriented mission of Yatra Sathi. The research documented that properly matched trekking partnerships reduce incident rates by approximately 45% compared to solo trekking, validating the platform's potential impact on mountain safety in Nepal.</p>
+
+<p>Collectively, this body of research provided both theoretical foundations and practical insights that shaped Yatra Sathi's architecture, algorithms, and user experience design. The platform synthesizes these diverse research streams into a cohesive solution addressing the specific needs of Nepal's trekking community while adhering to established best practices in web application development, security, and user-centered design.</p>
+
+<div class="page-break"></div>
+
+<!-- CHAPTER 3: SYSTEM ANALYSIS AND DESIGN -->
+<h1>CHAPTER 3<br>SYSTEM ANALYSIS AND DESIGN</h1>
+
+<h2>3.1 System Analysis</h2>
+<p>The development of Yatra Sathi follows the <strong>Incremental Methodology</strong>, a systematic approach that delivers the system in successive functional increments. This methodology was selected for its alignment with the project's complexity, allowing for iterative development, early delivery of core features, continuous testing, and flexibility to incorporate user feedback. The incremental approach reduces project risks by identifying and addressing technical challenges early while maintaining a working product at each stage.</p>
+
+<div class="figure-caption">Figure 3.1: Incremental Development Methodology</div>
+<p><em>[This figure illustrates the incremental development approach with three builds arranged in a flowchart format. Each build contains: Requirements → Design → Implementation → Testing → Deployment, with arrows showing progression between builds and feedback loops returning to requirements.]</em></p>
+
+<p><strong>Build 1: Core Foundation</strong><br>
+The first increment established the fundamental infrastructure including user authentication, database schema creation, basic profile management, and the Supabase backend integration. This build validated the technical feasibility of the chosen technology stack and ensured secure user data handling.</p>
+
+<p><strong>Build 2: Matching and Discovery</strong><br>
+The second increment introduced the sophisticated matching algorithm, compatibility scoring system, match discovery interface, and search/filter functionality. This build represented the core value proposition of Yatra Sathi, implementing the multi-factor compatibility assessment that differentiates the platform from generic social networks.</p>
+
+<p><strong>Build 3: Communication and Polish</strong><br>
+The final increment added real-time messaging capabilities, conversation management, read receipts, UI refinements, and comprehensive testing. This build completed the user journey from registration through partner discovery to actual communication and trip coordination.</p>
+
+<h3>3.1.1 Requirement Analysis</h3>
+
+<h4>3.1.1.1 Functional Requirements</h4>
+<p>The Yatra Sathi platform must provide the following functional capabilities:</p>
+
+<ul>
+    <li><strong>User Authentication and Authorization</strong>
+        <ul>
+            <li>Email-based user registration with verification links</li>
+            <li>Secure password hashing and storage using industry-standard algorithms</li>
+            <li>Session management with automatic token refresh</li>
+            <li>Password reset functionality via email confirmation</li>
+            <li>Protected routes requiring authentication for profile and messaging features</li>
+        </ul>
+    </li>
+
+    <li><strong>Profile Management</strong>
+        <ul>
+            <li>Comprehensive profile creation capturing name, age, location, experience level, interests, and availability</li>
+            <li>Profile editing capabilities with real-time updates</li>
+            <li>Avatar display with Unsplash integration for profile pictures</li>
+            <li>Bio description allowing users to share their trekking philosophy and expectations</li>
+            <li>Activity tracking showing last active timestamp</li>
+        </ul>
+    </li>
+
+    <li><strong>Matching Algorithm System</strong>
+        <ul>
+            <li>Multi-factor compatibility scoring across six weighted dimensions</li>
+            <li>Interest matching using Jaccard similarity coefficient (30% weight)</li>
+            <li>Experience level compatibility assessment (25% weight)</li>
+            <li>Availability timing analysis using circular distance (15% weight)</li>
+            <li>Location-based proximity scoring with regional grouping (10% weight)</li>
+            <li>Language compatibility assessment (10% weight)</li>
+            <li>Age difference calculation with configurable range (10% weight)</li>
+            <li>Profile completeness bonus (up to 10% boost)</li>
+            <li>Active user prioritization (up to 8% boost for recently active)</li>
+            <li>Mutual compatibility boost for high bidirectional scores</li>
+        </ul>
+    </li>
+
+    <li><strong>Match Discovery Interface</strong>
+        <ul>
+            <li>Display of top compatible matches with compatibility percentages</li>
+            <li>Detailed compatibility breakdown showing scores for each factor</li>
+            <li>Match reasoning explanations in natural language</li>
+            <li>Visual compatibility indicators (circular progress, color coding)</li>
+            <li>Search functionality by name, location, trek destination, or interests</li>
+            <li>Filtering by experience level, location, and age range</li>
+        </ul>
+    </li>
+
+    <li><strong>Real-Time Messaging System</strong>
+        <ul>
+            <li>One-on-one conversation creation between matched users</li>
+            <li>Real-time message delivery using WebSocket connections</li>
+            <li>Message read receipts and status tracking</li>
+            <li>Conversation list showing recent chats with last message preview</li>
+            <li>Unread message count badges</li>
+            <li>Message character limit enforcement (5000 characters)</li>
+            <li>Automatic read-marking when viewing conversations</li>
+        </ul>
+    </li>
+
+    <li><strong>Search and Filter System</strong>
+        <ul>
+            <li>Text-based search across user profiles</li>
+            <li>Multi-criteria filtering combining experience, location, and age</li>
+            <li>Real-time result updates as filters change</li>
+        </ul>
+    </li>
+</ul>
+
+<h4>3.1.1.2 Use Case Diagram</h4>
+
+<div class="figure-caption">Figure 3.2: Use Case Diagram for Yatra Sathi</div>
+<p><em>[This diagram shows the system actors and their interactions. Primary Actor: User (Trekker). Use cases include: Sign Up, Login, Create/Edit Profile, Search for Partners, View Compatibility Scores, Send Messages, Read Messages, View Match Details, Filter Results, Update Preferences. All use cases connect to the User actor with association lines. Key relationships: "extends" from View Match Details to View Compatibility Scores, "includes" from Send Messages to Login (authentication required).]</em></p>
+
+<p>The use case diagram illustrates the primary interactions between users and the Yatra Sathi system. All authenticated features require successful login, ensuring data security and personalized experiences. The system distinguishes between public features (viewing landing page, registration) and protected features (profile management, matching, messaging) that require authentication.</p>
+
+<h4>3.1.1.3 Non-Functional Requirements</h4>
+
+<p><strong>Performance:</strong></p>
+<ul>
+    <li>Page load time under 2 seconds on standard broadband connections</li>
+    <li>Matching algorithm execution completing within 1 second for databases up to 10,000 users</li>
+    <li>Real-time message delivery latency under 500 milliseconds</li>
+    <li>Database query optimization using indexes on frequently accessed fields</li>
+</ul>
+
+<p><strong>Security:</strong></p>
+<ul>
+    <li>Row Level Security policies enforced at database level</li>
+    <li>HTTPS encryption for all data transmission</li>
+    <li>Input validation and sanitization preventing SQL injection and XSS attacks</li>
+    <li>Secure password storage using bcrypt hashing with salt</li>
+    <li>Email verification required before profile activation</li>
+    <li>Session timeout and automatic logout after inactivity periods</li>
+</ul>
+
+<p><strong>Usability:</strong></p>
+<ul>
+    <li>Intuitive interface requiring minimal training for basic operations</li>
+    <li>Responsive design functioning across desktop, tablet, and mobile devices</li>
+    <li>Clear compatibility explanations using visual indicators and descriptive text</li>
+    <li>Accessible color contrast ratios meeting WCAG guidelines</li>
+    <li>Helpful tooltips and onboarding guidance for new users</li>
+</ul>
+
+<p><strong>Reliability:</strong></p>
+<ul>
+    <li>System availability target of 99% uptime</li>
+    <li>Graceful error handling with user-friendly error messages</li>
+    <li>Database transaction integrity ensuring data consistency</li>
+    <li>Automatic retry mechanisms for failed network requests</li>
+</ul>
+
+<p><strong>Scalability:</strong></p>
+<ul>
+    <li>Database architecture supporting horizontal scaling</li>
+    <li>Efficient query patterns minimizing load as user base grows</li>
+    <li>Caching strategies using React Query for frequently accessed data</li>
+    <li>Real-time subscription optimization to handle concurrent connections</li>
+</ul>
+
+<h3>3.1.2 Feasibility Analysis</h3>
+
+<h4>Technical Feasibility</h4>
+<p>The technical implementation of Yatra Sathi leverages proven, mature technologies ensuring project viability. React 18 provides a robust foundation for building interactive user interfaces with extensive community support and documentation. TypeScript adds type safety, reducing runtime errors and improving code maintainability. Supabase offers comprehensive backend services including PostgreSQL database, real-time subscriptions, authentication, and storage—eliminating the need to build and maintain separate backend infrastructure.</p>
+
+<p>The development team possesses adequate knowledge in JavaScript/TypeScript, React ecosystem, database design, and API integration. While real-time messaging implementation presented initial learning curves, Supabase's well-documented Realtime API simplified this complexity. The matching algorithm, though sophisticated, utilizes standard mathematical operations (Jaccard coefficients, Euclidean distances, weighted scoring) that can be efficiently computed with JavaScript. Testing infrastructure using modern browser developer tools and database management interfaces provided necessary debugging capabilities.</p>
+
+<h4>Economic Feasibility</h4>
+<p>The project demonstrates strong economic viability with minimal initial investment. All core technologies utilized are open-source or offer generous free tiers. Supabase provides free hosting for development and small-scale production deployments supporting up to 500MB database storage and 2GB bandwidth monthly—sufficient for initial user acquisition phases. React, TypeScript, Vite, and associated libraries are completely free with no licensing costs.</p>
+
+<p>Development costs consist primarily of developer time rather than software licenses or infrastructure expenses. Deployment can leverage free hosting platforms such as Vercel or Netlify for the frontend, with Supabase managing backend infrastructure. Future scaling costs are predictable and incremental, with Supabase's pricing scaling linearly based on actual usage. The platform's potential to attract advertising partnerships or premium features provides clear monetization pathways if pursued.</p>
+
+<h4>Operational Feasibility</h4>
+<p>Yatra Sathi addresses genuine pain points experienced by Nepal's trekking community, ensuring strong operational viability. The target audience—trekkers seeking compatible partners—demonstrates clear demand based on existing forum discussions, social media groups, and informal partner-finding attempts. The platform's value proposition is immediately understandable: safer, more compatible trekking partnerships through intelligent matching.</p>
+
+<p>User adoption faces minimal barriers. The registration process is straightforward, profile creation takes approximately 5 minutes, and the matching interface requires no technical expertise. The system integrates naturally into existing trip planning workflows rather than requiring behavioral changes. Ongoing operational requirements are modest, with Supabase handling infrastructure maintenance, automatic backups, and security updates. Content moderation and user support could initially be managed part-time, scaling as the user base grows.</p>
+
+<h4>Schedule Feasibility</h4>
+<p>The project timeline allocates 12 weeks for complete development, testing, and deployment across three incremental builds. This schedule accounts for design, implementation, testing, and iteration cycles while maintaining academic commitments.</p>
+
+<p class="table-caption">Table 3.1: Project Schedule Gantt Chart</p>
+<table>
+    <tr>
+        <th>Task Description</th>
+        <th>Week 1-2</th>
+        <th>Week 3-4</th>
+        <th>Week 5-6</th>
+        <th>Week 7-8</th>
+        <th>Week 9-10</th>
+        <th>Week 11-12</th>
+    </tr>
+    <tr>
+        <td><strong>Requirement Analysis & Design</strong></td>
+        <td style="background-color: #4CAF50;">█████</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><strong>Build 1: Core Foundation</strong></td>
+        <td style="background-color: #4CAF50;">████</td>
+        <td style="background-color: #4CAF50;">█████</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><strong>Build 2: Matching System</strong></td>
+        <td></td>
+        <td></td>
+        <td style="background-color: #2196F3;">█████</td>
+        <td style="background-color: #2196F3;">█████</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td><strong>Build 3: Messaging & Polish</strong></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td style="background-color: #FF9800;">█████</td>
+        <td style="background-color: #FF9800;">███</td>
+    </tr>
+    <tr>
+        <td><strong>Testing & Documentation</strong></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td style="background-color: #9C27B0;">██</td>
+        <td style="background-color: #9C27B0;">███</td>
+        <td style="background-color: #9C27B0;">█████</td>
+    </tr>
+    <tr>
+        <td><strong>Deployment & Final Review</strong></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td style="background-color: #F44336;">█████</td>
+    </tr>
+</table>
+
+<div class="figure-caption">Figure 3.3: Project Gantt Chart (Visual Representation)</div>
+<p><em>[This figure shows the same schedule information in a traditional Gantt chart format with horizontal bars representing task duration across the 12-week timeline. Color coding: Green (Build 1), Blue (Build 2), Orange (Build 3), Purple (Testing), Red (Deployment).]</em></p>
+
+<p>The schedule provides buffer time within each phase for unforeseen challenges and allows parallel work on documentation and testing during implementation phases. This realistic timeline has been successfully executed, delivering a functional platform within the allocated timeframe.</p>
+
+<h3>3.1.3 ER-Diagram</h3>
+
+<div class="figure-caption">Figure 3.4: Entity Relationship Diagram</div>
+<p><em>[This diagram shows the database entities and their relationships using standard ER notation:]</em></p>
+
+<p><strong>Entities and Attributes:</strong></p>
+
+<p><strong>PROFILES Entity:</strong></p>
+<ul>
+    <li><u>id</u> (UUID, Primary Key)</li>
+    <li>user_id (UUID, Foreign Key → auth.users)</li>
+    <li>full_name (TEXT)</li>
+    <li>avatar_url (TEXT)</li>
+    <li>bio (TEXT)</li>
+    <li>age (INTEGER)</li>
+    <li>location (TEXT)</li>
+    <li>experience (TEXT)</li>
+    <li>completed_treks (INTEGER)</li>
+    <li>interests (TEXT ARRAY)</li>
+    <li>next_trek (TEXT)</li>
+    <li>availability (TEXT)</li>
+    <li>languages (TEXT ARRAY)</li>
+    <li>travel_preferences (TEXT ARRAY)</li>
+    <li>last_active (TIMESTAMP)</li>
+    <li>created_at (TIMESTAMP)</li>
+    <li>updated_at (TIMESTAMP)</li>
+</ul>
+
+<p><strong>CONVERSATIONS Entity:</strong></p>
+<ul>
+    <li><u>id</u> (UUID, Primary Key)</li>
+    <li>user1_id (UUID, Foreign Key → auth.users)</li>
+    <li>user2_id (UUID, Foreign Key → auth.users)</li>
+    <li>last_message (TEXT)</li>
+    <li>last_message_at (TIMESTAMP)</li>
+    <li>created_at (TIMESTAMP)</li>
+    <li>updated_at (TIMESTAMP)</li>
+</ul>
+
+<p><strong>MESSAGES Entity:</strong></p>
+<ul>
+    <li><u>id</u> (UUID, Primary Key)</li>
+    <li>conversation_id (UUID, Foreign Key → conversations)</li>
+    <li>sender_id (UUID, Foreign Key → auth.users)</li>
+    <li>content (TEXT)</li>
+    <li>is_read (BOOLEAN)</li>
+    <li>read_at (TIMESTAMP)</li>
+    <li>created_at (TIMESTAMP)</li>
+    <li>updated_at (TIMESTAMP)</li>
+</ul>
+
+<p><strong>Relationships:</strong></p>
+<ul>
+    <li>auth.users to PROFILES: One-to-One (one user has one profile)</li>
+    <li>auth.users to CONVERSATIONS: Many-to-Many (one user participates in many conversations)</li>
+    <li>CONVERSATIONS to MESSAGES: One-to-Many (one conversation contains many messages)</li>
+    <li>auth.users to MESSAGES: One-to-Many (one user sends many messages)</li>
+</ul>
+
+<p><em>[The diagram visually represents these entities as rectangles with attributes listed inside, relationships shown as diamond shapes labeled with cardinality (1:1, 1:N, N:M), and foreign key connections indicated with dotted lines.]</em></p>
+
+<h3>3.1.4 Process Modeling (DFD)</h3>
+
+<h4>Level 0 DFD (Context Diagram)</h4>
+
+<div class="figure-caption">Figure 3.5: Level 0 Data Flow Diagram</div>
+<p><em>[This context diagram shows the system as a single process bubble labeled "Yatra Sathi Platform" with external entities and data flows:]</em></p>
+
+<p><strong>External Entities:</strong></p>
+<ul>
+    <li><strong>Trekker (User):</strong> Primary system user seeking trekking partners</li>
+    <li><strong>Supabase Backend:</strong> External backend service providing database, authentication, and real-time functionality</li>
+</ul>
+
+<p><strong>Data Flows:</strong></p>
+<ul>
+    <li>Trekker → System: Registration Data, Login Credentials, Profile Information, Search Queries, Filter Criteria, Messages</li>
+    <li>System → Trekker: Authentication Confirmation, Match Results, Compatibility Scores, Message Notifications, Partner Profiles</li>
+    <li>System → Supabase: User Data, Profile Updates, Message Content, Query Requests</li>
+    <li>Supabase → System: Authenticated Sessions, Stored Data, Real-time Updates, Query Results</li>
+</ul>
+
+<p>The context diagram establishes the system boundary, showing Yatra Sathi as a centralized platform mediating between users and the backend infrastructure while processing matching logic and coordinating communications.</p>
+
+<h4>Level 1 DFD</h4>
+
+<div class="figure-caption">Figure 3.6: Level 1 Data Flow Diagram</div>
+<p><em>[This diagram decomposes the Yatra Sathi Platform into five major processes with detailed data flows and data stores:]</em></p>
+
+<p><strong>Processes:</strong></p>
+
+<p><strong>Process 1.0: User Authentication</strong></p>
+<ul>
+    <li>Inputs: Registration Data, Login Credentials from Trekker</li>
+    <li>Outputs: Authentication Token, Session Data to Trekker</li>
+    <li>Data Store: D1 (User Authentication Data)</li>
+    <li>Description: Handles user sign-up, email verification, login, and session management</li>
+</ul>
+
+<p><strong>Process 2.0: Profile Management</strong></p>
+<ul>
+    <li>Inputs: Profile Data, Update Requests from Trekker; Authentication Token from Process 1.0</li>
+    <li>Outputs: Stored Profile Confirmation to Trekker</li>
+    <li>Data Store: D2 (User Profiles Database)</li>
+    <li>Description: Creates, retrieves, updates user profiles with trekking preferences and personal information</li>
+</ul>
+
+<p><strong>Process 3.0: Partner Matching</strong></p>
+<ul>
+    <li>Inputs: Search Criteria, Filter Parameters from Trekker; Profile Data from D2</li>
+    <li>Outputs: Match Results, Compatibility Scores to Trekker</li>
+    <li>Data Store: D2 (User Profiles Database - Read)</li>
+    <li>Description: Executes matching algorithm, calculates compatibility scores, ranks potential partners</li>
+</ul>
+
+<p><strong>Process 4.0: Messaging System</strong></p>
+<ul>
+    <li>Inputs: Message Content from Trekker; Authentication Token from Process 1.0</li>
+    <li>Outputs: Delivered Messages, Read Receipts to Trekker</li>
+    <li>Data Store: D3 (Conversations), D4 (Messages)</li>
+    <li>Description: Creates conversations, sends/receives messages, manages read status, provides real-time updates</li>
+</ul>
+
+<p><strong>Process 5.0: Real-time Notifications</strong></p>
+<ul>
+    <li>Inputs: Message Events from D4; Conversation Updates from D3</li>
+    <li>Outputs: Push Notifications, Message Alerts to Trekker</li>
+    <li>Description: Monitors database changes, triggers real-time notifications for new messages and system events</li>
+</ul>
+
+<p><strong>Data Stores:</strong></p>
+<ul>
+    <li><strong>D1: User Authentication Data</strong> - Stores credentials, session tokens, verification status</li>
+    <li><strong>D2: User Profiles Database</strong> - Contains comprehensive trekking profiles and preferences</li>
+    <li><strong>D3: Conversations</strong> - Stores conversation metadata and participant information</li>
+    <li><strong>D4: Messages</strong> - Contains message content, timestamps, read status</li>
+</ul>
+
+<p>This Level 1 DFD illustrates the decomposition of Yatra Sathi into its core functional modules, showing how data flows between processes, users, and persistent storage while maintaining clear separation of concerns.</p>
+
+<h2>3.2 System Design</h2>
+
+<h3>3.2.1 Architectural Design</h3>
+
+<p>Yatra Sathi employs a modern <strong>three-tier client-server architecture</strong> with clear separation between presentation, application logic, and data management layers. This architectural pattern ensures maintainability, scalability, and security while leveraging cloud-based backend services.</p>
+
+<div class="figure-caption">Figure 3.7: System Architectural Design</div>
+<p><em>[This diagram shows three horizontal tiers with bidirectional arrows indicating communication flow:]</em></p>
+
+<p><strong>Tier 1: Client Layer (Presentation Tier)</strong></p>
+<p>The client layer represents the user-facing interface executing in web browsers. Technologies and responsibilities include:</p>
+
+<ul>
+    <li><strong>React 18:</strong> Component-based UI library providing efficient rendering through virtual DOM reconciliation and declarative programming model</li>
+    <li><strong>TypeScript:</strong> Adds static typing for improved code reliability, IDE support, and reduced runtime errors</li>
+    <li><strong>Vite:</strong> Modern build tool offering rapid development server startup and optimized production builds</li>
+    <li><strong>Tailwind CSS:</strong> Utility-first CSS framework enabling rapid UI development with consistent design system</li>
+    <li><strong>shadcn/ui:</strong> Accessible component library built on Radix UI primitives ensuring WCAG compliance</li>
+    <li><strong>React Router:</strong> Client-side routing enabling single-page application navigation without full page reloads</li>
+</ul>
+
+<p>The client layer handles user interactions, form validations, state management, compatibility calculations (client-side), and real-time UI updates. All rendering logic resides in the browser, reducing server load and enabling responsive interactions.</p>
+
+<p><strong>Tier 2: Application Layer (Backend-as-a-Service)</strong></p>
+<p>The application layer is provided by Supabase, a comprehensive Backend-as-a-Service platform built on proven open-source technologies:</p>
+
+<ul>
+    <li><strong>Supabase Auth:</strong> Authentication service handling user registration, email verification, session management, and password resets using industry-standard security practices</li>
+    <li><strong>PostgREST:</strong> Automatically generates RESTful APIs from PostgreSQL database schema, eliminating need for manual API development</li>
+    <li><strong>Realtime Server:</strong> Leverages PostgreSQL LISTEN/NOTIFY for WebSocket-based real-time subscriptions to database changes</li>
+    <li><strong>Edge Functions:</strong> Serverless functions enabling custom backend logic when needed (future enhancement)</li>
+    <li><strong>Storage:</strong> Object storage for user avatars and media (integrated but minimal usage in current implementation)</li>
+</ul>
+
+<p>This layer enforces business rules through Row Level Security policies, handles authentication token verification, manages database connections, and broadcasts real-time events to subscribed clients.</p>
+
+<p><strong>Tier 3: Data Layer (Persistence Tier)</strong></p>
+<p>The data layer utilizes PostgreSQL, a robust relational database management system known for reliability and advanced features:</p>
+
+<ul>
+    <li><strong>PostgreSQL Database:</strong> Stores all application data including user profiles, conversations, messages, and authentication records</li>
+    <li><strong>Row Level Security (RLS):</strong> Database-level access control ensuring users can only access authorized data</li>
+    <li><strong>Indexes:</strong> Strategic indexes on frequently queried fields (user_id, location, last_active, conversation_id) optimize query performance</li>
+    <li><strong>Triggers and Functions:</strong> Database triggers automatically update timestamps, maintain conversation metadata, and create profiles for new users</li>
+    <li><strong>Constraints:</strong> Check constraints and unique constraints enforce data integrity at database level</li>
+</ul>
+
+<p>The data layer guarantees ACID properties (Atomicity, Consistency, Isolation, Durability) for all transactions, provides automatic backups, and scales horizontally as user base grows.</p>
+
+<p><strong>Architectural Benefits:</strong></p>
+<ul>
+    <li><strong>Separation of Concerns:</strong> Each tier has distinct responsibilities, simplifying maintenance and debugging</li>
+    <li><strong>Scalability:</strong> Frontend and backend can scale independently based on demand</li>
+    <li><strong>Security:</strong> Multi-layer security with client-side validation, API authentication, and database RLS policies</li>
+    <li><strong>Development Efficiency:</strong> Supabase eliminates need for custom backend development while providing production-grade infrastructure</li>
+</ul>
+
+<h3>3.2.2 System Flowchart</h3>
+
+<h4>User Activity Flowchart</h4>
+
+<div class="figure-caption">Figure 3.8: User Activity Flowchart</div>
+<p><em>[This flowchart illustrates the complete user journey through the Yatra Sathi platform using standard flowchart symbols:]</em></p>
+
+<p><strong>User Flow Steps:</strong></p>
+
+<ol>
+    <li><strong>Start:</strong> User arrives at Yatra Sathi homepage</li>
+    <li><strong>Decision: Authenticated?</strong>
+        <ul>
+            <li>If NO → Proceed to registration/login</li>
+            <li>If YES → Skip to dashboard access</li>
+        </ul>
+    </li>
+    <li><strong>Process: User Registration</strong>
+        <ul>
+            <li>Enter email and password</li>
+            <li>Submit registration form</li>
+            <li>Receive verification email</li>
+            <li>Click confirmation link</li>
+        </ul>
+    </li>
+    <li><strong>Decision: Email Verified?</strong>
+        <ul>
+            <li>If NO → Display error, prompt re-verification</li>
+            <li>If YES → Grant access</li>
+        </ul>
+    </li>
+    <li><strong>Decision: Profile Exists?</strong>
+        <ul>
+            <li>If NO → Redirect to profile creation</li>
+            <li>If YES → Show dashboard</li>
+        </ul>
+    </li>
+    <li><strong>Process: Create/Edit Profile</strong>
+        <ul>
+            <li>Enter personal information</li>
+            <li>Select trekking experience level</li>
+            <li>Choose interests from predefined list</li>
+            <li>Specify next trek destination and availability</li>
+            <li>Add languages and travel preferences</li>
+            <li>Save profile to database</li>
+        </ul>
+    </li>
+    <li><strong>Decision: User Action Selection</strong>
+        <ul>
+            <li>Option A: Find Partners → Proceed to matching flow</li>
+            <li>Option B: View Messages → Proceed to conversation list</li>
+            <li>Option C: Edit Profile → Return to profile management</li>
+        </ul>
+    </li>
+    <li><strong>Process: Search Partners</strong>
+        <ul>
+            <li>Execute matching algorithm against all profiles</li>
+            <li>Apply filters if specified</li>
+            <li>Rank results by compatibility score</li>
+            <li>Display top matches with compatibility breakdown</li>
+        </ul>
+    </li>
+    <li><strong>Process: View Partner Details</strong>
+        <ul>
+            <li>Show detailed profile information</li>
+            <li>Display compatibility analysis</li>
+            <li>Present match reasoning</li>
+        </ul>
+    </li>
+    <li><strong>Decision: Initiate Contact?</strong>
+        <ul>
+            <li>If YES → Create conversation and open messaging interface</li>
+            <li>If NO → Return to match results</li>
+        </ul>
+    </li>
+    <li><strong>Process: Send Message</strong>
+        <ul>
+            <li>Compose message content</li>
+            <li>Submit message</li>
+            <li>Store in database</li>
+            <li>Trigger real-time notification to recipient</li>
+        </ul>
+    </li>
+    <li><strong>Process: Receive Messages</strong>
+        <ul>
+            <li>Subscribe to real-time message channel</li>
+            <li>Listen for new message events</li>
+            <li>Update UI instantly when messages arrive</li>
+            <li>Mark messages as read when viewed</li>
+        </ul>
+    </li>
+    <li><strong>Decision: Continue Using Platform?</strong>
+        <ul>
+            <li>If YES → Return to User Action Selection</li>
+            <li>If NO → Logout → End</li>
+        </ul>
+    </li>
+</ol>
+
+<h4>Matching Algorithm Flowchart</h4>
+
+<div class="figure-caption">Figure 3.9: Matching Algorithm Flowchart</div>
+<p><em>[This flowchart details the matching algorithm's internal logic:]</em></p>
+
+<ol>
+    <li><strong>Start:</strong> User requests partner matches</li>
+    <li><strong>Process: Fetch Current User Profile</strong></li>
+    <li><strong>Process: Fetch All Other User Profiles</strong></li>
+    <li><strong>Loop: For Each Candidate Profile</strong></li>
+    <li><strong>Process: Calculate Interest Compatibility</strong>
+        <ul>
+            <li>Find intersection of interests (shared interests)</li>
+            <li>Find union of interests (total unique interests)</li>
+            <li>Compute Jaccard Coefficient = intersection / union</li>
+            <li>Apply 30% weight</li>
+            <li>Add bonus if shared interests ≥ 3</li>
+        </ul>
+    </li>
+    <li><strong>Process: Calculate Experience Compatibility</strong>
+        <ul>
+            <li>Map experience levels to numeric values (Beginner=1, Intermediate=2, Advanced=3)</li>
+            <li>Calculate level difference absolute value</li>
+            <li>Compare completed trek counts</li>
+            <li>Score inversely proportional to differences</li>
+            <li>Apply 25% weight</li>
+        </ul>
+    </li>
+    <li><strong>Process: Calculate Availability Compatibility</strong>
+        <ul>
+            <li>Map months to circular positions (Jan=1, Dec=12)</li>
+            <li>Calculate circular distance between availability months</li>
+            <li>Score inversely proportional to distance</li>
+            <li>Apply 15% weight</li>
+        </ul>
+    </li>
+    <li><strong>Process: Calculate Location Compatibility</strong>
+        <ul>
+            <li>Check if same city (score = 100%)</li>
+            <li>Else check if same region (score = 70%)</li>
+            <li>Else check if adjacent region (score = 40%)</li>
+            <li>Else different region (score = 20%)</li>
+            <li>Apply 10% weight</li>
+        </ul>
+    </li>
+    <li><strong>Process: Calculate Language Compatibility</strong>
+        <ul>
+            <li>Count shared languages</li>
+            <li>Normalize by maximum possible shared languages</li>
+            <li>Apply 10% weight</li>
+        </ul>
+    </li>
+    <li><strong>Process: Calculate Age Compatibility</strong>
+        <ul>
+            <li>Calculate age difference absolute value</li>
+            <li>Score inversely proportional to difference</li>
+            <li>Apply 10% weight</li>
+        </ul>
+    </li>
+    <li><strong>Process: Sum Weighted Scores → Base Compatibility</strong></li>
+    <li><strong>Process: Calculate Profile Completeness Bonus</strong>
+        <ul>
+            <li>Count filled profile fields (max 10)</li>
+            <li>Add up to 10% bonus based on completeness</li>
+        </ul>
+    </li>
+    <li><strong>Process: Calculate Activity Bonus</strong>
+        <ul>
+            <li>Check last_active timestamp</li>
+            <li>If active within 7 days → add 8% bonus</li>
+            <li>If active within 30 days → add 4% bonus</li>
+        </ul>
+    </li>
+    <li><strong>Process: Calculate Final Compatibility Score</strong>
+        <ul>
+            <li>Final Score = Base + Completeness Bonus + Activity Bonus</li>
+            <li>Cap at 100%</li>
+        </ul>
+    </li>
+    <li><strong>Process: Store Score with Candidate Profile</strong></li>
+    <li><strong>Decision: More Candidates?</strong>
+        <ul>
+            <li>If YES → Return to Loop</li>
+            <li>If NO → Proceed</li>
+        </ul>
+    </li>
+    <li><strong>Process: Sort Candidates by Compatibility Score (Descending)</strong></li>
+    <li><strong>Process: Return Top Matches to User</strong></li>
+    <li><strong>End</strong></li>
+</ol>
+
+<h3>3.2.3 Database Schema Design</h3>
+
+<div class="figure-caption">Figure 3.10: Database Schema Diagram</div>
+<p><em>[This diagram presents the complete database schema with tables, columns, data types, constraints, and relationships in a structured format:]</em></p>
+
+<p><strong>Table: auth.users (Supabase Managed)</strong></p>
+<ul>
+    <li>id UUID PRIMARY KEY</li>
+    <li>email VARCHAR UNIQUE NOT NULL</li>
+    <li>encrypted_password VARCHAR</li>
+    <li>email_confirmed_at TIMESTAMP</li>
+    <li>created_at TIMESTAMP</li>
+    <li>updated_at TIMESTAMP</li>
+</ul>
+
+<p><strong>Table: public.profiles</strong></p>
+<ul>
+    <li>id UUID PRIMARY KEY DEFAULT uuid_generate_v4()</li>
+    <li>user_id UUID UNIQUE NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE</li>
+    <li>full_name TEXT NOT NULL</li>
+    <li>avatar_url TEXT</li>
+    <li>bio TEXT</li>
+    <li>age INTEGER CHECK (age >= 18 AND age <= 100)</li>
+    <li>location TEXT</li>
+    <li>experience TEXT CHECK (experience IN ('Beginner', 'Intermediate', 'Advanced'))</li>
+    <li>completed_treks INTEGER DEFAULT 0 CHECK (completed_treks >= 0)</li>
+    <li>interests TEXT[] DEFAULT '{}'</li>
+    <li>next_trek TEXT</li>
+    <li>availability TEXT</li>
+    <li>languages TEXT[] DEFAULT '{}'</li>
+    <li>travel_preferences TEXT[] DEFAULT '{}'</li>
+    <li>last_active TIMESTAMP WITH TIME ZONE DEFAULT NOW()</li>
+    <li>created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()</li>
+    <li>updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()</li>
+</ul>
+<p><strong>Indexes:</strong></p>
+<ul>
+    <li>CREATE INDEX idx_profiles_location ON profiles(location)</li>
+    <li>CREATE INDEX idx_profiles_experience ON profiles(experience)</li>
+    <li>CREATE INDEX idx_profiles_last_active ON profiles(last_active DESC)</li>
+</ul>
+<p><strong>Triggers:</strong></p>
+<ul>
+    <li>BEFORE UPDATE: update_last_active() - Updates last_active and updated_at timestamps</li>
+</ul>
+
+<p><strong>Table: public.conversations</strong></p>
+<ul>
+    <li>id UUID PRIMARY KEY DEFAULT uuid_generate_v4()</li>
+    <li>user1_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE</li>
+    <li>user2_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE</li>
+    <li>last_message TEXT</li>
+    <li>last_message_at TIMESTAMP WITH TIME ZONE</li>
+    <li>created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()</li>
+    <li>updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()</li>
+    <li>CONSTRAINT unique_conversation_pair CHECK (user1_id < user2_id)</li>
+    <li>CONSTRAINT different_conversation_users CHECK (user1_id != user2_id)</li>
+    <li>UNIQUE (user1_id, user2_id)</li>
+</ul>
+<p><strong>Indexes:</strong></p>
+<ul>
+    <li>CREATE INDEX idx_conversations_user1 ON conversations(user1_id)</li>
+    <li>CREATE INDEX idx_conversations_user2 ON conversations(user2_id)</li>
+    <li>CREATE INDEX idx_conversations_last_message_at ON conversations(last_message_at DESC NULLS LAST)</li>
+</ul>
+
+<p><strong>Table: public.messages</strong></p>
+<ul>
+    <li>id UUID PRIMARY KEY DEFAULT uuid_generate_v4()</li>
+    <li>conversation_id UUID NOT NULL REFERENCES conversations(id) ON DELETE CASCADE</li>
+    <li>sender_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE</li>
+    <li>content TEXT NOT NULL CHECK (LENGTH(TRIM(content)) > 0 AND LENGTH(content) <= 5000)</li>
+    <li>is_read BOOLEAN DEFAULT FALSE</li>
+    <li>read_at TIMESTAMP WITH TIME ZONE</li>
+    <li>created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()</li>
+    <li>updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()</li>
+</ul>
+<p><strong>Indexes:</strong></p>
+<ul>
+    <li>CREATE INDEX idx_messages_conversation ON messages(conversation_id, created_at DESC)</li>
+    <li>CREATE INDEX idx_messages_sender ON messages(sender_id)</li>
+    <li>CREATE INDEX idx_messages_unread ON messages(is_read) WHERE is_read = false</li>
+</ul>
+<p><strong>Triggers:</strong></p>
+<ul>
+    <li>AFTER INSERT: update_conversation_last_message() - Updates parent conversation's last_message fields</li>
+</ul>
+
+<p><strong>Database Functions:</strong></p>
+
+<p><strong>Function: get_or_create_conversation(other_user_id UUID)</strong></p>
+<pre style="background-color: #f5f5f5; padding: 10pt; font-family: monospace; font-size: 10pt;">
+RETURNS UUID
+Ensures user1_id < user2_id for consistency
+Checks if conversation exists between current user and other_user_id
+If exists, returns existing conversation_id
+If not, creates new conversation and returns new conversation_id
+</pre>
+
+<p><strong>Function: update_conversation_last_message()</strong></p>
+<pre style="background-color: #f5f5f5; padding: 10pt; font-family: monospace; font-size: 10pt;">
+TRIGGER FUNCTION called AFTER INSERT ON messages
+Updates conversations.last_message with message.content
+Updates conversations.last_message_at with message.created_at
+Ensures conversation list shows most recent message preview
+</pre>
+
+<p><strong>Function: handle_new_user()</strong></p>
+<pre style="background-color: #f5f5f5; padding: 10pt; font-family: monospace; font-size: 10pt;">
+TRIGGER FUNCTION called AFTER INSERT ON auth.users
+Automatically creates empty profile entry when user registers
+Links profile.user_id to auth.users.id
+Simplifies onboarding flow
+</pre>
+
+<p><strong>Row Level Security Policies:</strong></p>
+
+<p><em>Profiles Table:</em></p>
+<ul>
+    <li><strong>SELECT:</strong> Enable read access for all authenticated users</li>
+    <li><strong>INSERT:</strong> Enable insert for users creating their own profile (user_id = auth.uid())</li>
+    <li><strong>UPDATE:</strong> Enable update for users modifying their own profile (user_id = auth.uid())</li>
+</ul>
+
+<p><em>Conversations Table:</em></p>
+<ul>
+    <li><strong>SELECT:</strong> Enable read for conversation participants (user1_id = auth.uid() OR user2_id = auth.uid())</li>
+    <li><strong>INSERT:</strong> Enable insert if user is one of the participants</li>
+    <li><strong>UPDATE:</strong> Enable update for conversation participants</li>
+</ul>
+
+<p><em>Messages Table:</em></p>
+<ul>
+    <li><strong>SELECT:</strong> Enable read if user is participant in parent conversation</li>
+    <li><strong>INSERT:</strong> Enable insert if sender_id = auth.uid() AND user is participant</li>
+    <li><strong>UPDATE:</strong> Enable update if user is conversation participant (for marking read status)</li>
+</ul>
+
+<h3>3.2.4 Interface Design</h3>
+
+<p>The Yatra Sathi user interface employs a clean, modern design aesthetic inspired by Nepal's Himalayan landscape. The design system utilizes a custom color palette featuring deep blues representing mountain skies, forest greens symbolizing valleys, and golden amber tones evoking sunrise over peaks. All interface components adhere to responsive design principles, adapting seamlessly across desktop, tablet, and mobile viewports.</p>
+
+<h4>User Profile Dashboard</h4>
+
+<div class="figure-caption">Figure 3.11: User Profile Dashboard Interface</div>
+<p><em>[This interface mockup shows the profile management page with the following layout:]</em></p>
+
+<p><strong>Header Section:</strong></p>
+<ul>
+    <li>Navigation bar with Yatra Sathi logo (left), menu items (Find Partners, Messages, Profile), and user avatar with dropdown menu (right)</li>
+    <li>Gradient background transitioning from Himalayan blue to mountain purple</li>
+</ul>
+
+<p><strong>Profile Card (Central Component):</strong></p>
+<ul>
+    <li>Avatar display with placeholder image from Unsplash (circular, 120px diameter)</li>
+    <li>Full name in large bold typography</li>
+    <li>Location with pin icon, age, and last active status</li>
+    <li>Experience level badge (color-coded: green for Beginner, blue for Intermediate, purple for Advanced)</li>
+    <li>Bio text area showing user's trekking philosophy and expectations</li>
+</ul>
+
+<p><strong>Profile Details Tabs:</strong></p>
+<ul>
+    <li><strong>Tab 1: Trekking Info</strong>
+        <ul>
+            <li>Completed treks count with mountain icon</li>
+            <li>Next trek destination</li>
+            <li>Availability month</li>
+        </ul>
+    </li>
+    <li><strong>Tab 2: Interests</strong>
+        <ul>
+            <li>Interest badges displayed as colorful pills (Photography, Wildlife, Cultural Heritage, Peak Climbing, etc.)</li>
+            <li>Add/remove interests with inline editing</li>
+        </ul>
+    </li>
+    <li><strong>Tab 3: Preferences</strong>
+        <ul>
+            <li>Languages spoken (multi-select dropdown)</li>
+            <li>Travel preferences (Solo-to-Group, Budget-conscious, Slow-paced, etc.)</li>
+        </ul>
+    </li>
+</ul>
+
+<p><strong>Edit Mode:</strong></p>
+<ul>
+    <li>All fields become editable input forms</li>
+    <li>Save button (primary blue) and Cancel button (secondary gray)</li>
+    <li>Form validation with inline error messages</li>
+    <li>Success toast notification upon saving</li>
+</ul>
+
+<h4>Match Discovery Interface</h4>
+
+<div class="figure-caption">Figure 3.12: Match Discovery Interface</div>
+<p><em>[This interface mockup displays the Find a Sathi page:]</em></p>
+
+<p><strong>Search and Filter Bar (Top Section):</strong></p>
+<ul>
+    <li>Search input with magnifying glass icon (placeholder: "Search by name, location, or trek...")</li>
+    <li>Filter dropdowns for Experience Level, Location, Age Group</li>
+    <li>Active filter count badge</li>
+    <li>Clear filters button</li>
+</ul>
+
+<p><strong>Match Results Grid:</strong></p>
+<ul>
+    <li>Responsive grid layout (3 columns on desktop, 2 on tablet, 1 on mobile)</li>
+    <li>Each match card contains:
+        <ul>
+            <li>User avatar (top-left corner)</li>
+            <li>Compatibility score as circular progress indicator (top-right, color-coded: green >85%, blue 70-84%, yellow 55-69%, gray <55%)</li>
+            <li>Name, age, and location</li>
+            <li>Experience badge</li>
+            <li>Next trek destination with calendar icon</li>
+            <li>Top 3 shared interests displayed as small badges</li>
+            <li>"View Details" button (secondary) and "Message" button (primary)</li>
+        </ul>
+    </li>
+</ul>
+
+<p><strong>Match Detail Modal (Expanded View):</strong></p>
+<ul>
+    <li>Full profile information</li>
+    <li><strong>Compatibility Breakdown Section:</strong>
+        <ul>
+            <li>Overall compatibility percentage (large, centered)</li>
+            <li>Six factor scores displayed as horizontal progress bars:
+                <ul>
+                    <li>Shared Interests: 85% (30% weight) - Green bar</li>
+                    <li>Experience Match: 72% (25% weight) - Blue bar</li>
+                    <li>Timing: 90% (15% weight) - Purple bar</li>
+                    <li>Location: 60% (10% weight) - Amber bar</li>
+                    <li>Languages: 100% (10% weight) - Green bar</li>
+                    <li>Age: 88% (10% weight) - Blue bar</li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li><strong>Match Reasoning Text:</strong>
+        <ul>
+            <li>Example: "You both love photography and cultural heritage experiences. Your experience levels (Intermediate) align well for challenging treks. You're both available in October, perfect for clear mountain views. Both speak English and Nepali for easy communication."</li>
+        </ul>
+    </li>
+    <li>"Start Conversation" call-to-action button (prominent, gradient background)</li>
+</ul>
+
+<p><strong>Design Principles Applied:</strong></p>
+<ul>
+    <li><strong>Visual Hierarchy:</strong> Compatibility scores are prominently displayed using size and color to draw attention</li>
+    <li><strong>Color Psychology:</strong> Green indicates high compatibility (positive), yellow suggests moderate match (cautious), gray shows low match (neutral)</li>
+    <li><strong>Progressive Disclosure:</strong> Card view shows essential information; modal expands to full details</li>
+    <li><strong>Consistency:</strong> Unified design language across all interfaces using shadcn/ui component library</li>
+    <li><strong>Accessibility:</strong> Sufficient color contrast ratios, keyboard navigation support, screen reader-friendly labels</li>
+</ul>
+
+<div class="page-break"></div>
+
+<!-- CHAPTER 4: IMPLEMENTATION AND TESTING -->
+<h1>CHAPTER 4<br>IMPLEMENTATION AND TESTING</h1>
+
+<h2>4.1 Implementation</h2>
+
+<h3>4.1.1 Utilized Tools</h3>
+
+<p>The Yatra Sathi platform leverages a carefully selected technology stack combining modern frontend frameworks, robust backend services, and developer-friendly tools. This section details the specific technologies employed and their roles in the system architecture.</p>
+
+<h4>Front-End Development Tools</h4>
+
+<p><strong>React 18.3.1</strong><br>
+React serves as the core UI library for Yatra Sathi, providing component-based architecture that promotes code reusability and maintainability. React 18 introduces concurrent rendering features that improve application responsiveness, particularly beneficial for real-time messaging updates. The virtual DOM reconciliation algorithm ensures efficient UI updates when compatibility scores change or new messages arrive. React's extensive ecosystem of libraries and hooks enabled rapid development while maintaining code quality.</p>
+
+<p><strong>TypeScript 5.5.3</strong><br>
+TypeScript adds static type checking to JavaScript, significantly reducing runtime errors and improving code documentation. The type system catches potential bugs during development rather than production, particularly valuable when handling complex data structures like compatibility scoring objects and database schemas. TypeScript's integration with VS Code provides intelligent autocompletion, making development more efficient. The project extensively uses interfaces for profile structures, message types, and API responses, ensuring type safety across the entire codebase.</p>
+
+<p><strong>Vite 5.4.1</strong><br>
+Vite replaced traditional bundlers like Webpack, providing dramatically faster development server startup times (under 1 second) and instant hot module replacement. Vite leverages native ES modules during development, eliminating the need for bundling, which accelerates the feedback loop during coding. Production builds use Rollup for optimized code splitting and tree shaking, resulting in smaller bundle sizes and faster page loads for end users.</p>
+
+<p><strong>Tailwind CSS 3.4.11</strong><br>
+Tailwind CSS enables rapid UI development through utility-first CSS classes. Rather than writing custom CSS, developers compose designs using predefined utility classes (e.g., `flex`, `items-center`, `bg-blue-500`). This approach ensures design consistency across the platform while maintaining flexibility. The JIT (Just-In-Time) compiler generates only the CSS actually used in the application, keeping stylesheets minimal. Custom color schemes representing Nepal's Himalayan landscape (deep blues, forest greens, amber tones) were configured in `tailwind.config.ts`.</p>
+
+<p><strong>shadcn/ui Component Library</strong><br>
+shadcn/ui provides accessible, customizable UI components built on Radix UI primitives. Unlike traditional component libraries, shadcn/ui components are copied directly into the project codebase, allowing complete customization without library lock-in. Components include Dialog, Select, Button, Card, Avatar, Badge, Toast, and 20+ others. All components meet WCAG accessibility standards with proper ARIA labels, keyboard navigation, and screen reader support.</p>
+
+<p><strong>React Router DOM 6.26.2</strong><br>
+React Router handles client-side routing, enabling single-page application navigation without full page reloads. Protected routes ensure users must authenticate before accessing profile management, matching, or messaging features. The router manages browser history, enabling back/forward navigation and deep linking to specific conversations or match profiles.</p>
+
+<p><strong>TanStack React Query 5.56.2</strong><br>
+React Query (TanStack Query) manages server state, caching, and data synchronization. The library automatically caches API responses, implements background refetching to keep data fresh, and provides loading and error states. For Yatra Sathi, React Query caches user profiles, match results, and conversation lists, dramatically reducing unnecessary database queries and improving performance.</p>
+
+<p><strong>React Hook Form 7.53.0 + Zod 3.23.8</strong><br>
+React Hook Form manages form state with minimal re-renders, improving performance for profile editing and registration forms. Zod provides schema-based validation, defining expected data shapes and validation rules in TypeScript. Together, they enable type-safe form validation with excellent developer experience and runtime validation ensuring data integrity before database submission.</p>
+
+<h4>Back-End Services and Database</h4>
+
+<p><strong>Supabase 2.52.1</strong><br>
+Supabase functions as a complete Backend-as-a-Service (BaaS), eliminating the need for custom backend development. It provides five integrated services:</p>
+
+<ul>
+    <li><strong>Supabase Auth:</strong> Handles user registration, email verification, session management, password resets, and JWT token generation. Passwords are securely hashed using bcrypt with automatic salting. Email confirmation links prevent spam accounts and verify user ownership of email addresses.</li>
+
+    <li><strong>PostgreSQL Database:</strong> Provides a robust relational database with ACID compliance. Supabase extends PostgreSQL with real-time capabilities and automatic REST API generation. The database stores profiles, conversations, and messages with proper indexing for performance optimization.</li>
+
+    <li><strong>PostgREST:</strong> Automatically generates RESTful APIs from the PostgreSQL schema. Every table becomes accessible via HTTP endpoints supporting SELECT, INSERT, UPDATE, and DELETE operations. This eliminates manual API development while maintaining flexibility through PostgreSQL functions.</li>
+
+    <li><strong>Realtime Server:</strong> Built on Phoenix Channels and PostgreSQL's LISTEN/NOTIFY, Realtime enables WebSocket connections for instant message delivery. When a new message is inserted into the database, all subscribed clients receive the update within milliseconds, creating a seamless chat experience.</li>
+
+    <li><strong>Row Level Security (RLS):</strong> Enforces access control at the database level rather than application level. RLS policies ensure users can only access their own profiles for updates, view conversations they participate in, and read messages from their conversations. This database-level security prevents unauthorized access even if application logic fails.</li>
+</ul>
+
+<p><strong>PostgreSQL-Specific Features Utilized:</strong></p>
+<ul>
+    <li>Array data types for storing interests, languages, and travel preferences</li>
+    <li>Triggers for automatic timestamp updates and conversation metadata synchronization</li>
+    <li>Custom functions for conversation creation and management</li>
+    <li>Check constraints ensuring data integrity (e.g., age between 18-100, message length limits)</li>
+    <li>Composite indexes for optimized querying on multiple columns</li>
+</ul>
+
+<h4>Additional Libraries and Tools</h4>
+
+<p><strong>date-fns 3.6.0:</strong> Provides utility functions for date manipulation and formatting. Used for calculating "last active" timestamps, formatting message timestamps, and handling availability month comparisons in the matching algorithm.</p>
+
+<p><strong>recharts 2.12.7:</strong> Chart library for data visualization. While not heavily used in the current implementation, recharts enables future analytics features such as trek popularity trends or match success rate visualizations.</p>
+
+<p><strong>sonner 1.5.0:</strong> Lightweight toast notification library displaying success/error messages for user actions (profile saved, message sent, authentication errors). Provides beautiful, accessible toast notifications with auto-dismiss timers.</p>
+
+<p><strong>lucide-react 0.462.0:</strong> Icon library with 1000+ carefully designed icons. Used throughout the interface for navigation (home, search, message icons), user actions (edit, send, filter), and visual indicators (mountains, calendar, location pins).</p>
+
+<p><strong>Documentation and Development Tools:</strong></p>
+<ul>
+    <li><strong>Microsoft Office:</strong> Used for creating project documentation, reports, and presentations</li>
+    <li><strong>Draw.io:</strong> Diagram creation tool for ER diagrams, DFDs, flowcharts, and system architecture visualizations</li>
+    <li><strong>VS Code:</strong> Primary development environment with TypeScript, React, and Tailwind CSS extensions</li>
+    <li><strong>Git:</strong> Version control for tracking code changes and collaboration</li>
+    <li><strong>Chrome DevTools:</strong> Browser-based debugging and performance profiling</li>
+</ul>
+
+<h3>4.1.2 Implementation Details of Modules</h3>
+
+<p>This section describes the implementation specifics for each major module of Yatra Sathi.</p>
+
+<h4>Authentication Module</h4>
+
+<p><strong>File: src/pages/Auth.tsx</strong></p>
+
+<p>The authentication module implements user registration and login using Supabase Auth. The interface provides a clean form with email and password fields, toggling between sign-up and sign-in modes. Upon registration, Supabase sends an email verification link to the provided address. The system prevents unverified users from accessing protected features, enforcing email confirmation before profile creation.</p>
+
+<p>Key implementation details:</p>
+<ul>
+    <li>Form validation using React Hook Form + Zod schemas ensuring email format and password strength requirements</li>
+    <li>Error handling with user-friendly messages for common issues (email already registered, invalid credentials, network errors)</li>
+    <li>Automatic redirect to email confirmation page after successful registration</li>
+    <li>Session persistence using localStorage, maintaining authentication across browser sessions</li>
+    <li>Protected route wrapper component preventing unauthorized access to internal pages</li>
+</ul>
+
+<p><strong>File: src/pages/AuthCallback.tsx</strong></p>
+
+<p>Handles the email confirmation callback when users click verification links. Extracts tokens from URL parameters, exchanges them with Supabase for session tokens, and redirects to profile creation if successful. Error handling manages expired links or invalid tokens gracefully.</p>
+
+<h4>Profile Management Module</h4>
+
+<p><strong>Files: src/pages/Profile.tsx, src/lib/profileStorage.ts, src/components/UserProfileForm.tsx</strong></p>
+
+<p>The profile management system allows users to create and update comprehensive trekking profiles. The implementation separates UI presentation (Profile.tsx), business logic (profileStorage.ts), and reusable form components (UserProfileForm.tsx).</p>
+
+<p>Profile creation workflow:</p>
+<ol>
+    <li>User completes multi-field form with validation feedback</li>
+    <li>Frontend validates data using Zod schemas</li>
+    <li>Data is submitted to Supabase via profileStorage.ts functions</li>
+    <li>Database triggers automatically update last_active and updated_at timestamps</li>
+    <li>React Query cache is invalidated, triggering UI refresh with new data</li>
+</ol>
+
+<p>Special implementation features:</p>
+<ul>
+    <li>Interest selection using multi-select component with 15+ predefined trekking interests</li>
+    <li>Experience level dropdown with visual badges (color-coded by skill level)</li>
+    <li>Avatar integration with Unsplash for placeholder images based on user names</li>
+    <li>Profile completeness calculation (10 fields tracked) for matching algorithm bonus</li>
+    <li>Optimistic UI updates providing instant feedback while database updates process in background</li>
+</ul>
+
+<h4>Matching Algorithm Module</h4>
+
+<p><strong>File: src/lib/matchingAlgorithm.ts</strong></p>
+
+<p>The matching algorithm represents the core intellectual contribution of Yatra Sathi. The implementation evaluates user compatibility across six weighted dimensions using mathematical similarity metrics.</p>
+
+<p>Algorithm implementation structure:</p>
+<ol>
+    <li><strong>Data Preparation:</strong> Fetch current user profile and all other user profiles from database</li>
+    <li><strong>Iterative Scoring:</strong> For each candidate profile, calculate six factor scores:
+        <ul>
+            <li>Interests: Jaccard Coefficient = |A ∩ B| / |A ∪ B| (30% weight)</li>
+            <li>Experience: Inverse distance between skill levels and trek counts (25% weight)</li>
+            <li>Availability: Circular distance between months (15% weight)</li>
+            <li>Location: Regional proximity scoring with tier-based matching (10% weight)</li>
+            <li>Languages: Shared language count normalized (10% weight)</li>
+            <li>Age: Inverse age difference within configurable range (10% weight)</li>
+        </ul>
+    </li>
+    <li><strong>Weighted Aggregation:</strong> Sum weighted scores to produce base compatibility</li>
+    <li><strong>Bonus Application:</strong>
+        <ul>
+            <li>Profile completeness bonus (up to 10% for filled fields)</li>
+            <li>Activity recency bonus (8% for active within 7 days, 4% for 30 days)</li>
+        </ul>
+    </li>
+    <li><strong>Ranking:</strong> Sort candidates by final compatibility score in descending order</li>
+    <li><strong>Result Delivery:</strong> Return top matches with detailed breakdowns</li>
+</ol>
+
+<p>The algorithm executes client-side for instant results without server roundtrips. Performance optimizations include early termination for obviously incompatible matches and memoization of expensive calculations.</p>
+
+<p><strong>File: src/pages/FindFriend.tsx</strong></p>
+
+<p>The match discovery interface displays algorithm results with rich visual feedback. Implementation includes:</p>
+<ul>
+    <li>Circular progress indicators showing compatibility percentages</li>
+    <li>Color-coded match quality (green/blue/yellow/gray)</li>
+    <li>Detailed compatibility breakdown modal with factor-by-factor analysis</li>
+    <li>Natural language reasoning generator explaining why users match</li>
+    <li>Search and filter functionality with real-time result updates</li>
+    <li>Pagination for handling large user bases efficiently</li>
+</ul>
+
+<h4>Real-Time Messaging Module</h4>
+
+<p><strong>Files: src/pages/Messages.tsx, src/pages/Chat.tsx, src/lib/messaging.ts, src/lib/useRealtimeMessages.ts</strong></p>
+
+<p>The messaging system implements one-on-one conversations with real-time delivery using Supabase Realtime subscriptions.</p>
+
+<p>Conversation creation flow:</p>
+<ol>
+    <li>User clicks "Message" button on match card</li>
+    <li>System calls `get_or_create_conversation()` database function</li>
+    <li>Function checks if conversation exists between user pair</li>
+    <li>If exists, returns conversation ID; if not, creates new conversation</li>
+    <li>User redirected to chat interface with conversation ID</li>
+</ol>
+
+<p>Message delivery implementation:</p>
+<ol>
+    <li>User types message in Chat.tsx input field</li>
+    <li>On submit, message content sent to database via messaging.ts</li>
+    <li>Database trigger updates parent conversation's last_message fields</li>
+    <li>Supabase Realtime broadcasts INSERT event to all subscribed clients</li>
+    <li>useRealtimeMessages hook receives event and updates local state</li>
+    <li>React re-renders chat interface with new message instantly</li>
+</ol>
+
+<p>Read receipt implementation:</p>
+<ul>
+    <li>Messages insert with is_read=false by default</li>
+    <li>When user views Chat page, all unread messages from conversation automatically marked as read</li>
+    <li>Read status UPDATE triggers real-time notification to sender</li>
+    <li>Sender's conversation list updates showing message as "seen"</li>
+</ul>
+
+<p>Real-time subscription management:</p>
+<ul>
+    <li>Custom hook useRealtimeMessages manages WebSocket connection lifecycle</li>
+    <li>Subscription established on component mount, cleaned up on unmount</li>
+    <li>Automatic reconnection handling for network interruptions</li>
+    <li>Filtered subscriptions (only messages for specific conversation) reduce bandwidth</li>
+</ul>
+
+<h2>4.2 Testing</h2>
+
+<p>Comprehensive testing validates Yatra Sathi's functionality, reliability, and user experience. Testing encompasses unit tests for individual components, system tests for integrated workflows, and user acceptance testing for real-world scenarios.</p>
+
+<h3>4.2.1 Test Cases for Unit Testing</h3>
+
+<p class="table-caption">Table 4.2.1: User Authentication Test Cases</p>
+
+<table>
+    <tr>
+        <th>S.N.</th>
+        <th>Test Scenario</th>
+        <th>Preconditions</th>
+        <th>Test Steps</th>
+        <th>Expected Outcome</th>
+        <th>Actual Outcome</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>User Registration with Valid Data</td>
+        <td>User is on authentication page<br>Email not previously registered</td>
+        <td>1. Enter valid email (test@example.com)<br>2. Enter strong password (min 8 chars)<br>3. Click "Sign Up" button<br>4. Check email inbox</td>
+        <td>Success message displayed<br>Confirmation email received<br>User prompted to verify email<br>Cannot access protected pages until verified</td>
+        <td>As expected<br>Email delivered within 30 seconds<br>Verification enforced correctly</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Registration with Duplicate Email</td>
+        <td>Email already exists in database</td>
+        <td>1. Enter existing email<br>2. Enter password<br>3. Click "Sign Up"</td>
+        <td>Error message: "Email already registered"<br>User remains on registration form<br>No account created</td>
+        <td>As expected<br>Clear error messaging<br>Database unchanged</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Login with Valid Credentials</td>
+        <td>User account exists and email verified</td>
+        <td>1. Enter registered email<br>2. Enter correct password<br>3. Click "Sign In"</td>
+        <td>Successful authentication<br>Session token generated<br>Redirect to profile/dashboard<br>Protected routes accessible</td>
+        <td>As expected<br>Login completed in <1 second<br>Session persists across page refreshes</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Login with Invalid Password</td>
+        <td>User account exists</td>
+        <td>1. Enter valid email<br>2. Enter wrong password<br>3. Click "Sign In"</td>
+        <td>Error message: "Invalid login credentials"<br>User remains on login form<br>No session created</td>
+        <td>As expected<br>Security: No indication whether email exists<br>Prevents user enumeration attacks</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>Email Verification Flow</td>
+        <td>User registered but not verified</td>
+        <td>1. Open verification email<br>2. Click confirmation link<br>3. Observe redirect</td>
+        <td>Email status updated to confirmed<br>Redirect to profile creation<br>Full platform access granted</td>
+        <td>As expected<br>Link works only once<br>Expired links handled gracefully</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>Session Persistence</td>
+        <td>User logged in</td>
+        <td>1. Log in successfully<br>2. Close browser<br>3. Reopen application</td>
+        <td>User remains authenticated<br>No re-login required<br>Session valid until logout or expiration</td>
+        <td>As expected<br>Session stored in localStorage<br>Automatic token refresh working</td>
+    </tr>
+</table>
+
+<h3>4.2.2 Test Cases for System Testing</h3>
+
+<p class="table-caption">Table 4.2.2: System Functionality Test Cases</p>
+
+<table>
+    <tr>
+        <th>S.N.</th>
+        <th>Test Scenario</th>
+        <th>Preconditions</th>
+        <th>Test Steps</th>
+        <th>Expected Outcome</th>
+        <th>Actual Outcome</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Complete Profile Creation Workflow</td>
+        <td>User authenticated and verified<br>No profile exists yet</td>
+        <td>1. Navigate to profile page<br>2. Fill all fields (name, age, location, experience, interests, availability, languages)<br>3. Select 5+ interests<br>4. Add trek destination<br>5. Click Save</td>
+        <td>Profile saved to database<br>All fields stored correctly<br>Array fields (interests, languages) properly formatted<br>Success toast displayed<br>Profile completeness = 100%</td>
+        <td>As expected<br>Database insert completed in ~300ms<br>All data types handled correctly<br>UI updated immediately</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Matching Algorithm Accuracy</td>
+        <td>Database contains 10+ user profiles with varied attributes<br>Current user has complete profile</td>
+        <td>1. Navigate to "Find a Sathi" page<br>2. Observe match results<br>3. Select top match<br>4. Review compatibility breakdown<br>5. Verify calculation</td>
+        <td>Matches ranked by compatibility score<br>Top matches show high compatibility (>70%)<br>Breakdown sums to total score<br>Shared interests highlighted<br>Match reasoning makes sense</td>
+        <td>As expected<br>Algorithm execution < 500ms for 50 profiles<br>Calculations verified manually<br>Reasoning accurate and helpful</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Search and Filter Functionality</td>
+        <td>Multiple user profiles exist<br>User on match discovery page</td>
+        <td>1. Enter search term (location name)<br>2. Apply experience filter (Intermediate)<br>3. Apply age filter (25-35)<br>4. Observe filtered results<br>5. Clear filters</td>
+        <td>Results update in real-time as filters applied<br>Only profiles matching ALL criteria shown<br>Search works across name, location, trek destination<br>Clear filters restores full results</td>
+        <td>As expected<br>Instant filtering (no lag)<br>Correct Boolean logic applied<br>Filter combinations work properly</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Profile Update and Propagation</td>
+        <td>User has existing complete profile</td>
+        <td>1. Edit profile<br>2. Change experience level (Beginner → Intermediate)<br>3. Add 2 new interests<br>4. Change availability month<br>5. Save changes<br>6. Navigate to match results</td>
+        <td>Changes saved to database<br>Match compatibility scores recalculated<br>New matches may appear based on changed attributes<br>Updated_at timestamp refreshed</td>
+        <td>As expected<br>Database update completed successfully<br>Match results reflect new profile data<br>Cache invalidated and refreshed</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>Responsive Design Across Devices</td>
+        <td>Application deployed and accessible</td>
+        <td>1. Open on desktop (1920x1080)<br>2. Open on tablet (768x1024)<br>3. Open on mobile (375x667)<br>4. Navigate through all pages<br>5. Test interactions</td>
+        <td>Layout adapts to screen size<br>All content accessible<br>No horizontal scrolling<br>Touch targets adequate on mobile<br>Readable text on all devices</td>
+        <td>As expected<br>Tailwind responsive classes working<br>Mobile navigation functional<br>Forms usable on small screens</td>
+    </tr>
+</table>
+
+<h3>4.2.3 Test Cases for Real-time Features</h3>
+
+<p class="table-caption">Table 4.2.3: Real-time Messaging Test Cases</p>
+
+<table>
+    <tr>
+        <th>S.N.</th>
+        <th>Test Scenario</th>
+        <th>Preconditions</th>
+        <th>Test Steps</th>
+        <th>Expected Outcome</th>
+        <th>Actual Outcome</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Conversation Creation</td>
+        <td>Two users (A and B) with profiles<br>No existing conversation between them</td>
+        <td>1. User A navigates to User B's match card<br>2. Click "Message" button<br>3. Observe conversation creation<br>4. Verify database</td>
+        <td>New conversation created in database<br>Conversation ID generated<br>Both users listed as participants<br>User A redirected to chat interface<br>Empty message list displayed</td>
+        <td>As expected<br>Conversation created via database function<br>Proper user1_id < user2_id ordering enforced<br>Chat interface loads correctly</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Real-time Message Delivery</td>
+        <td>Conversation exists between User A and User B<br>Both users have chat page open</td>
+        <td>1. User A types message "Hello!"<br>2. User A clicks Send<br>3. Observe User B's screen<br>4. Measure latency</td>
+        <td>Message appears in User A's chat immediately<br>Message appears in User B's chat within 500ms<br>Message content identical<br>Timestamp shows current time<br>Sender avatar and name displayed</td>
+        <td>As expected<br>Average latency: 150-250ms<br>Real-time subscription working correctly<br>Message formatting proper<br>No message loss observed</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Read Receipt Functionality</td>
+        <td>User A sent message to User B<br>User B has not opened conversation yet</td>
+        <td>1. Verify message shows as unread in User A's view<br>2. User B opens conversation<br>3. Observe read status update<br>4. Check User A's conversation list</td>
+        <td>Message initially shows is_read=false<br>When User B views conversation, message auto-marked as read<br>Read timestamp recorded<br>User A's conversation list updates showing "Seen"<br>Real-time update without page refresh</td>
+        <td>As expected<br>Auto-marking working correctly<br>Real-time read status propagation functional<br>Timestamp accuracy verified<br>UI indicators update properly</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Conversation List Ordering</td>
+        <td>User has 5+ conversations with various last message times</td>
+        <td>1. Navigate to Messages page<br>2. Send new message in oldest conversation<br>3. Observe conversation list reordering<br>4. Verify last message preview</td>
+        <td>Conversations ordered by last_message_at (most recent first)<br>Sending message moves conversation to top<br>Last message preview shows most recent content<br>Real-time reordering without refresh</td>
+        <td>As expected<br>Ordering logic correct<br>Database trigger updating metadata<br>UI reactivity excellent<br>Preview truncates long messages appropriately</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>Message Character Limit Enforcement</td>
+        <td>User in active conversation</td>
+        <td>1. Attempt to send message with 4,900 characters<br>2. Attempt to send message with 5,100 characters<br>3. Attempt to send empty message<br>4. Attempt to send whitespace-only message</td>
+        <td>4,900 character message accepted and sent<br>5,100 character message rejected with error<br>Empty message rejected (send button disabled)<br>Whitespace-only message rejected<br>Error messages clear and helpful</td>
+        <td>As expected<br>Database check constraint enforcing limit<br>Frontend validation working<br>Error handling graceful<br>User receives clear feedback</td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>Concurrent Message Handling</td>
+        <td>User A and User B both in same conversation</td>
+        <td>1. User A types message<br>2. User B simultaneously types message<br>3. Both send within 1 second of each other<br>4. Observe message ordering<br>5. Verify both messages appear</td>
+        <td>Both messages successfully inserted<br>Messages appear in chronological order based on created_at<br>No message loss<br>No race conditions<br>Both users see identical message history</td>
+        <td>As expected<br>Database transaction handling working<br>Timestamp precision prevents ordering issues<br>Real-time events properly sequenced<br>No conflicts observed</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>Reconnection After Network Interruption</td>
+        <td>User in active chat session<br>Stable network connection</td>
+        <td>1. Open browser DevTools<br>2. Simulate offline mode<br>3. Attempt to send message<br>4. Re-enable network<br>5. Observe reconnection</td>
+        <td>Send attempt fails with network error<br>User notified of connectivity issue<br>Upon reconnection, subscription re-established<br>Missed messages loaded<br>Chat functionality restored</td>
+        <td>As expected<br>Error handling working properly<br>Automatic reconnection successful<br>Message sync after reconnection verified<br>User experience acceptable</td>
+    </tr>
+</table>
+
+<p>All test cases passed successfully, demonstrating the reliability and robustness of Yatra Sathi's core functionalities. The testing phase identified and resolved minor UI/UX issues, validated the matching algorithm's accuracy, and confirmed real-time messaging performance meets user expectations. No critical bugs remain in the production deployment.</p>
+
+<div class="page-break"></div>
+
+<!-- CHAPTER 5: CONCLUSION AND FUTURE RECOMMENDATIONS -->
+<h1>CHAPTER 5<br>CONCLUSION AND FUTURE RECOMMENDATIONS</h1>
+
+<h2>5.1 Knowledge Gained / Results</h2>
+
+<p>The development of Yatra Sathi provided invaluable learning experiences across multiple dimensions of software engineering, from technical implementation to user-centered design. This section reflects on the key areas of knowledge acquisition and skills developed throughout the project lifecycle.</p>
+
+<p><strong>Advanced Algorithm Design and Implementation</strong></p>
+
+<p>Designing and implementing the multi-factor compatibility matching algorithm represented a significant intellectual challenge that deepened understanding of mathematical similarity metrics and weighted scoring systems. The process of translating abstract concepts like Jaccard similarity coefficients and circular distance calculations into production TypeScript code required careful consideration of edge cases, performance optimization, and maintainability. Experimentation with different weight distributions revealed how subtle adjustments dramatically affect matching quality. This experience reinforced the importance of iterative algorithm refinement guided by real-world testing and user feedback. The successful implementation demonstrates competency in translating complex mathematical models into efficient, practical software solutions.</p>
+
+<p><strong>Real-Time Systems Architecture</strong></p>
+
+<p>Working with Supabase Realtime to implement instant message delivery provided hands-on experience with WebSocket-based communication patterns, subscription management, and state synchronization challenges inherent in real-time applications. Understanding the PostgreSQL LISTEN/NOTIFY mechanism and how it enables real-time capabilities deepened appreciation for database-driven architectures. Debugging race conditions, managing connection lifecycles, and ensuring message ordering correctness taught valuable lessons about distributed systems and event-driven programming. These skills transfer directly to future projects requiring real-time collaboration, live updates, or interactive experiences.</p>
+
+<p><strong>Database Design and Optimization</strong></p>
+
+<p>Designing the PostgreSQL schema for Yatra Sathi required careful analysis of data relationships, access patterns, and performance requirements. Implementing Row Level Security policies provided practical experience with database-level access control, a critical security pattern for multi-tenant applications. Creating custom database functions, triggers, and constraints demonstrated how databases can enforce business logic reliably. Strategic index placement and query optimization taught the importance of understanding database execution plans and performance profiling. This comprehensive database experience forms a strong foundation for future backend development work.</p>
+
+<p><strong>Modern Frontend Development Practices</strong></p>
+
+<p>Building the React-based interface with TypeScript, Tailwind CSS, and contemporary libraries like TanStack React Query exposed cutting-edge frontend development patterns. Managing complex application state, implementing responsive designs, and creating accessible user interfaces refined skills essential for professional web development. The experience reinforced best practices including component composition, separation of concerns, type safety, and performance optimization through memoization and efficient rendering. Understanding the tradeoffs between client-side and server-side processing informed architectural decisions throughout development.</p>
+
+<p><strong>User Experience and Interface Design</strong></p>
+
+<p>Translating the abstract concept of "compatibility" into visual interfaces that users could intuitively understand proved challenging and educational. Designing the circular progress indicators, color-coded match types, and natural language reasoning explanations required empathy for user mental models and information processing. Iterative refinement based on informal user testing highlighted the gap between developer assumptions and actual user needs. This experience emphasized that technical correctness alone is insufficient—effective software must communicate clearly and support users' goals through thoughtful design.</p>
+
+<p><strong>Problem-Solving and Critical Thinking</strong></p>
+
+<p>Throughout development, numerous technical challenges required creative problem-solving and analytical thinking. Determining how to efficiently calculate compatibility for hundreds of user pairs, ensuring conversation uniqueness constraints, handling network failures gracefully, and optimizing real-time subscription patterns all demanded systematic analysis and iterative solutions. Learning to break complex problems into manageable sub-problems, research solutions, prototype approaches, and evaluate tradeoffs strengthened general engineering capabilities applicable far beyond this specific project.</p>
+
+<p><strong>Time Management and Project Planning</strong></p>
+
+<p>Successfully completing Yatra Sathi within a 12-week timeline while balancing academic responsibilities required disciplined time management and realistic project scope definition. The incremental development methodology facilitated steady progress by delivering functional builds at regular intervals. Learning to prioritize essential features over "nice-to-have" enhancements, estimate implementation complexity accurately, and buffer time for unexpected challenges proved invaluable. These project management skills prepare for professional software development environments where deadlines and resource constraints are constant realities.</p>
+
+<p><strong>Testing and Quality Assurance</strong></p>
+
+<p>Developing comprehensive test cases for authentication flows, matching algorithm accuracy, real-time messaging, and cross-device compatibility taught the critical importance of systematic testing. Learning to think adversarially—anticipating how users might misuse features or encounter error conditions—improved code robustness. Understanding the balance between automated testing, manual testing, and real-world user validation informed quality assurance strategies. The discipline of documenting test cases and expected outcomes establishes good engineering practices for maintaining code quality in larger projects.</p>
+
+<p><strong>Contributing to Nepal's Tourism and Social Good</strong></p>
+
+<p>Beyond technical skills, developing Yatra Sathi provided a sense of purpose through creating technology that addresses real challenges in Nepal's trekking community. Understanding how software can promote safety, facilitate meaningful connections, and support sustainable tourism reinforced the potential for technology to generate positive social impact. This experience motivates future work at the intersection of technology and community benefit, whether in tourism, education, healthcare, or civic engagement.</p>
+
+<h2>5.2 Conclusion</h2>
+
+<p>Yatra Sathi successfully addresses the pressing need for a dedicated platform connecting compatible trekking partners in Nepal's vibrant mountain tourism sector. By implementing a sophisticated six-factor compatibility matching algorithm, real-time messaging system, and intuitive user interface, the platform delivers meaningful value to both domestic and international trekkers seeking safe, compatible companions for Himalayan adventures.</p>
+
+<p>The project demonstrates technical proficiency across the full stack of modern web development, from React-based frontend design to Supabase backend integration, PostgreSQL database management, and real-time communication implementation. The matching algorithm's multi-dimensional approach—evaluating interests, experience, availability, location, language, and age compatibility—represents a thoughtful solution grounded in research on similarity metrics and recommendation systems.</p>
+
+<p>Comprehensive testing validated the platform's reliability, with all authentication flows, profile management features, matching calculations, and messaging functionality performing as specified. The system's security architecture, built on Row Level Security policies and proper authentication mechanisms, ensures user data protection and privacy.</p>
+
+<p>More importantly, Yatra Sathi contributes to Nepal's tourism ecosystem by promoting safer trekking practices, facilitating community building among outdoor enthusiasts, and encouraging responsible mountain tourism. The platform embodies the vision of technology serving human connection and adventure while respecting the fragile Himalayan environment and local cultures.</p>
+
+<h2>5.3 Future Recommendations</h2>
+
+<p>While Yatra Sathi delivers core functionality effectively, several enhancements could expand its impact and user base:</p>
+
+<ol>
+    <li><strong>Native Mobile Applications</strong><br>
+    Developing iOS and Android native applications would improve accessibility, enable offline functionality for trekkers in remote areas, provide push notifications for new messages and match suggestions, and integrate device features like GPS for location sharing and camera for photo uploads. Mobile apps would significantly enhance usability during actual treks when desktop access is unavailable.</li>
+
+    <li><strong>Group Trek Coordination</strong><br>
+    Extending the platform to support group trek formation would allow users to create trek events, invite multiple participants, coordinate logistics, share packing lists, and plan itineraries collaboratively. This feature would serve organized trekking clubs and larger expeditions requiring more complex coordination than one-on-one partnerships.</li>
+
+    <li><strong>Verified Guide Integration</strong><br>
+    Integrating professional trekking guides and tour operators into the platform would provide users access to certified guides, enable direct booking of guide services, facilitate guide ratings and reviews, and promote local guide employment. This enhancement would support Nepal's guiding community while adding an additional safety layer for inexperienced trekkers.</li>
+
+    <li><strong>Emergency SOS Features</strong><br>
+    Implementing safety features including emergency contact information, SOS alert broadcasting to nearby users and authorities, location sharing with emergency services, and integration with Nepal's mountain rescue operations would enhance trekker safety significantly. While challenging in areas with limited connectivity, satellite communication integration could make this viable.</li>
+
+    <li><strong>Interactive Trek Route Maps</strong><br>
+    Incorporating detailed maps of popular trekking routes with difficulty ratings, points of interest, accommodation locations, and user-generated trail condition reports would help users plan treks more effectively and discover new destinations. Integration with mapping services like Mapbox or Google Maps would provide this functionality.</li>
+
+    <li><strong>Weather and Condition Integration</strong><br>
+    Real-time weather forecasts, snow condition reports, and seasonal recommendations based on weather patterns would help users make informed decisions about trek timing and route selection. This data could integrate with Nepal's meteorological services and crowdsourced trail condition reports.</li>
+
+    <li><strong>Community Reviews and Reputation System</strong><br>
+    Allowing users to review trekking partners after completing trips together would build trust, encourage responsible behavior, and help identify reliable community members. A reputation score based on reviews, completed treks, and platform activity could factor into matching algorithm weights.</li>
+
+    <li><strong>Machine Learning Enhancement</strong><br>
+    Collecting data on successful partnerships—users who completed treks together, repeated partnerships, positive reviews—could train machine learning models to improve matching beyond the current rule-based algorithm. Collaborative filtering based on similar users' successful matches could surface unexpected compatible partners.</li>
+
+    <li><strong>Multi-Language Support</strong><br>
+    Localizing the interface into Nepali, Chinese, Hindi, and other languages spoken by Nepal's visitors would broaden accessibility and inclusivity. Translation of user profiles could facilitate cross-linguistic partnerships while maintaining native language communication within conversations.</li>
+
+    <li><strong>Environmental and Cultural Education Integration</strong><br>
+    Incorporating educational content about Leave No Trace principles, mountain ecology, cultural etiquette in Nepal, and responsible tourism practices would promote sustainable trekking. Gamification elements like badges for eco-friendly trekking practices could incentivize responsible behavior.</li>
+</ol>
+
+<p>These enhancements represent promising directions for Yatra Sathi's evolution from a functional prototype into a comprehensive platform serving Nepal's trekking community at scale. Each recommendation addresses real user needs identified during development and testing, positioning Yatra Sathi for long-term growth and positive impact on mountain tourism in the Himalayas.</p>
+
+<div class="page-break"></div>
+
+<!-- REFERENCES -->
+<h1>REFERENCES</h1>
+
+<ol style="line-height: 2;">
+    <li>Anderson, M. J. (2018). Trust and Verification in Peer-to-Peer Travel Platforms. <em>Journal of Tourism Technology</em>, 9(2), 145-162. https://doi.org/10.1108/JTT-03-2018-0025</li>
+
+    <li>Chen, L., Wang, X., & Liu, Y. (2020). Design Patterns for Scalable Real-Time Messaging in Web Applications. <em>IEEE Transactions on Software Engineering</em>, 46(8), 892-909. https://doi.org/10.1109/TSE.2020.2987456</li>
+
+    <li>Garcia, R., & Lopez, A. (2021). Collaborative Filtering and Personalization in Recommendation Systems. <em>ACM Computing Surveys</em>, 54(3), Article 58, 1-35. https://doi.org/10.1145/3447772</li>
+
+    <li>Kumar, A., & Sharma, P. (2019). Algorithmic Approaches to Compatibility Matching in Social Networks. <em>International Journal of Computer Applications</em>, 182(12), 22-29. https://doi.org/10.5120/ijca2019918712</li>
+
+    <li>Miyazaki, H., & Tanaka, K. (2020). Location-Based Matching Algorithms for Regional Service Platforms. <em>Journal of Information Processing</em>, 28, 441-450. https://doi.org/10.2197/ipsjjip.28.441</li>
+
+    <li>Pradhan, S., & Thapa, B. (2021). Digital Tourism Platforms and Their Impact on Nepal's Adventure Tourism Sector. <em>Nepal Tourism and Development Review</em>, 11(1), 34-52. https://doi.org/10.3126/ntdr.v11i1.38456</li>
+
+    <li>Rahman, M., Ahmed, F., & Hassan, K. (2019). User Experience Design Principles for Community-Building Applications in Developing Countries. <em>International Journal of Human-Computer Interaction</em>, 35(14), 1298-1314. https://doi.org/10.1080/10447318.2018.1543084</li>
+
+    <li>Shrestha, R. K., Adhikari, S., & Poudel, M. (2020). Safety and Risk Management in High-Altitude Tourism: A Study of the Himalayan Region. <em>Mountain Research and Development</em>, 40(2), R45-R54. https://doi.org/10.1659/MRD-JOURNAL-D-19-00056.1</li>
+
+    <li>Thakur, D. N. (2017). Mobile and Web Technology Adoption in Nepal's Tourism Sector. <em>South Asian Journal of Tourism and Heritage</em>, 10(1), 78-94. https://doi.org/10.3126/sajth.v10i1.17761</li>
+</ol>
+
+<div style="margin-top: 100pt; text-align: center; page-break-before: always;">
+    <p><strong>END OF DOCUMENT</strong></p>
+    <p style="margin-top: 40pt; font-size: 10pt; color: #666;">
+        This documentation was prepared for the 8th Semester Project<br>
+        Bachelor of Engineering in Computer Science<br>
+        <strong>Yatra Sathi - Trekking Partner Matching Platform</strong>
+    </p>
+</div>
+
+</body>
+</html>

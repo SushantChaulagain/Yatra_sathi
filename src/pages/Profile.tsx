@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useToast } from "@/hooks/use-toast";
 import { profileStorage, UserProfile } from "@/lib/profileStorage";
 import UserProfileForm from "@/components/UserProfileForm";
@@ -146,9 +147,12 @@ const Profile = () => {
                   <CardHeader>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
-                        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                          <User className="h-8 w-8 text-primary" />
-                        </div>
+                        <Avatar className="w-16 h-16">
+                          <AvatarImage src={userProfile.avatar} alt={userProfile.name} />
+                          <AvatarFallback>
+                            <User className="h-8 w-8 text-muted-foreground" />
+                          </AvatarFallback>
+                        </Avatar>
                         <div>
                           <CardTitle className="text-2xl">{userProfile.name}</CardTitle>
                           <CardDescription>

@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { X, Plus } from "lucide-react";
+import { AvatarUpload } from "@/components/AvatarUpload";
 
 interface UserProfile {
   id?: string;
@@ -36,6 +37,7 @@ interface UserProfileFormProps {
 
 const UserProfileForm = ({ onSubmit, initialData, isEditing = false }: UserProfileFormProps) => {
   const { toast } = useToast();
+  const [userId, setUserId] = useState<string>("");
   const [formData, setFormData] = useState<UserProfile>({
     name: "",
     age: 18,
@@ -52,6 +54,17 @@ const UserProfileForm = ({ onSubmit, initialData, isEditing = false }: UserProfi
 
   const [newInterest, setNewInterest] = useState("");
   const [newLanguage, setNewLanguage] = useState("");
+
+  // Get user ID on mount
+  useEffect(() => {
+    const getUserId = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        setUserId(user.id);
+      }
+    };
+    getUserId();
+  }, []);
 
   const nepaliLocations = [
     "Kathmandu", "Pokhara", "Chitwan", "Lalitpur", "Bhaktapur", "Biratnagar", 
@@ -179,6 +192,18 @@ const UserProfileForm = ({ onSubmit, initialData, isEditing = false }: UserProfi
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Profile Picture */}
+          {userId && (
+            <div className="flex justify-center pb-6 border-b">
+              <AvatarUpload
+                userId={userId}
+                currentAvatarUrl={formData.avatar}
+                userName={formData.name}
+                onAvatarChange={(url) => setFormData(prev => ({ ...prev, avatar: url || undefined }))}
+              />
+            </div>
+          )}
+
           {/* Basic Information */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">

@@ -290,5 +290,105 @@ export const profileStorage = {
     }
   },
 
+  // Upload avatar to Supabase storage
+  async uploadAvatar(file: File, userId: string): Promise<string> {
+    try {
+      console.log('📤 Uploading avatar for user:', userId);
+
+      // Generate a unique file name with timestamp to avoid caching issues
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${userId}/profile-${Date.now()}.${fileExt}`;
+      const filePath = fileName;
+
+      // Delete old avatar if exists
+      await this.deleteAvatar(userId);
+
+      // Upload new avatar
+      const { data, error } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: true,
+        });
+
+      if (error) {
+        console.error('❌ Error uploading avatar:', error);
+        throw new Error(`Failed to upload avatar: ${error.message}`);
+      }
+
+      console.log('✅ Avatar uploaded successfully:', data.path);
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(data.path);
+
+      console.log('🔗 Public URL:', publicUrl);
+
+      return publicUrl;
+    } catch (error) {
+      console.error('❌ Error uploading avatar:', error);
+      throw error;
+    }
+  },
+
+  // Delete avatar from Supabase storage
+  async deleteAvatar(userId: string): Promise<void> {
+    try {
+      console.log('🗑️ Deleting avatar for user:', userId);
+
+      // List all files in the user's folder
+      const { data: files, error: listError } = await supabase.storage
+        .from('avatars')
+        .list(userId);
+
+      if (listError) {
+        console.error('Error listing files:', listError);
+        return;
+      }
+
+      if (!files || files.length === 0) {
+        console.log('No avatar files to delete');
+        return;
+      }
+
+      // Delete all files in the user's folder
+      const filePaths = files.map(file => `${userId}/${file.name}`);
+      const { error: deleteError } = await supabase.storage
+        .from('avatars')
+        .remove(filePaths);
+
+      if (deleteError) {
+        console.error('Error deleting files:', deleteError);
+        throw new Error(`Failed to delete avatar: ${deleteError.message}`);
+      }
+
+      console.log('✅ Avatar deleted successfully');
+    } catch (error) {
+      console.error('❌ Error deleting avatar:', error);
+      // Don't throw error for deletion failures, just log
+    }
+  },
+
+  // Update profile avatar URL
+  async updateAvatarUrl(userId: string, avatarUrl: string | null): Promise<void> {
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({ avatar_url: avatarUrl })
+        .eq('user_id', userId);
+
+      if (error) {
+        console.error('Error updating avatar URL:', error);
+        throw new Error(`Failed to update avatar URL: ${error.message}`);
+      }
+
+      console.log('✅ Avatar URL updated in profile');
+    } catch (error) {
+      console.error('❌ Error updating avatar URL:', error);
+      throw error;
+    }
+  },
+
   // NO MORE SAMPLE DATA - Real users only!
 };

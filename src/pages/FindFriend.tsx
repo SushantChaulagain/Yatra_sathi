@@ -347,7 +347,7 @@ const FindFriend = () => {
                       <div className="relative flex-shrink-0">
                         <Avatar className="h-20 w-20 border-4 border-white shadow-lg">
                           <AvatarImage
-                            src={`https://images.unsplash.com/${trekker.avatar}?w=100&h=100&fit=crop&crop=face`}
+                            src={trekker.avatar}
                             alt={trekker.name}
                           />
                           <AvatarFallback className="text-lg font-bold bg-gradient-to-br from-[hsl(var(--himalayan-deep-blue))] to-[hsl(var(--forest-green))] text-white">
